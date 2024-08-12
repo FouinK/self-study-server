@@ -30,8 +30,6 @@ class UserAuthInterceptor(
             ((request.getHeader("app-version") ?: request.getParameter("app_version")) ?: "0").toInt()
         val osVersion: String? =
             request.getHeader("os-version") ?: request.getParameter("os_version")
-        val settingRevision: Int =
-            ((request.getHeader("setting-revision") ?: request.getParameter("setting_revision")) ?: "0").toInt()
 
         if (os.isNullOrEmpty()) {
             throw Exception() // TODO : 여기 kona에 있는거 그대로 정의하기
@@ -45,7 +43,6 @@ class UserAuthInterceptor(
 
         memberInfo.init(
             userId = member.id,
-            settingRevision = settingRevision,
             appVersion = appVersion,
             authToken = authToken,
             os = os,

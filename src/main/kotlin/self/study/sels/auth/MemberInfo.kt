@@ -13,7 +13,6 @@ class MemberInfo {
     var os: String = ""
     var appVersion: Int = 0
     var osVersion: String? = null
-    var settingRevision: Int = 0
     var appVersionUpdated: Boolean = false
     var newbieYn: Boolean = false
     var createdAt: LocalDateTime = LocalDateTime.now()
@@ -26,7 +25,6 @@ class MemberInfo {
         os: String,
         appVersion: Int,
         osVersion: String?,
-        settingRevision: Int,
         appVersionUpdated: Boolean = false,
         newbieYn: Boolean = false,
         createdAt: LocalDateTime,
@@ -38,7 +36,6 @@ class MemberInfo {
         this.os = os
         this.appVersion = appVersion
         this.osVersion = osVersion
-        this.settingRevision = settingRevision
         this.appVersionUpdated = appVersionUpdated
         this.newbieYn = newbieYn
         this.createdAt = createdAt

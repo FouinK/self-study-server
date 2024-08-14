@@ -1,12 +1,12 @@
-package self.study.sels.interceptor
+package self.study.sels.config.interceptor
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
-import self.study.sels.auth.MemberInfo
-import self.study.sels.model.Member
-import self.study.sels.repository.MemberRepository
+import self.study.sels.config.auth.MemberInfo
+import self.study.sels.model.member.Member
+import self.study.sels.model.member.MemberRepository
 
 @Component
 class UpdateAppInfoInterceptor(

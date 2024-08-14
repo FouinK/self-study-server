@@ -1,8 +1,9 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-package self.study.sels.model
+package self.study.sels.model.member
 
 import jakarta.persistence.*
+import self.study.sels.model.BaseTimeEntity
 
 @Entity
 @Table(name = "member")

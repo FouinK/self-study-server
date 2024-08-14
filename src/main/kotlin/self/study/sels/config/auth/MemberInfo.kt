@@ -1,4 +1,4 @@
-package self.study.sels.auth
+package self.study.sels.config.auth
 
 import org.springframework.context.annotation.Scope
 import org.springframework.context.annotation.ScopedProxyMode

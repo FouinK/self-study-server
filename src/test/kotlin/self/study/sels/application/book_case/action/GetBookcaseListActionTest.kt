@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class GetBookCaseListActionTest {
+class GetBookcaseListActionTest {
     @Test
     fun `여기에작성`() {
         // given

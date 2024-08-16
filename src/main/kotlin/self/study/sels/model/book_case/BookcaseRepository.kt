@@ -4,11 +4,11 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface BookCaseRepository : JpaRepository<BookCase, Int> {
+interface BookcaseRepository : JpaRepository<Bookcase, Int> {
     fun findAllByMemberId(
         memberId: Int,
         pageable: Pageable,
-    ): Page<BookCase>
+    ): Page<Bookcase>
 
     fun existsByMemberIdAndName(
         memberId: Int,

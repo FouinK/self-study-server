@@ -1,13 +1,13 @@
 package fixtures
 
-import self.study.sels.model.book_case.BookCase
+import self.study.sels.model.book_case.Bookcase
 
-class BookCaseBuilder(
+class BookcaseBuilder(
     val name: String,
     val memberId: Int,
 ) {
     fun build() =
-        BookCase(
+        Bookcase(
             memberId = memberId,
             name = name,
         )

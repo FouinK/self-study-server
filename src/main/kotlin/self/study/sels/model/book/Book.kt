@@ -9,7 +9,7 @@ import self.study.sels.model.BaseTimeEntity
 @Table(name = "book")
 class Book(
     memberId: Int,
-    bookCaseId: Int,
+    bookcaseId: Int,
     name: String,
 ) : BaseTimeEntity() {
     @Id
@@ -21,8 +21,8 @@ class Book(
     var memberId = memberId
         protected set
 
-    @Column(name = "book_case_id", nullable = false)
-    var bookCaseId = bookCaseId
+    @Column(name = "bookcase_id", nullable = false)
+    var bookcaseId = bookcaseId
         protected set
 
     @Column(name = "name", nullable = false, length = 100)

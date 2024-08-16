@@ -6,8 +6,8 @@ import jakarta.persistence.*
 import self.study.sels.model.BaseTimeEntity
 
 @Entity
-@Table(name = "book_case")
-class BookCase(
+@Table(name = "bookcase")
+class Bookcase(
     memberId: Int,
     name: String,
 ) : BaseTimeEntity() {

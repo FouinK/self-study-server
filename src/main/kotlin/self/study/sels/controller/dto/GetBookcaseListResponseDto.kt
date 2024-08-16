@@ -1,6 +1,6 @@
 package self.study.sels.controller.dto
 
-class GetBookCaseListResponseDto(
+class GetBookcaseListResponseDto(
     val totalElement: Long,
     val page: Int,
     val bookCaseList: List<Item>,

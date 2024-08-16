@@ -9,4 +9,9 @@ interface BookCaseRepository : JpaRepository<BookCase, Int> {
         memberId: Int,
         pageable: Pageable,
     ): Page<BookCase>
+
+    fun existsByMemberIdAndName(
+        memberId: Int,
+        name: String,
+    ): Boolean
 }

@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import self.study.sels.application.book_case.port.`in`.CreateBookcaseCommand
-import self.study.sels.application.book_case.port.`in`.CreateBookcaseUseCase
-import self.study.sels.application.book_case.port.`in`.GetBookcaseListCommand
-import self.study.sels.application.book_case.port.`in`.GetBookcaseListUseCase
+import self.study.sels.application.book_case.port.`in`.*
 import self.study.sels.config.auth.MemberInfo
 import self.study.sels.controller.dto.CreateBookcaseRequestDto
 import self.study.sels.controller.dto.CreateBookcaseResponseDto
@@ -24,6 +21,7 @@ import self.study.sels.controller.dto.CreateBookcaseResponseDto
 class BookcaseController(
     private val getBookCaseListUseCase: GetBookcaseListUseCase,
     private val createBookCaseUseCase: CreateBookcaseUseCase,
+    private val getBookcaseUseCase: GetBookcaseUseCase,
     private val memberInfo: MemberInfo,
 ) {
     @PostMapping
@@ -55,9 +53,16 @@ class BookcaseController(
         return ResponseEntity.ok(getBookCaseListUseCase.list(command = command))
     }
 
-    @GetMapping("/{bookCaseId}")
+    @GetMapping("/{bookcaseId}")
     fun detail(
-        @PathVariable("bookCaseId") bookCaseId: Int,
-    ) {
+        @PathVariable("bookcaseId") bookcaseId: Int,
+    ): ResponseEntity<Any> {
+        val command =
+            GetBookcaseCommand(
+                bookcaseId = bookcaseId,
+                memberId = memberInfo.memberId,
+            )
+
+        return ResponseEntity.ok(getBookcaseUseCase.detail(command))
     }
 }

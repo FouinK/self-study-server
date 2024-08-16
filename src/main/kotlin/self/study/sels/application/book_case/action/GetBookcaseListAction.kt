@@ -20,11 +20,11 @@ class GetBookcaseListAction(
         return GetBookcaseListResponseDto(
             totalElement = bookcasePage.totalElements,
             page = bookcasePage.number,
-            bookCaseList =
+            bookcaseList =
                 bookcasePage.content.map {
                     GetBookcaseListResponseDto.Item(
                         bookCaseId = it.id,
-                        bookCaseName = it.name,
+                        bookcaseName = it.name,
                     )
                 },
         )

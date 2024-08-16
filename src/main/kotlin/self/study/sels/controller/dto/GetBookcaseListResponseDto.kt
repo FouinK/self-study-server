@@ -3,10 +3,10 @@ package self.study.sels.controller.dto
 class GetBookcaseListResponseDto(
     val totalElement: Long,
     val page: Int,
-    val bookCaseList: List<Item>,
+    val bookcaseList: List<Item>,
 ) {
     class Item(
         val bookCaseId: Int,
-        val bookCaseName: String,
+        val bookcaseName: String,
     )
 }

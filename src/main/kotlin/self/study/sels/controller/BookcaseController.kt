@@ -36,7 +36,7 @@ class BookcaseController(
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             CreateBookcaseResponseDto(
-                bookCaseId = createBookCaseUseCase.create(command),
+                bookcaseId = createBookCaseUseCase.create(command),
             ),
         )
     }

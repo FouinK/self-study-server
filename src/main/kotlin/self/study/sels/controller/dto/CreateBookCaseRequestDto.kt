@@ -1,5 +1,5 @@
 package self.study.sels.controller.dto
 
-class BookCaseCreateRequestDto(
+class CreateBookCaseRequestDto(
     val name: String,
 )

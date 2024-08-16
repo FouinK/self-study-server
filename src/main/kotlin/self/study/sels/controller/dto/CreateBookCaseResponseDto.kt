@@ -1,5 +1,5 @@
 package self.study.sels.controller.dto
 
-class BookCaseCreateResponseDto(
+class CreateBookCaseResponseDto(
     val bookCaseId: Int,
 )

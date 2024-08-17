@@ -2,7 +2,7 @@ package self.study.sels.application.book_case.action
 
 import fixtures.BookcaseBuilder
 import fixtures.MemberBuilder
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -70,10 +70,11 @@ class GetBookcaseListActionTest(
         val getBookcaseListResponseDto = getBookcaseListUseCase.list(command)
 
         // then
-        Assertions.assertThat(getBookcaseListResponseDto.totalElement).isEqualTo(3)
-        Assertions.assertThat(getBookcaseListResponseDto.page).isEqualTo(page)
+        assertThat(getBookcaseListResponseDto.totalElement).isEqualTo(3)
+        assertThat(getBookcaseListResponseDto.page).isEqualTo(page)
+        assertThat(getBookcaseListResponseDto.bookcaseList.size).isEqualTo(3)
         val actualBookcaseNames = getBookcaseListResponseDto.bookcaseList.map { it.bookcaseName }
-        Assertions.assertThat(actualBookcaseNames).containsExactly(
+        assertThat(actualBookcaseNames).containsExactly(
             science,
             korean,
             english,

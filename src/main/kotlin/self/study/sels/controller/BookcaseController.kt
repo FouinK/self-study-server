@@ -17,7 +17,7 @@ import self.study.sels.controller.dto.CreateBookcaseRequestDto
 import self.study.sels.controller.dto.CreateBookcaseResponseDto
 
 @RestController
-@RequestMapping("/sels/api/u/book-case")
+@RequestMapping("/sels/api/u/bookcase")
 class BookcaseController(
     private val getBookCaseListUseCase: GetBookcaseListUseCase,
     private val createBookCaseUseCase: CreateBookcaseUseCase,

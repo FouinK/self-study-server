@@ -11,7 +11,7 @@ class CreateQuestionAnswerAction(
     private val questionRepository: QuestionRepository,
 ) : CreateQuestionAnswerUseCase {
     @Transactional
-    override fun createQuestionAnswer(command: CreateQuestionAnswerCommand) {
+    override fun createQuestionAnswer(command: CreateQuestionAnswerCommand): Int {
         val question = questionRepository.save(command.toQuestionEntity())
 
         val answerList = command.toAnswerEntityList(question).toMutableList()
@@ -19,5 +19,7 @@ class CreateQuestionAnswerAction(
         question.answerList = answerList
 
         questionRepository.save(question)
+
+        return question.id
     }
 }

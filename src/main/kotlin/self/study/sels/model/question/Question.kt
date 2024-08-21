@@ -2,6 +2,7 @@ package self.study.sels.model.question
 
 import jakarta.persistence.*
 import self.study.sels.model.BaseTimeEntity
+import self.study.sels.model.answer.Answer
 
 @Entity
 @Table(name = "question")
@@ -11,6 +12,7 @@ class Question(
     question: String,
     multipleChoiceYn: Boolean = false,
     answerId: Int? = null,
+    answerList: List<Answer> = listOf(),
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +38,12 @@ class Question(
     @Column(name = "answer_id", nullable = true)
     var answerId = answerId
         protected set
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var answerList: MutableList<Answer> = answerList.toMutableList()
+        set(list) {
+            list.forEach { it.question = this }
+            field.clear()
+            field.addAll(list)
+        }
 }

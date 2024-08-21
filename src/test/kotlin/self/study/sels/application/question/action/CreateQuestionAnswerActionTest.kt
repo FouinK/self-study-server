@@ -36,6 +36,7 @@ class CreateQuestionAnswerActionTest(
         createQuestionAnswerUseCase =
             CreateQuestionAnswerAction(
                 questionRepository,
+                bookRepository,
             )
 
         member = memberRepository.save(MemberBuilder().build())

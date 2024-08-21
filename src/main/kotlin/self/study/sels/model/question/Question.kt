@@ -3,12 +3,13 @@ package self.study.sels.model.question
 import jakarta.persistence.*
 import self.study.sels.model.BaseTimeEntity
 import self.study.sels.model.answer.Answer
+import self.study.sels.model.book.Book
 
 @Entity
 @Table(name = "question")
 class Question(
     memberId: Int,
-    bookId: Int,
+    book: Book,
     question: String,
     multipleChoiceYn: Boolean = false,
     answerId: Int? = null,
@@ -23,8 +24,9 @@ class Question(
     var memberId = memberId
         protected set
 
-    @Column(name = "book_id", nullable = false)
-    var bookId = bookId
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", nullable = false)
+    var book = book
         protected set
 
     @Column(name = "question", nullable = false, length = 255)

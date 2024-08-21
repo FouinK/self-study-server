@@ -1,22 +1,16 @@
-package self.study.sels.model.question_answer
+package self.study.sels.model.question
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import self.study.sels.model.BaseTimeEntity
 
 @Entity
-@Table(name = "question_answer")
-class QuestionAnswer(
+@Table(name = "question")
+class Question(
     memberId: Int,
     bookId: Int,
     question: String,
-    answer: String? = null,
     multipleChoiceYn: Boolean,
-    multipleChoiceAnswerId: Int? = null,
+    answerId: Int? = null,
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,15 +29,11 @@ class QuestionAnswer(
     var question = question
         protected set
 
-    @Column(name = "answer", nullable = true, length = 255)
-    var answer = answer
-        protected set
-
     @Column(name = "multiple_choice_yn", nullable = false)
     var multipleChoiceYn = multipleChoiceYn
         protected set
 
-    @Column(name = "multiple_choice_answer_id", nullable = true)
-    var multipleChoiceAnswerId = multipleChoiceAnswerId
+    @Column(name = "answer_id", nullable = true)
+    var answerId = answerId
         protected set
 }

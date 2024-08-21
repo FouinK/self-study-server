@@ -45,5 +45,6 @@ class Question(
             list.forEach { it.question = this }
             field.clear()
             field.addAll(list)
+            this.answerId = list.first { it.correctYn }.id
         }
 }

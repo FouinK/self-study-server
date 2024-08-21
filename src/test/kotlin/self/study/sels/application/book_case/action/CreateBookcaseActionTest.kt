@@ -77,6 +77,6 @@ class CreateBookcaseActionTest(
         // when & then
         assertThrows<Exception> {
             createBookcaseUseCase.create(command = createBookcaseCommand)
-        }.message.apply { assertThat("이미 사용중인 이름입니다.") }
+        }.message.apply { assertThat(this).isEqualTo("이미 사용중인 이름입니다.") }
     }
 }

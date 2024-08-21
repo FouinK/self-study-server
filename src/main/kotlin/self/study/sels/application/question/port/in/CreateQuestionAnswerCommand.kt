@@ -11,15 +11,6 @@ class CreateQuestionAnswerCommand(
     val memberId: Int,
     val answerList: List<CreateQuestionAnswerRequestDto.AnswerItem>,
 ) {
-    fun toQuestionEntity(): Question {
-        return Question(
-            memberId = this.memberId,
-            bookId = this.bookId,
-            question = this.question,
-            multipleChoiceYn = this.multipleChoiceYn,
-        )
-    }
-
     fun toAnswerEntityList(question: Question): List<Answer> {
         return answerList.map {
             Answer(

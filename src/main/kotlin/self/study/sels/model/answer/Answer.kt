@@ -8,7 +8,7 @@ import self.study.sels.model.BaseTimeEntity
 class Answer(
     questionId: Int,
     answer: String,
-    correctYn: Boolean,
+    correctYn: Boolean = false,
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

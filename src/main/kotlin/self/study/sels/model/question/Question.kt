@@ -9,7 +9,7 @@ class Question(
     memberId: Int,
     bookId: Int,
     question: String,
-    multipleChoiceYn: Boolean,
+    multipleChoiceYn: Boolean = false,
     answerId: Int? = null,
 ) : BaseTimeEntity() {
     @Id

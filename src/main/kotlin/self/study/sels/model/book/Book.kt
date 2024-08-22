@@ -38,4 +38,8 @@ class Book(
             field.clear()
             field.addAll(list)
         }
+
+    fun updateName(name: String) {
+        this.name = name
+    }
 }

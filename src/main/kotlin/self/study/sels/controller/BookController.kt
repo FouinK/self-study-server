@@ -5,15 +5,19 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import self.study.sels.application.book.port.`in`.CreateBookCommand
 import self.study.sels.application.book.port.`in`.CreateBookUseCase
 import self.study.sels.application.book.port.`in`.GetBookUseCase
+import self.study.sels.application.book.port.`in`.UpdateBookUseCase
 import self.study.sels.config.auth.MemberInfo
 import self.study.sels.controller.dto.CreateBookRequestDto
 import self.study.sels.controller.dto.CreateBookResponseDto
+import self.study.sels.controller.dto.UpdateBookRequestDto
+import self.study.sels.controller.dto.UpdateBookResponseDto
 
 @RestController
 @RequestMapping("/sels/api/u/book")
@@ -21,6 +25,7 @@ class BookController(
     private val memberInfo: MemberInfo,
     private val createBookUseCase: CreateBookUseCase,
     private val getBookUseCase: GetBookUseCase,
+    private val updateBookUseCase: UpdateBookUseCase,
 ) {
     @GetMapping("/{bookId}")
     fun detail(
@@ -45,6 +50,17 @@ class BookController(
         return ResponseEntity.status(HttpStatus.CREATED).body(
             CreateBookResponseDto(
                 bookId = createBookUseCase.create(command),
+            ),
+        )
+    }
+
+    @PutMapping
+    fun update(
+        @RequestBody request: UpdateBookRequestDto,
+    ): ResponseEntity<Any> {
+        return ResponseEntity.ok(
+            UpdateBookResponseDto(
+                name = updateBookUseCase.update(request),
             ),
         )
     }

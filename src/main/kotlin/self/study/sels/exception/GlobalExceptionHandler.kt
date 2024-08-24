@@ -1,0 +1,56 @@
+package self.study.sels.exception
+
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
+import org.springframework.http.HttpStatus
+import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
+import self.study.sels.util.logger
+
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@RestControllerAdvice
+class GlobalExceptionHandler {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun httpMessageNotReadableException(ex: Exception): Error? {
+        when (ex.cause) {
+            is MissingKotlinParameterException -> return createMissingKotlinParameterViolation(ex.cause as MissingKotlinParameterException)
+        }
+        throw ex
+    }
+
+    private fun createMissingKotlinParameterViolation(ex: MissingKotlinParameterException): Error {
+        val error = Error(HttpStatus.BAD_REQUEST.value(), "validation error")
+        val errorFieldRegex = Regex("\\.([^.]*)\\[\\\"(.*)\"\\]\$")
+        val errorMatch = errorFieldRegex.find(ex.path[0].description)!!
+        val (objectName, field) = errorMatch.destructured
+
+        error.addFieldError(objectName = objectName, field = field, message = "필드가 누락되었습니다.")
+        logger().error("BAD_REQUEST", ex)
+        return error
+    }
+
+    data class Error(
+        val status: Int,
+        var message: String,
+        val fieldErrors: MutableList<CustomFieldError> = mutableListOf(),
+    ) {
+        fun addFieldError(
+            objectName: String,
+            field: String,
+            message: String,
+        ) {
+            val error = CustomFieldError(objectName, field, message)
+            fieldErrors.add(error)
+        }
+    }
+
+    data class CustomFieldError(
+        val objectName: String,
+        val field: String,
+        val message: String,
+    )
+}

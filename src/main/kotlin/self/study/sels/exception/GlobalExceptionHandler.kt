@@ -10,9 +10,23 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import self.study.sels.util.logger
 
+data class GlobalErrorResponseDto(
+    val code: Int,
+    val msg: String? = null,
+    val data: Any? = null,
+)
+
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 class GlobalExceptionHandler {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException::class)
+    fun notFoundHandler(ex: Exception): GlobalErrorResponseDto =
+        GlobalErrorResponseDto(
+            code = 404,
+            msg = ex.message,
+        )
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun httpMessageNotReadableException(ex: Exception): Error? {

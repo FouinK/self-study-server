@@ -93,4 +93,13 @@ class GetBookcaseActionTest(
             bookName3,
         )
     }
+
+    @Test
+    fun `내 책장이 아닌 책장을 조회할 시 예외가 발생한다`() {
+        // given
+
+        // when
+
+        // then
+    }
 }

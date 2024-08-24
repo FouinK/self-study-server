@@ -77,4 +77,13 @@ class UpdateBookcaseActionTest(
             updateBookcaseUseCase.update(command)
         }.message.apply { Assertions.assertThat(this).isEqualTo("이미 존재하는 책장 이름으로는 변경 할 수 없습니다.") }
     }
+
+    @Test
+    fun `내 책장이 아닌 책장을 수정할 시 예외가 발생한다`() {
+        // given
+
+        // when
+
+        // then
+    }
 }

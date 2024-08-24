@@ -86,4 +86,13 @@ class UpdateBookActionTest(
             updateBookUseCase.update(command)
         }.message.apply { assertThat(this).isEqualTo("이미 존재하는 책 이름으로는 변경 할 수 없습니다.") }
     }
+
+    @Test
+    fun `내 책이 아닌 책을 수정할 경우 예외가 발생한다`() {
+        // given
+
+        // when
+
+        // then
+    }
 }

@@ -19,11 +19,19 @@ data class GlobalErrorResponseDto(
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 class GlobalExceptionHandler {
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ExistsNameException::class)
+    fun handleExistsNameException(ex: ExistsNameException): GlobalErrorResponseDto =
+        GlobalErrorResponseDto(
+            code = HttpStatus.CONFLICT.value(),
+            msg = ex.message,
+        )
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException::class)
-    fun notFoundHandler(ex: Exception): GlobalErrorResponseDto =
+    fun notFoundHandler(ex: NotFoundException): GlobalErrorResponseDto =
         GlobalErrorResponseDto(
-            code = 404,
+            code = HttpStatus.NOT_FOUND.value(),
             msg = ex.message,
         )
 

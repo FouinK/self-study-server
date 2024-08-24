@@ -1,6 +1,7 @@
 package self.study.sels.model.question
 
 import jakarta.persistence.*
+import self.study.sels.exception.NotFoundException
 import self.study.sels.model.BaseTimeEntity
 import self.study.sels.model.answer.Answer
 import self.study.sels.model.book.Book
@@ -47,6 +48,11 @@ class Question(
             list.forEach { it.question = this }
             field.clear()
             field.addAll(list)
-            this.answerId = list.first { it.correctYn }.id
+            val correctAnswer = list.find { it.correctYn }
+            if (correctAnswer != null) {
+                this.answerId = correctAnswer.id
+            } else {
+                throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
+            }
         }
 }

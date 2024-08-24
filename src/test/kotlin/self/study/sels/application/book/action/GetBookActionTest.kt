@@ -164,4 +164,19 @@ class GetBookActionTest(
             getBookUseCase.detail(command)
         }.message.apply { assertThat(this).isEqualTo("책이 없습니다.") }
     }
+
+    @Test
+    fun `내 책이 아닌 책을 조회할 경우 예외가 발생한다2`() {
+        // given
+        val command =
+            GetBookCommand(
+                bookId = otherMemberBook.id,
+                memberId = member.id,
+            )
+
+        // when & then
+        assertThrows<Exception> {
+            getBookUseCase.detail(command)
+        }.message.apply { assertThat(this).isEqualTo("책이 없습니다.") }
+    }
 }

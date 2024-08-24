@@ -19,7 +19,10 @@ interface BookRepository : JpaRepository<Book, Int> {
         memberId: Int,
     ): Book?
 
-    fun findByIdOrderByIdDesc(bookId: Int): Book?
+    fun findByIdAndMemberIdOrderByIdDesc(
+        bookId: Int,
+        memberId: Int,
+    ): Book?
 
     fun existsByMemberIdAndName(
         memberId: Int,

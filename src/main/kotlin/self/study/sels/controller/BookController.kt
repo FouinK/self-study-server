@@ -61,9 +61,15 @@ class BookController(
     fun update(
         @RequestBody @Valid request: UpdateBookRequestDto,
     ): ResponseEntity<Any> {
+        val command =
+            UpdateBookCommand(
+                bookId = request.bookId,
+                name = request.name,
+                memberId = memberInfo.memberId,
+            )
         return ResponseEntity.ok(
             UpdateBookResponseDto(
-                name = updateBookUseCase.update(request),
+                name = updateBookUseCase.update(command),
             ),
         )
     }

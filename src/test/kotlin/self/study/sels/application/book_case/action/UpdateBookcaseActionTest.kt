@@ -74,6 +74,6 @@ class UpdateBookcaseActionTest(
         // when & then
         assertThrows<Exception> {
             val updatedName = updateBookcaseUseCase.update(command)
-        }.message.apply { Assertions.assertThat(this).isEqualTo("이미 존재하는 책장이름으로는 변경 할 수 없습니다.") }
+        }.message.apply { Assertions.assertThat(this).isEqualTo("이미 존재하는 책장 이름으로는 변경 할 수 없습니다.") }
     }
 }

@@ -15,7 +15,7 @@ class UpdateBookcaseAction(
                 .orElseThrow { throw Exception("책장이 없습니다.") }
 
         if (bookcaseRepository.existsByMemberIdAndName(bookcase.memberId, command.name)) {
-            throw Exception("이미 존재하는 책장이름으로는 변경 할 수 없습니다.")
+            throw Exception("이미 존재하는 책장 이름으로는 변경 할 수 없습니다.")
         }
 
         bookcase.updateName(command.name)

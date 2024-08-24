@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import self.study.sels.application.book.port.`in`.GetBookCommand
 import self.study.sels.application.book.port.`in`.GetBookUseCase
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
@@ -27,8 +28,11 @@ class GetBookActionTest(
     @Autowired val bookRepository: BookRepository,
 ) {
     lateinit var member: Member
+    lateinit var otherMember: Member
     lateinit var bookcase: Bookcase
+    lateinit var otherMemberBookcase: Bookcase
     lateinit var book: Book
+    lateinit var otherMemberBook: Book
     lateinit var questionString1: String
     lateinit var questionString2: String
     lateinit var questionString3: String
@@ -40,12 +44,20 @@ class GetBookActionTest(
         getBookUseCase = GetBookAction(bookRepository)
 
         member = memberRepository.save(MemberBuilder().build())
+        otherMember = memberRepository.save(MemberBuilder().build())
 
         bookcase =
             bookcaseRepository.save(
                 BookcaseBuilder(
                     name = "역사",
                     memberId = member.id,
+                ).build(),
+            )
+        otherMemberBookcase =
+            bookcaseRepository.save(
+                BookcaseBuilder(
+                    name = "역사",
+                    memberId = otherMember.id,
                 ).build(),
             )
 
@@ -55,6 +67,15 @@ class GetBookActionTest(
                     name = "1단원",
                     memberId = member.id,
                     bookcaseId = bookcase.id,
+                ).build(),
+            )
+
+        otherMemberBook =
+            bookRepository.save(
+                BookBuilder(
+                    name = "1단원",
+                    memberId = otherMember.id,
+                    bookcaseId = otherMemberBookcase.id,
                 ).build(),
             )
 
@@ -91,8 +112,15 @@ class GetBookActionTest(
 
     @Test
     fun `책 상세를 정상 조회한다`() {
-        // given && when
-        val getBookResponseDto = getBookUseCase.detail(book.id)
+        // given
+        val command =
+            GetBookCommand(
+                bookId = book.id,
+                memberId = member.id,
+            )
+
+        // when
+        val getBookResponseDto = getBookUseCase.detail(command)
 
         // then
         assertThat(getBookResponseDto.bookName).isEqualTo(book.name)
@@ -109,8 +137,31 @@ class GetBookActionTest(
 
     @Test
     fun `생성되지 않은 책 ID로 조회 시 예외가 발생한다`() {
+        // given
+        val command =
+            GetBookCommand(
+                bookId = Int.MAX_VALUE - 10,
+                memberId = member.id,
+            )
+
+        // when & then
         assertThrows<Exception> {
-            getBookUseCase.detail(Int.MAX_VALUE - 10)
+            getBookUseCase.detail(command)
+        }.message.apply { assertThat(this).isEqualTo("책이 없습니다.") }
+    }
+
+    @Test
+    fun `내 책이 아닌 책을 조회할 경우 예외가 발생한다`() {
+        // given
+        val command =
+            GetBookCommand(
+                bookId = book.id,
+                memberId = otherMember.id,
+            )
+
+        // when & then
+        assertThrows<Exception> {
+            getBookUseCase.detail(command)
         }.message.apply { assertThat(this).isEqualTo("책이 없습니다.") }
     }
 }

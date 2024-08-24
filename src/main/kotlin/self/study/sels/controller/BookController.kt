@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import self.study.sels.application.book.port.`in`.CreateBookCommand
-import self.study.sels.application.book.port.`in`.CreateBookUseCase
-import self.study.sels.application.book.port.`in`.GetBookUseCase
-import self.study.sels.application.book.port.`in`.UpdateBookUseCase
+import self.study.sels.application.book.port.`in`.*
 import self.study.sels.config.auth.MemberInfo
 import self.study.sels.controller.dto.CreateBookRequestDto
 import self.study.sels.controller.dto.CreateBookResponseDto
@@ -32,8 +29,13 @@ class BookController(
     fun detail(
         @PathVariable("bookId") bookId: Int,
     ): ResponseEntity<Any> {
+        val command =
+            GetBookCommand(
+                bookId = bookId,
+                memberId = memberInfo.memberId,
+            )
         return ResponseEntity.ok(
-            getBookUseCase.detail(bookId),
+            getBookUseCase.detail(command),
         )
     }
 

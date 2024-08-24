@@ -1,6 +1,7 @@
 package self.study.sels.application.book.action
 
 import org.springframework.stereotype.Component
+import self.study.sels.application.book.port.`in`.GetBookCommand
 import self.study.sels.application.book.port.`in`.GetBookUseCase
 import self.study.sels.controller.dto.GetBookResponseDto
 import self.study.sels.model.book.BookRepository
@@ -9,10 +10,10 @@ import self.study.sels.model.book.BookRepository
 class GetBookAction(
     private val bookRepository: BookRepository,
 ) : GetBookUseCase {
-    override fun detail(bookId: Int): GetBookResponseDto {
+    override fun detail(command: GetBookCommand): GetBookResponseDto {
         val book =
-            bookRepository.findById(bookId)
-                .orElseThrow { throw Exception("책이 없습니다.") }
+            bookRepository.findByIdAndMemberId(command.bookId, command.memberId)
+                ?: throw Exception("책이 없습니다.")
 
         return GetBookResponseDto(
             bookName = book.name,

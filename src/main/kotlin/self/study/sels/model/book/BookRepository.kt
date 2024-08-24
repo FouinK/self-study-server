@@ -13,6 +13,12 @@ interface BookRepository : JpaRepository<Book, Int> {
     @EntityGraph(attributePaths = ["questionList"])
     override fun findById(bookId: Int): Optional<Book>
 
+    @EntityGraph(attributePaths = ["questionList"])
+    fun findByIdAndMemberId(
+        bookId: Int,
+        memberId: Int,
+    ): Book?
+
     fun findByIdOrderByIdDesc(bookId: Int): Book?
 
     fun existsByMemberIdAndName(

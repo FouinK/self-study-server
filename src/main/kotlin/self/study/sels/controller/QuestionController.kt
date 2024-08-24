@@ -2,6 +2,8 @@ package self.study.sels.controller
 
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,6 +19,13 @@ class QuestionController(
     private val memberInfo: MemberInfo,
     private val createQuestionAnswerUseCase: CreateQuestionAnswerUseCase,
 ) {
+    @GetMapping("/{questionId}")
+    fun detail(
+        @PathVariable("questionId") questionId: Int,
+    ): ResponseEntity<Any> {
+        return ResponseEntity.ok("")
+    }
+
     @PostMapping
     fun createQuestionAnswer(
         @RequestBody @Valid request: CreateQuestionAnswerRequestDto,

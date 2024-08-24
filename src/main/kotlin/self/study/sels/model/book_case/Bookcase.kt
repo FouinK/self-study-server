@@ -23,4 +23,8 @@ class Bookcase(
     @Column(name = "name", nullable = false, length = 100)
     var name = name
         protected set
+
+    fun updateName(name: String) {
+        this.name = name
+    }
 }

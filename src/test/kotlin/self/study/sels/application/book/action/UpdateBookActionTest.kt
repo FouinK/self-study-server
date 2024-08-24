@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.application.book.port.`in`.UpdateBookUseCase
 import self.study.sels.controller.dto.UpdateBookRequestDto
+import self.study.sels.exception.ExistsNameException
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
 
@@ -81,7 +82,7 @@ class UpdateBookActionTest(
             )
 
         // when & then
-        assertThrows<Exception> {
+        assertThrows<ExistsNameException> {
             updateBookUseCase.update(command)
         }.message.apply { assertThat(this).isEqualTo("이미 존재하는 책 이름으로는 변경 할 수 없습니다.") }
     }

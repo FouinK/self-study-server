@@ -57,7 +57,7 @@ class BookController(
 
     @PutMapping
     fun update(
-        @RequestBody request: UpdateBookRequestDto,
+        @RequestBody @Valid request: UpdateBookRequestDto,
     ): ResponseEntity<Any> {
         return ResponseEntity.ok(
             UpdateBookResponseDto(

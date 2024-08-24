@@ -73,7 +73,7 @@ class BookcaseController(
 
     @PutMapping
     fun update(
-        @RequestBody request: UpdateBookcaseRequestDto,
+        @RequestBody @Valid request: UpdateBookcaseRequestDto,
     ): ResponseEntity<Any> {
         return ResponseEntity.ok(
             UpdateBookcaseResponseDto(

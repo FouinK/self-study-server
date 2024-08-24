@@ -1,4 +1,5 @@
 package self.study.sels.controller.dto
 
-class UpdateBookcaseResponseDto {
-}
+class UpdateBookcaseResponseDto(
+    val name: String,
+)

@@ -17,6 +17,7 @@ import self.study.sels.config.auth.MemberInfo
 import self.study.sels.controller.dto.CreateBookcaseRequestDto
 import self.study.sels.controller.dto.CreateBookcaseResponseDto
 import self.study.sels.controller.dto.UpdateBookcaseRequestDto
+import self.study.sels.controller.dto.UpdateBookcaseResponseDto
 
 @RestController
 @RequestMapping("/sels/api/u/bookcase")
@@ -24,6 +25,7 @@ class BookcaseController(
     private val getBookCaseListUseCase: GetBookcaseListUseCase,
     private val createBookCaseUseCase: CreateBookcaseUseCase,
     private val getBookcaseUseCase: GetBookcaseUseCase,
+    private val updateBookcaseUseCase: UpdateBookcaseUseCase,
     private val memberInfo: MemberInfo,
 ) {
     @GetMapping
@@ -72,6 +74,10 @@ class BookcaseController(
     fun update(
         @RequestBody request: UpdateBookcaseRequestDto,
     ): ResponseEntity<Any> {
-        return ResponseEntity.ok("")
+        return ResponseEntity.ok(
+            UpdateBookcaseResponseDto(
+                name = updateBookcaseUseCase.update(command = request),
+            ),
+        )
     }
 }

@@ -37,7 +37,7 @@ class UpdateBookcaseActionTest(
         member = memberRepository.save(MemberBuilder().build())
 
         existsName = "이미 존재하는 이름"
-        updateBeforeName = "수정전 이름"
+        updateBeforeName = "수정 전 이름"
         bookcaseRepository.save(BookcaseBuilder(name = existsName, memberId = member.id).build())
         bookcase = bookcaseRepository.save(BookcaseBuilder(name = updateBeforeName, memberId = member.id).build())
     }

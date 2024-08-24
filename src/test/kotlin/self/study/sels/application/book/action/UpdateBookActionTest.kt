@@ -1,9 +1,10 @@
 package self.study.sels.application.book.action
 
 import fixtures.BookBuilder
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
@@ -18,6 +19,8 @@ class UpdateBookActionTest(
 ) {
     lateinit var updateBookUseCase: UpdateBookUseCase
     lateinit var book: Book
+    lateinit var existsName: String
+    lateinit var updateBeforeName: String
 
     @BeforeEach
     fun setUp() {
@@ -26,10 +29,20 @@ class UpdateBookActionTest(
                 bookRepository,
             )
 
+        existsName = "이미 존재하는 이름"
+        updateBeforeName = "수정 전 이름"
+
+        bookRepository.save(
+            BookBuilder(
+                name = existsName,
+                memberId = 1,
+                bookcaseId = 1,
+            ).build(),
+        )
         book =
             bookRepository.save(
                 BookBuilder(
-                    name = "1단원",
+                    name = updateBeforeName,
                     memberId = 1,
                     bookcaseId = 1,
                 ).build(),
@@ -39,7 +52,7 @@ class UpdateBookActionTest(
     @Test
     fun `책 이름을 정상 수정한다`() {
         // given
-        val updateName = "수정된 이름"
+        val updateName = "수정 될 이름"
         val command =
             UpdateBookRequestDto(
                 bookId = book.id,
@@ -55,5 +68,21 @@ class UpdateBookActionTest(
         // then
         book = bookRepository.findByIdOrNull(book.id)!!
         assertThat(book.name).isEqualTo(updatedName)
+    }
+
+    @Test
+    fun `이미 존재하는 이름으로 수정 시 예외가 발생한다`() {
+        // given
+        val updateName = existsName
+        val command =
+            UpdateBookRequestDto(
+                bookId = book.id,
+                name = updateName,
+            )
+
+        // when & then
+        assertThrows<Exception> {
+            updateBookUseCase.update(command)
+        }.message.apply { assertThat(this).isEqualTo("이미 존재하는 책 이름으로는 변경 할 수 없습니다.") }
     }
 }

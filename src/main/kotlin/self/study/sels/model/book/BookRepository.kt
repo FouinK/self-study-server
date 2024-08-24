@@ -14,4 +14,9 @@ interface BookRepository : JpaRepository<Book, Int> {
     override fun findById(bookId: Int): Optional<Book>
 
     fun findByIdOrderByIdDesc(bookId: Int): Book?
+
+    fun existsByMemberIdAndName(
+        memberId: Int,
+        name: String,
+    ): Boolean
 }

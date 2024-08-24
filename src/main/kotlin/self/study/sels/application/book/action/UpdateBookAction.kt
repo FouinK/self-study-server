@@ -14,6 +14,10 @@ class UpdateBookAction(
             bookRepository.findByIdOrderByIdDesc(command.bookId)
                 ?: throw Exception("책이 없습니다.")
 
+        if (bookRepository.existsByMemberIdAndName(book.memberId, command.name)) {
+            throw Exception("이미 존재하는 책 이름으로는 변경 할 수 없습니다.")
+        }
+
         book.updateName(command.name)
 
         bookRepository.save(book)

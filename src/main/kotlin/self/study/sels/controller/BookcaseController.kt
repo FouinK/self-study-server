@@ -1,5 +1,6 @@
 package self.study.sels.controller
 
+import jakarta.validation.Valid
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -55,7 +56,7 @@ class BookcaseController(
 
     @PostMapping
     fun create(
-        @RequestBody request: CreateBookcaseRequestDto,
+        @RequestBody @Valid request: CreateBookcaseRequestDto,
     ): ResponseEntity<Any> {
         val command =
             CreateBookcaseCommand(

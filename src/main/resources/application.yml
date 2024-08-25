@@ -1,6 +1,67 @@
 server:
   port: 8080
 
+--- #production phase
+spring:
+  config:
+    activate:
+      on-profile: production
+  application:
+    name: sels
+  datasource:
+    url: jdbc:mariadb://localhost:3306/self_study?useSSL=false
+    username: root
+    password: root
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      dialect: org.hibernate.dialect.MariaDBDialect
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+discord:
+  webhook:
+    url: https://discord.com/api/webhooks/1277123681360805908/m2P2yHwHt9k7VYgMAfQG6DOsI_xZPaZMBkWJt6ChkHm6rxhN6PBReQ32bsZn86MlTyJ8
+
+
+--- #alpha phase
+spring:
+  config:
+    activate:
+      on-profile: alpha
+  application:
+    name: sels
+  datasource:
+    url: jdbc:mariadb://localhost:3306/self_study?useSSL=false
+    username: root
+    password: root
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      dialect: org.hibernate.dialect.MariaDBDialect
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+discord:
+  webhook:
+    url: https://discord.com/api/webhooks/1277123349784563815/rv2oZ0SG8GNGHxqdi8qJbvN2tLxpTBN9Oy_I4U235RqMmAlSgK37apspZViA-mwzFnzX
+
+
+--- #development phase
 spring:
   config:
     activate:

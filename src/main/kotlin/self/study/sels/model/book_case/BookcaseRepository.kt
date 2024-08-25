@@ -14,4 +14,9 @@ interface BookcaseRepository : JpaRepository<Bookcase, Int> {
         memberId: Int,
         name: String,
     ): Boolean
+
+    fun findByIdAndMemberId(
+        bookcaseId: Int,
+        memberId: Int,
+    ): Bookcase?
 }

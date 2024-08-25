@@ -108,12 +108,11 @@ spring:
         show-sql: true
         format_sql: true
     database-platform: org.hibernate.dialect.H2Dialect
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema-h2.sql
-      data-locations: classpath:data-h2.sql
 
 logging:
   level:
     org.hibernate.SQL: DEBUG
+
+discord:
+  webhook:
+    url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt

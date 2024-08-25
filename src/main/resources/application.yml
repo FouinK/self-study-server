@@ -4,7 +4,7 @@ server:
 spring:
   config:
     activate:
-      on-profile: production
+      on-profile: development
   application:
     name: sels
   datasource:
@@ -24,6 +24,10 @@ spring:
 logging:
   level:
     org.hibernate.SQL: DEBUG
+
+discord:
+  webhook:
+    url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt
 
 --- #test phase
 spring:

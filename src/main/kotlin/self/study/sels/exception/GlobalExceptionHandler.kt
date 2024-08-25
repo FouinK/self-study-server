@@ -1,6 +1,7 @@
 package self.study.sels.exception
 
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
@@ -8,7 +9,12 @@ import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import self.study.sels.feignclient.ErrorMsg
+import self.study.sels.service.WatchTowerService
 import self.study.sels.util.logger
+import java.net.InetAddress
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 data class GlobalErrorResponseDto(
     val code: Int,
@@ -18,7 +24,35 @@ data class GlobalErrorResponseDto(
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
-class GlobalExceptionHandler {
+class GlobalExceptionHandler(
+    private val watchTowerService: WatchTowerService,
+) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception::class)
+    fun handleAllExceptions(
+        request: HttpServletRequest,
+        ex: Exception,
+    ): GlobalErrorResponseDto {
+        val currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        val msg =
+            "[sels server error]\n" +
+                "[$currentDateTime]\n" +
+                "[${InetAddress.getLocalHost().hostName}]\n" +
+                "[${request.method}] ${request.requestURI}\n" +
+                "[msg] ${ex}\n" +
+                "[trace-0] ${ex.stackTrace[0]}\n" +
+                "[trace-1] ${ex.stackTrace[1]}\n"
+        val errorMsg =
+            ErrorMsg(
+                content = msg,
+            )
+        watchTowerService.sendErrorNotification(errorMsg)
+        return GlobalErrorResponseDto(
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            msg = ex.message,
+        )
+    }
+
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ExistsNameException::class)
     fun handleExistsNameException(ex: ExistsNameException): GlobalErrorResponseDto =

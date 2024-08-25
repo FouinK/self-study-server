@@ -35,13 +35,17 @@ class GlobalExceptionHandler(
     ): GlobalErrorResponseDto {
         val currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         val msg =
-            "[sels server error]\n" +
-                "[$currentDateTime]\n" +
-                "[${InetAddress.getLocalHost().hostName}]\n" +
-                "[${request.method}] ${request.requestURI}\n" +
-                "[msg] ${ex}\n" +
-                "[trace-0] ${ex.stackTrace[0]}\n" +
-                "[trace-1] ${ex.stackTrace[1]}\n"
+            """
+            ```diff
+            [sels server error]
+            [$currentDateTime]
+            [${InetAddress.getLocalHost().hostName}]
+            - [${request.method}] ${request.requestURI}
+            - [msg] $ex
+            - [trace-0] ${ex.stackTrace[0]}
+            - [trace-1] ${ex.stackTrace[1]}
+            ```
+            """.trimIndent()
         val errorMsg =
             ErrorMsg(
                 content = msg,

@@ -1,7 +1,7 @@
 package self.study.sels.application.question.action
 
-import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import self.study.sels.annotation.Action
 import self.study.sels.application.question.port.`in`.CreateQuestionAnswerCommand
 import self.study.sels.application.question.port.`in`.CreateQuestionAnswerUseCase
 import self.study.sels.exception.ExistsNameException
@@ -11,7 +11,7 @@ import self.study.sels.model.book.BookRepository
 import self.study.sels.model.question.Question
 import self.study.sels.model.question.QuestionRepository
 
-@Component
+@Action
 class CreateQuestionAnswerAction(
     private val questionRepository: QuestionRepository,
     private val bookRepository: BookRepository,

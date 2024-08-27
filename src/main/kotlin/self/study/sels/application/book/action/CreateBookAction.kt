@@ -1,12 +1,12 @@
 package self.study.sels.application.book.action
 
-import org.springframework.stereotype.Component
+import self.study.sels.annotation.Action
 import self.study.sels.application.book.port.`in`.CreateBookCommand
 import self.study.sels.application.book.port.`in`.CreateBookUseCase
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.book_case.BookcaseRepository
 
-@Component
+@Action
 class CreateBookAction(
     private val bookcaseRepository: BookcaseRepository,
     private val bookRepository: BookRepository,

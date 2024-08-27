@@ -1,12 +1,12 @@
 package self.study.sels.application.book_case.action
 
-import org.springframework.stereotype.Component
+import self.study.sels.annotation.Action
 import self.study.sels.application.book_case.port.`in`.GetBookcaseCommand
 import self.study.sels.application.book_case.port.`in`.GetBookcaseUseCase
 import self.study.sels.controller.dto.GetBookcaseResponseDto
 import self.study.sels.model.book.BookRepository
 
-@Component
+@Action
 class GetBookcaseAction(
     private val bookRepository: BookRepository,
 ) : GetBookcaseUseCase {

@@ -1,13 +1,13 @@
 package self.study.sels.application.book.action
 
-import org.springframework.stereotype.Component
+import self.study.sels.annotation.Action
 import self.study.sels.application.book.port.`in`.UpdateBookCommand
 import self.study.sels.application.book.port.`in`.UpdateBookUseCase
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
 import self.study.sels.model.book.BookRepository
 
-@Component
+@Action
 class UpdateBookAction(
     private val bookRepository: BookRepository,
 ) : UpdateBookUseCase {

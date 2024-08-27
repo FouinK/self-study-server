@@ -9,7 +9,9 @@ import self.study.sels.model.book_case.BookcaseRepository
 class CreateBookcaseAction(
     private val bookcaseRepository: BookcaseRepository,
 ) : CreateBookcaseUseCase {
-    override fun create(command: CreateBookcaseCommand): Int {
+    override fun create(
+        command: CreateBookcaseCommand
+    ): Int {
         if (bookcaseRepository.existsByMemberIdAndName(command.memberId, command.name)) {
             throw Exception("이미 사용중인 이름입니다.")
         }

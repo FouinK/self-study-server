@@ -29,11 +29,10 @@ class BookController(
     fun detail(
         @PathVariable("bookId") bookId: Int,
     ): ResponseEntity<Any> {
-        val command =
-            GetBookCommand(
-                bookId = bookId,
-                memberId = memberInfo.memberId,
-            )
+        val command = GetBookCommand(
+            bookId = bookId,
+            memberId = memberInfo.memberId,
+        )
         return ResponseEntity.ok(
             getBookUseCase.detail(command),
         )
@@ -43,12 +42,11 @@ class BookController(
     fun create(
         @RequestBody @Valid request: CreateBookRequestDto,
     ): ResponseEntity<Any> {
-        val command =
-            CreateBookCommand(
-                bookcaseId = request.bookcaseId,
-                name = request.name,
-                memberId = memberInfo.memberId,
-            )
+        val command = CreateBookCommand(
+            bookcaseId = request.bookcaseId,
+            name = request.name,
+            memberId = memberInfo.memberId,
+        )
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             CreateBookResponseDto(
@@ -61,12 +59,11 @@ class BookController(
     fun update(
         @RequestBody @Valid request: UpdateBookRequestDto,
     ): ResponseEntity<Any> {
-        val command =
-            UpdateBookCommand(
-                bookId = request.bookId,
-                name = request.name,
-                memberId = memberInfo.memberId,
-            )
+        val command = UpdateBookCommand(
+            bookId = request.bookId,
+            name = request.name,
+            memberId = memberInfo.memberId,
+        )
         return ResponseEntity.ok(
             UpdateBookResponseDto(
                 name = updateBookUseCase.update(command),

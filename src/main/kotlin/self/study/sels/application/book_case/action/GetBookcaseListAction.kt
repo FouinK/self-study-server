@@ -10,23 +10,23 @@ import self.study.sels.model.book_case.BookcaseRepository
 class GetBookcaseListAction(
     private val bookcaseRepository: BookcaseRepository,
 ) : GetBookcaseListUseCase {
-    override fun list(command: GetBookcaseListCommand): GetBookcaseListResponseDto {
-        val bookcasePage =
-            bookcaseRepository.findAllByMemberId(
-                memberId = command.memberId,
-                pageable = command.pageable,
-            )
+    override fun list(
+        command: GetBookcaseListCommand
+    ): GetBookcaseListResponseDto {
+        val bookcasePage = bookcaseRepository.findAllByMemberId(
+            memberId = command.memberId,
+            pageable = command.pageable,
+        )
 
         return GetBookcaseListResponseDto(
             totalElement = bookcasePage.totalElements,
             page = bookcasePage.number,
-            bookcaseList =
-                bookcasePage.content.map {
-                    GetBookcaseListResponseDto.Item(
-                        bookCaseId = it.id,
-                        bookcaseName = it.name,
-                    )
-                },
+            bookcaseList = bookcasePage.content.map {
+                GetBookcaseListResponseDto.Item(
+                    bookCaseId = it.id,
+                    bookcaseName = it.name,
+                )
+            },
         )
     }
 }

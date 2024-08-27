@@ -34,8 +34,7 @@ class GlobalExceptionHandler(
         ex: Exception,
     ): GlobalErrorResponseDto {
         val currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-        val msg =
-            """
+        val msg = """
             ```diff
             [sels server error]
             [$currentDateTime]
@@ -45,11 +44,10 @@ class GlobalExceptionHandler(
             - [trace-0] ${ex.stackTrace[0]}
             - [trace-1] ${ex.stackTrace[1]}
             ```
-            """.trimIndent()
-        val errorMsg =
-            ErrorMsg(
-                content = msg,
-            )
+        """.trimIndent()
+        val errorMsg = ErrorMsg(
+            content = msg,
+        )
         watchTowerService.sendErrorNotification(errorMsg)
         return GlobalErrorResponseDto(
             code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -59,7 +57,9 @@ class GlobalExceptionHandler(
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ExistsNameException::class)
-    fun handleExistsNameException(ex: ExistsNameException): GlobalErrorResponseDto =
+    fun handleExistsNameException(
+        ex: ExistsNameException
+    ): GlobalErrorResponseDto =
         GlobalErrorResponseDto(
             code = HttpStatus.CONFLICT.value(),
             msg = ex.message,
@@ -67,7 +67,9 @@ class GlobalExceptionHandler(
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException::class)
-    fun notFoundHandler(ex: NotFoundException): GlobalErrorResponseDto =
+    fun notFoundHandler(
+        ex: NotFoundException
+    ): GlobalErrorResponseDto =
         GlobalErrorResponseDto(
             code = HttpStatus.NOT_FOUND.value(),
             msg = ex.message,
@@ -75,14 +77,18 @@ class GlobalExceptionHandler(
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException::class)
-    fun httpMessageNotReadableException(ex: Exception): Error? {
+    fun httpMessageNotReadableException(
+        ex: Exception
+    ): Error? {
         when (ex.cause) {
             is MissingKotlinParameterException -> return createMissingKotlinParameterViolation(ex.cause as MissingKotlinParameterException)
         }
         throw ex
     }
 
-    private fun createMissingKotlinParameterViolation(ex: MissingKotlinParameterException): Error {
+    private fun createMissingKotlinParameterViolation(
+        ex: MissingKotlinParameterException
+    ): Error {
         val error = Error(HttpStatus.BAD_REQUEST.value(), "validation error")
         val errorFieldRegex = Regex("\\.([^.]*)\\[\\\"(.*)\"\\]\$")
         val errorMatch = errorFieldRegex.find(ex.path[0].description)!!

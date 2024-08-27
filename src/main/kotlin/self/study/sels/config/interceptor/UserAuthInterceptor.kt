@@ -26,10 +26,8 @@ class UserAuthInterceptor(
 
         val authToken: String? = request.getHeader("auth-token") ?: request.getParameter("temp_str")
         val os = request.getHeader("os") ?: request.getParameter("os")
-        val appVersion: Int =
-            ((request.getHeader("app-version") ?: request.getParameter("app_version")) ?: "0").toInt()
-        val osVersion: String? =
-            request.getHeader("os-version") ?: request.getParameter("os_version")
+        val appVersion: Int = ((request.getHeader("app-version") ?: request.getParameter("app_version")) ?: "0").toInt()
+        val osVersion: String? = request.getHeader("os-version") ?: request.getParameter("os_version")
 
         if (os.isNullOrEmpty()) {
             throw Exception() // TODO : 여기 kona에 있는거 그대로 정의하기
@@ -37,9 +35,8 @@ class UserAuthInterceptor(
         if (authToken.isNullOrEmpty()) {
             throw Exception() // TODO : 여기 kona에 있는거 그대로 정의하기
         }
-        val member: Member =
-            memberRepository.findByAuthToken(authToken)
-                ?: throw Exception() // TODO : 여기 kona에 있는거 그대로 정의하기
+        val member: Member = memberRepository.findByAuthToken(authToken)
+            ?: throw Exception() // TODO : 여기 kona에 있는거 그대로 정의하기
 
         memberInfo.init(
             userId = member.id,

@@ -33,11 +33,10 @@ class BookcaseController(
     fun list(
         @PageableDefault(size = 10, page = 0, sort = ["id"], direction = Sort.Direction.DESC) pageable: Pageable,
     ): ResponseEntity<Any> {
-        val command =
-            GetBookcaseListCommand(
-                memberId = memberInfo.memberId,
-                pageable = pageable,
-            )
+        val command = GetBookcaseListCommand(
+            memberId = memberInfo.memberId,
+            pageable = pageable,
+        )
         return ResponseEntity.ok(getBookCaseListUseCase.list(command = command))
     }
 
@@ -45,11 +44,10 @@ class BookcaseController(
     fun detail(
         @PathVariable("bookcaseId") bookcaseId: Int,
     ): ResponseEntity<Any> {
-        val command =
-            GetBookcaseCommand(
-                bookcaseId = bookcaseId,
-                memberId = memberInfo.memberId,
-            )
+        val command = GetBookcaseCommand(
+            bookcaseId = bookcaseId,
+            memberId = memberInfo.memberId,
+        )
 
         return ResponseEntity.ok(getBookcaseUseCase.detail(command))
     }
@@ -58,11 +56,10 @@ class BookcaseController(
     fun create(
         @RequestBody @Valid request: CreateBookcaseRequestDto,
     ): ResponseEntity<Any> {
-        val command =
-            CreateBookcaseCommand(
-                name = request.name,
-                memberId = memberInfo.memberId,
-            )
+        val command = CreateBookcaseCommand(
+            name = request.name,
+            memberId = memberInfo.memberId,
+        )
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
             CreateBookcaseResponseDto(
@@ -75,12 +72,11 @@ class BookcaseController(
     fun update(
         @RequestBody @Valid request: UpdateBookcaseRequestDto,
     ): ResponseEntity<Any> {
-        val command =
-            UpdateBookcaseCommand(
-                bookcaseId = request.bookcaseId,
-                name = request.name,
-                memberId = memberInfo.memberId,
-            )
+        val command = UpdateBookcaseCommand(
+            bookcaseId = request.bookcaseId,
+            name = request.name,
+            memberId = memberInfo.memberId,
+        )
         return ResponseEntity.ok(
             UpdateBookcaseResponseDto(
                 name = updateBookcaseUseCase.update(command),

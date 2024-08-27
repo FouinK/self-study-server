@@ -10,20 +10,20 @@ import self.study.sels.model.book.BookRepository
 class GetBookAction(
     private val bookRepository: BookRepository,
 ) : GetBookUseCase {
-    override fun detail(command: GetBookCommand): GetBookResponseDto {
-        val book =
-            bookRepository.findByIdAndMemberId(command.bookId, command.memberId)
-                ?: throw Exception("책이 없습니다.")
+    override fun detail(
+        command: GetBookCommand
+    ): GetBookResponseDto {
+        val book = bookRepository.findByIdAndMemberId(command.bookId, command.memberId)
+            ?: throw Exception("책이 없습니다.")
 
         return GetBookResponseDto(
             bookName = book.name,
-            questionList =
-                book.questionList.map {
-                    GetBookResponseDto.QuestionItem(
-                        questionId = it.id,
-                        question = it.question,
-                    )
-                },
+            questionList = book.questionList.map {
+                GetBookResponseDto.QuestionItem(
+                    questionId = it.id,
+                    question = it.question,
+                )
+            },
         )
     }
 }

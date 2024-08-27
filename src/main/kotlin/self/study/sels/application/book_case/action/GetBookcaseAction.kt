@@ -10,19 +10,19 @@ import self.study.sels.model.book.BookRepository
 class GetBookcaseAction(
     private val bookRepository: BookRepository,
 ) : GetBookcaseUseCase {
-    override fun detail(command: GetBookcaseCommand): GetBookcaseResponseDto {
-        val bookList =
-            bookRepository.findAllByBookcaseIdAndMemberId(command.bookcaseId, command.memberId)
+    override fun detail(
+        command: GetBookcaseCommand
+    ): GetBookcaseResponseDto {
+        val bookList = bookRepository.findAllByBookcaseIdAndMemberId(command.bookcaseId, command.memberId)
 
         return GetBookcaseResponseDto(
-            bookList =
-                bookList.map {
-                    GetBookcaseResponseDto.Item(
-                        it.id,
-                        it.bookcaseId,
-                        bookName = it.name,
-                    )
-                },
+            bookList = bookList.map {
+                GetBookcaseResponseDto.Item(
+                    it.id,
+                    it.bookcaseId,
+                    bookName = it.name,
+                )
+            },
         )
     }
 }

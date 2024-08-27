@@ -11,10 +11,11 @@ class CreateBookAction(
     private val bookcaseRepository: BookcaseRepository,
     private val bookRepository: BookRepository,
 ) : CreateBookUseCase {
-    override fun create(command: CreateBookCommand): Int {
-        val bookcase =
-            bookcaseRepository.findById(command.bookcaseId)
-                .orElseThrow { throw Exception("책장이 존재하지 않습니다.") }
+    override fun create(
+        command: CreateBookCommand
+    ): Int {
+        val bookcase = bookcaseRepository.findById(command.bookcaseId)
+            .orElseThrow { throw Exception("책장이 존재하지 않습니다.") }
 
         val book = command.toEntity()
 

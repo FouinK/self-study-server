@@ -12,10 +12,7 @@ class WebMvcConfig(
     private val userAuthInterceptor: UserAuthInterceptor,
     private val updateAppInfoInterceptor: UpdateAppInfoInterceptor,
 ) : WebMvcConfigurer {
-    private val excludeUrlList =
-        arrayOf(
-            "/sels/api/u/faq/**",
-        )
+    private val excludeUrlList = arrayOf("/sels/api/u/faq/**")
     private val userUrlList = arrayOf("/sels/api/u/**")
     private val appUrlList = arrayOf("/api/**", *userUrlList)
 

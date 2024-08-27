@@ -1,0 +1,33 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+
+[*.{kt,kts}]
+indent_size = 4
+ij_kotlin_allow_trailing_comma_on_call_site = true
+ij_kotlin_allow_trailing_comma = true
+
+ktlint_experimental = disabled
+ktlint_standard_no-wildcard-imports = disabled
+ktlint_standard_package-name = disabled
+ktlint_standard_string-template-indent = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+
+# 자동 수정 안되는 룰들
+ktlint_standard_function-signature = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled
+ktlint_standard_discouraged-comment-location = disabled
+ktlint_standard_comment-spacing = disabled
+ktlint_standard_no-empty-first-line-in-class-body = disabled
+ktlint_standard_property-naming = disabled
+ktlint_standard_enum-entry-name-case = disabled
+ktlint_standard_no-consecutive-comments = disabled
+ktlint_standard_parameter-list-spacing = disabled
+ktlint_standard_function-naming = disabled
+# 의존성 있는 룰들
+ktlint_standard_if-else-wrapping = disabled

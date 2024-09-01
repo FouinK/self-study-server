@@ -7,11 +7,13 @@ import fixtures.QuestionBuilder
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import self.study.sels.application.question.port.`in`.GetQuestionCommand
 import self.study.sels.application.question.port.`in`.GetQuestionUseCase
 import self.study.sels.controller.dto.GetQuestionResponseDto
+import self.study.sels.exception.NotFoundException
 import self.study.sels.model.answer.Answer
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.Book
@@ -55,7 +57,7 @@ class GetQuestionActionTest(
             ).build(),
         )
 
-        questionString = "질문"
+        questionString = "문제"
 
         question = questionRepository.save(
             QuestionBuilder(
@@ -101,7 +103,7 @@ class GetQuestionActionTest(
     }
 
     @Test
-    fun `질문 상세를 조회할때 정답을 노출하지 않고 리스트만 조회한다`() {
+    fun `문제 상세를 조회할때 정답을 노출하지 않고 리스트만 조회한다`() {
         //given
         val command = GetQuestionCommand(
             memberId = member.id,
@@ -129,7 +131,7 @@ class GetQuestionActionTest(
     }
 
     @Test
-    fun `질문 상세를 조회 할 때 정답까지 같이 조회한다`() {
+    fun `문제 상세를 조회 할 때 정답까지 같이 조회한다`() {
         //given
         val command = GetQuestionCommand(
             memberId = member.id,
@@ -158,5 +160,21 @@ class GetQuestionActionTest(
             answerStringList[3],
             answerStringList[4],
         )
+    }
+
+    @Test
+    fun `내가 작성한 문제가 아니라면 정상 조회 되지 않는다`() {
+        //given
+        val command = GetQuestionCommand(
+            memberId = Int.MAX_VALUE - 100,
+            questionId = question.id,
+            getAnswerList = true,
+            getCorrectAnswer = true,
+        )
+
+        //when & then
+        assertThrows<NotFoundException> {
+            getQuestionUseCase.detail(command)
+        }.message.apply { assertThat(this).isEqualTo("질문이 존재하지 않습니다.") }
     }
 }

@@ -19,6 +19,7 @@ class GetQuestionAction(
 
         return GetQuestionResponseDto(
             questionId = question.id,
+            question = question.question,
             multipleChoiceYn = question.multipleChoiceYn,
             answerId = if (command.getCorrectAnswer) question.answerId else null,
             answerList = if (command.getAnswerList) {

@@ -46,13 +46,20 @@ class Question(
     var answerList: MutableList<Answer> = answerList.toMutableList()
         set(list) {
             list.forEach { it.question = this }
+
             field.clear()
             field.addAll(list)
+
             val correctAnswer = list.find { it.correctYn }
+
             if (correctAnswer != null) {
                 this.answerId = correctAnswer.id
             } else {
                 throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
+            }
+
+            if (list.size > 1) {
+                this.multipleChoiceYn = true
             }
         }
 }

@@ -8,7 +8,6 @@ class CreateQuestionAndAnswerRequestDto(
     val bookId: Int,
     @field:NotBlank
     val question: String,
-    val multipleChoiceYn: Boolean,
     val answerList: List<AnswerItem>,
 ) {
     class AnswerItem(

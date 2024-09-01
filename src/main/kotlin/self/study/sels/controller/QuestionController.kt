@@ -47,7 +47,6 @@ class QuestionController(
         val command = CreateQuestionAndAnswerCommand(
             bookId = request.bookId,
             question = request.question,
-            multipleChoiceYn = request.multipleChoiceYn,
             memberId = memberInfo.memberId,
             answerList = request.answerList,
         )

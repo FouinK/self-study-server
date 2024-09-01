@@ -32,7 +32,6 @@ class CreateQuestionAndAnswerAction(
                 memberId = command.memberId,
                 bookId = command.bookId,
                 question = command.question,
-                multipleChoiceYn = command.multipleChoiceYn,
             ),
         )
 

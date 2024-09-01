@@ -86,7 +86,6 @@ class CreateQuestionAndAnswerActionTest(
             CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = questionString,
-                multipleChoiceYn = false,
                 memberId = member.id,
                 answerList =
                     listOf(
@@ -121,7 +120,6 @@ class CreateQuestionAndAnswerActionTest(
             CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = existsQuestion,
-                multipleChoiceYn = false,
                 answerList =
                     listOf(
                         CreateQuestionAndAnswerRequestDto.AnswerItem(
@@ -146,7 +144,6 @@ class CreateQuestionAndAnswerActionTest(
             CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = questionString,
-                multipleChoiceYn = false,
                 answerList = listOf(),
                 memberId = member.id,
             )
@@ -174,7 +171,6 @@ class CreateQuestionAndAnswerActionTest(
             CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = questionString,
-                multipleChoiceYn = false,
                 memberId = member.id,
                 answerList =
                     listOf(

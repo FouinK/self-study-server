@@ -119,7 +119,6 @@ class GetQuestionActionTest(
         assertThat(detail.answerList.size).isEqualTo(5)
         assertThat(detail.question).isEqualTo(questionString)
         assertThat(detail.answerId).isEqualTo(null)
-        assertThat(detail.multipleChoiceYn).isEqualTo(true)
         val answerStringList = detail.answerList.map { item -> item.answer }
         assertThat(answerStringList).containsExactly(
             answerStringList[0],
@@ -151,7 +150,6 @@ class GetQuestionActionTest(
         assertThat(detail.answerList.size).isEqualTo(5)
         assertThat(detail.question).isEqualTo(questionString)
         assertThat(detail.answerId).isEqualTo(correctAnswer.id)
-        assertThat(detail.multipleChoiceYn).isEqualTo(true)
         val answerStringList = detail.answerList.map { item -> item.answer }
         assertThat(answerStringList).containsExactly(
             answerStringList[0],

@@ -11,7 +11,6 @@ class Question(
     memberId: Int,
     bookId: Int,
     question: String,
-    multipleChoiceYn: Boolean = false,
     answerId: Int? = null,
     answerList: List<Answer> = listOf(),
 ) : BaseTimeEntity() {
@@ -32,10 +31,6 @@ class Question(
     var question = question
         protected set
 
-    @Column(name = "multiple_choice_yn", nullable = false)
-    var multipleChoiceYn = multipleChoiceYn
-        protected set
-
     @Column(name = "answer_id", nullable = true)
     var answerId = answerId
         protected set
@@ -54,10 +49,6 @@ class Question(
                 this.answerId = correctAnswer.id
             } else {
                 throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
-            }
-
-            if (list.size > 1) {
-                this.multipleChoiceYn = true
             }
         }
 }

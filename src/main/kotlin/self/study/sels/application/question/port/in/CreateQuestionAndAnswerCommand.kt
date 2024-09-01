@@ -7,7 +7,6 @@ import self.study.sels.model.question.Question
 class CreateQuestionAndAnswerCommand(
     val bookId: Int,
     val question: String,
-    val multipleChoiceYn: Boolean,
     val memberId: Int,
     val answerList: List<CreateQuestionAndAnswerRequestDto.AnswerItem>,
 ) {

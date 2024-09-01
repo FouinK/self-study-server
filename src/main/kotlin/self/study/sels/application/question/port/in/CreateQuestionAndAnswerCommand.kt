@@ -1,6 +1,6 @@
 package self.study.sels.application.question.port.`in`
 
-import self.study.sels.controller.dto.CreateQuestionAnswerRequestDto
+import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
 import self.study.sels.model.answer.Answer
 import self.study.sels.model.question.Question
 
@@ -9,7 +9,7 @@ class CreateQuestionAndAnswerCommand(
     val question: String,
     val multipleChoiceYn: Boolean,
     val memberId: Int,
-    val answerList: List<CreateQuestionAnswerRequestDto.AnswerItem>,
+    val answerList: List<CreateQuestionAndAnswerRequestDto.AnswerItem>,
 ) {
     fun toAnswerEntityList(question: Question): List<Answer> {
         return answerList.map {
@@ -17,6 +17,7 @@ class CreateQuestionAndAnswerCommand(
                 question = question,
                 answer = it.answer,
                 correctYn = it.correctYn,
+                memberId = memberId,
             )
         }
     }

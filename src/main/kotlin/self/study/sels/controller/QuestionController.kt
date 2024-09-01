@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -15,7 +16,7 @@ import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUse
 import self.study.sels.application.question.port.`in`.GetQuestionCommand
 import self.study.sels.application.question.port.`in`.GetQuestionUseCase
 import self.study.sels.config.auth.MemberInfo
-import self.study.sels.controller.dto.CreateQuestionAnswerRequestDto
+import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
 
 @RestController
 @RequestMapping("/sels/api/u/question")
@@ -41,7 +42,7 @@ class QuestionController(
 
     @PostMapping
     fun createQuestionAndAnswer(
-        @RequestBody @Valid request: CreateQuestionAnswerRequestDto,
+        @RequestBody @Valid request: CreateQuestionAndAnswerRequestDto,
     ): ResponseEntity<Any> {
         val command = CreateQuestionAndAnswerCommand(
             bookId = request.bookId,
@@ -54,6 +55,7 @@ class QuestionController(
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
+    @PutMapping
     fun updateQuestionAnswer() {
     }
 }

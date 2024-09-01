@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCommand
 import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
-import self.study.sels.controller.dto.CreateQuestionAnswerRequestDto
+import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
 import self.study.sels.model.answer.AnswerRepository
@@ -90,7 +90,7 @@ class CreateQuestionAndAnswerActionTest(
                 memberId = member.id,
                 answerList =
                     listOf(
-                        CreateQuestionAnswerRequestDto.AnswerItem(
+                        CreateQuestionAndAnswerRequestDto.AnswerItem(
                             answer = answerString,
                             correctYn = true,
                         ),
@@ -110,6 +110,7 @@ class CreateQuestionAndAnswerActionTest(
         assertThat(question.answerList.size).isEqualTo(1)
         assertThat(question.answerList[0].answer).isEqualTo(answerString)
         assertThat(question.answerList[0].id).isEqualTo(question.answerId)
+        assertThat(question.answerList[0].memberId).isEqualTo(question.memberId)
     }
 
     @Test
@@ -123,7 +124,7 @@ class CreateQuestionAndAnswerActionTest(
                 multipleChoiceYn = false,
                 answerList =
                     listOf(
-                        CreateQuestionAnswerRequestDto.AnswerItem(
+                        CreateQuestionAndAnswerRequestDto.AnswerItem(
                             answer = answerString,
                             correctYn = true,
                         ),
@@ -177,7 +178,7 @@ class CreateQuestionAndAnswerActionTest(
                 memberId = member.id,
                 answerList =
                     listOf(
-                        CreateQuestionAnswerRequestDto.AnswerItem(
+                        CreateQuestionAndAnswerRequestDto.AnswerItem(
                             answer = answerString,
                             correctYn = false,
                         ),

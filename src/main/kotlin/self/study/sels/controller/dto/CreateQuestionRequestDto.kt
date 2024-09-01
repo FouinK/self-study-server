@@ -3,7 +3,7 @@ package self.study.sels.controller.dto
 import jakarta.validation.constraints.NotBlank
 import org.jetbrains.annotations.NotNull
 
-class CreateQuestionAnswerRequestDto(
+class CreateQuestionAndAnswerRequestDto(
     @field:NotNull
     val bookId: Int,
     @field:NotBlank

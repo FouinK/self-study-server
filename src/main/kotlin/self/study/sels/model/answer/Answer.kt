@@ -10,6 +10,7 @@ class Answer(
     question: Question,
     answer: String,
     correctYn: Boolean = false,
+    memberId: Int,
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +27,9 @@ class Answer(
 
     @Column(name = "correct_yn", nullable = false)
     var correctYn = correctYn
+        protected set
+
+    @Column(name = "member_id", nullable = false)
+    var memberId = memberId
         protected set
 }

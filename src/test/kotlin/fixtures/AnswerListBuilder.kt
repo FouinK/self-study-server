@@ -15,6 +15,7 @@ class AnswerListBuilder(
                 question = question,
                 answer = answerList[index],
                 correctYn = correctYnList[index],
+                memberId = question.memberId,
             ).build()
         }
 }

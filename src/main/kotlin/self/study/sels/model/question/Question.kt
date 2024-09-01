@@ -4,13 +4,12 @@ import jakarta.persistence.*
 import self.study.sels.exception.NotFoundException
 import self.study.sels.model.BaseTimeEntity
 import self.study.sels.model.answer.Answer
-import self.study.sels.model.book.Book
 
 @Entity
 @Table(name = "question")
 class Question(
     memberId: Int,
-    book: Book,
+    bookId: Int,
     question: String,
     multipleChoiceYn: Boolean = false,
     answerId: Int? = null,
@@ -25,9 +24,8 @@ class Question(
     var memberId = memberId
         protected set
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = false)
-    var book = book
+    @Column(name = "book_id", nullable = false)
+    var bookId = bookId
         protected set
 
     @Column(name = "question", nullable = false, length = 255)

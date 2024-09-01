@@ -1,17 +1,16 @@
 package fixtures
 
-import self.study.sels.model.book.Book
 import self.study.sels.model.question.Question
 
 class QuestionBuilder(
     val memberId: Int,
-    val book: Book,
+    val bookId: Int,
     val question: String,
 ) {
     fun build() =
         Question(
             memberId = this.memberId,
-            book = this.book,
+            bookId = this.bookId,
             question = this.question,
         )
 }

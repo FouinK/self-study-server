@@ -2,16 +2,15 @@ package self.study.sels.model.question
 
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
-import self.study.sels.model.book.Book
 import java.util.Optional
 
 interface QuestionRepository : JpaRepository<Question, Int>, QuestionRepositoryCustom {
     @EntityGraph(attributePaths = ["answerList"])
     override fun findById(questionId: Int): Optional<Question>
 
-    fun existsByQuestionAndBook(
+    fun existsByQuestionAndBookId(
         question: String,
-        book: Book,
+        bookId: Int,
     ): Boolean
 
     @EntityGraph(attributePaths = ["answerList"])

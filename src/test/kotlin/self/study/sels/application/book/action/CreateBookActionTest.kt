@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.application.book.port.`in`.CreateBookCommand
 import self.study.sels.application.book.port.`in`.CreateBookUseCase
 import self.study.sels.model.book.BookRepository
@@ -57,9 +58,7 @@ class CreateBookActionTest(
         val bookId = createBookUseCase.create(command)
 
         // then
-        val book =
-            bookRepository.findById(bookId)
-                .orElseThrow { throw Exception("없는 bookId로 조회 테스트 실패") }
+        val book = bookRepository.findByIdOrNull(bookId)!!
 
         assertThat(book.bookcaseId).isEqualTo(command.bookcaseId)
         assertThat(book.name).isEqualTo(command.name)

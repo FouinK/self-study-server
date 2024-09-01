@@ -88,22 +88,22 @@ class GetBookActionTest(
             listOf(
                 QuestionBuilder(
                     memberId = member.id,
-                    book = book,
+                    bookId = book.id,
                     question = questionString1,
                 ).build(),
                 QuestionBuilder(
                     memberId = member.id,
-                    book = book,
+                    bookId = book.id,
                     question = questionString2,
                 ).build(),
                 QuestionBuilder(
                     memberId = member.id,
-                    book = book,
+                    bookId = book.id,
                     question = questionString3,
                 ).build(),
                 QuestionBuilder(
                     memberId = member.id,
-                    book = book,
+                    bookId = book.id,
                     question = questionString4,
                 ).build(),
             ),

@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 
-interface BookRepository : JpaRepository<Book, Int> {
+interface BookRepository : JpaRepository<Book, Int>, BookRepositoryCustom {
     fun findAllByBookcaseIdAndMemberId(
         bookcaseId: Int,
         memberId: Int,

@@ -19,17 +19,18 @@ class CreateQuestionAnswerAction(
 ) : CreateQuestionAnswerUseCase {
     @Transactional
     override fun createQuestionAnswer(command: CreateQuestionAnswerCommand): Int {
-        val book = bookRepository.findById(command.bookId)
-            .orElseThrow { throw NotFoundException("책이 없습니다.") }
+        if (!bookRepository.existsById(command.bookId)) {
+            throw NotFoundException("책이 없습니다.")
+        }
 
-        if (questionRepository.existsByQuestionAndBook(command.question, book)) {
+        if (questionRepository.existsByQuestionAndBookId(command.question, command.bookId)) {
             throw ExistsNameException("동일한 질문이 이미 존재합니다.")
         }
 
         val question = questionRepository.save(
             Question(
                 memberId = command.memberId,
-                book = bookRepository.findById(command.bookId).orElseThrow { throw NotFoundException("책이 없습니다.") },
+                bookId = command.bookId,
                 question = command.question,
                 multipleChoiceYn = command.multipleChoiceYn,
             ),

@@ -70,7 +70,7 @@ class CreateQuestionAnswerActionTest(
         questionRepository.save(
             QuestionBuilder(
                 memberId = member.id,
-                book = book,
+                bookId = book.id,
                 question = existsQuestion,
             ).build(),
         )

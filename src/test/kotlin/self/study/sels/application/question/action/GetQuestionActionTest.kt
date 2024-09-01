@@ -62,7 +62,7 @@ class GetQuestionActionTest(
         question = questionRepository.save(
             QuestionBuilder(
                 memberId = member.id,
-                book = book,
+                bookId = book.id,
                 question = questionString,
             ).build(),
         )

@@ -4,7 +4,6 @@ package self.study.sels.model.book
 
 import jakarta.persistence.*
 import self.study.sels.model.BaseTimeEntity
-import self.study.sels.model.question.Question
 
 @Entity
 @Table(name = "book")
@@ -12,7 +11,6 @@ class Book(
     memberId: Int,
     bookcaseId: Int,
     name: String,
-    questionList: List<Question> = listOf(),
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +28,6 @@ class Book(
     @Column(name = "name", nullable = false, length = 100)
     var name = name
         protected set
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var questionList: MutableList<Question> = questionList.toMutableList()
-        set(list) {
-            list.forEach { it.book }
-            field.clear()
-            field.addAll(list)
-        }
 
     fun updateName(name: String) {
         this.name = name

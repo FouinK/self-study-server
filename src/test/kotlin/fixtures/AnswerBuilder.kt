@@ -1,5 +1,17 @@
 package fixtures
 
+import self.study.sels.model.answer.Answer
+import self.study.sels.model.question.Question
+
 class AnswerBuilder(
-    val questionId: Int,
-)
+    val question: Question,
+    val answer: String,
+    val correctYn: Boolean = false,
+) {
+    fun build(): Answer =
+        Answer(
+            question = question,
+            answer = answer,
+            correctYn = correctYn,
+        )
+}

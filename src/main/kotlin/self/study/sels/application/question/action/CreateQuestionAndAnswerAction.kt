@@ -2,8 +2,8 @@ package self.study.sels.application.question.action
 
 import org.springframework.transaction.annotation.Transactional
 import self.study.sels.annotation.Action
-import self.study.sels.application.question.port.`in`.CreateQuestionAnswerCommand
-import self.study.sels.application.question.port.`in`.CreateQuestionAnswerUseCase
+import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCommand
+import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
 import self.study.sels.model.answer.AnswerRepository
@@ -12,13 +12,13 @@ import self.study.sels.model.question.Question
 import self.study.sels.model.question.QuestionRepository
 
 @Action
-class CreateQuestionAnswerAction(
+class CreateQuestionAndAnswerAction(
     private val questionRepository: QuestionRepository,
     private val bookRepository: BookRepository,
     private val answerRepository: AnswerRepository,
-) : CreateQuestionAnswerUseCase {
+) : CreateQuestionAndAnswerUseCase {
     @Transactional
-    override fun createQuestionAnswer(command: CreateQuestionAnswerCommand): Int {
+    override fun createQuestionAndAnswer(command: CreateQuestionAndAnswerCommand): Int {
         if (!bookRepository.existsById(command.bookId)) {
             throw NotFoundException("책이 없습니다.")
         }

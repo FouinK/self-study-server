@@ -4,7 +4,7 @@ import self.study.sels.controller.dto.CreateQuestionAnswerRequestDto
 import self.study.sels.model.answer.Answer
 import self.study.sels.model.question.Question
 
-class CreateQuestionAnswerCommand(
+class CreateQuestionAndAnswerCommand(
     val bookId: Int,
     val question: String,
     val multipleChoiceYn: Boolean,

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import self.study.sels.application.question.port.`in`.CreateQuestionAnswerCommand
-import self.study.sels.application.question.port.`in`.CreateQuestionAnswerUseCase
+import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCommand
+import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
 import self.study.sels.application.question.port.`in`.GetQuestionCommand
 import self.study.sels.application.question.port.`in`.GetQuestionUseCase
 import self.study.sels.config.auth.MemberInfo
@@ -22,7 +22,7 @@ import self.study.sels.controller.dto.CreateQuestionAnswerRequestDto
 class QuestionController(
     private val memberInfo: MemberInfo,
     private val getQuestionUseCase: GetQuestionUseCase,
-    private val createQuestionAnswerUseCase: CreateQuestionAnswerUseCase,
+    private val createQuestionAndAnswerUseCase: CreateQuestionAndAnswerUseCase,
 ) {
     @GetMapping("/{questionId}")
     fun detail(
@@ -40,17 +40,20 @@ class QuestionController(
     }
 
     @PostMapping
-    fun createQuestionAnswer(
+    fun createQuestionAndAnswer(
         @RequestBody @Valid request: CreateQuestionAnswerRequestDto,
     ): ResponseEntity<Any> {
-        val command = CreateQuestionAnswerCommand(
+        val command = CreateQuestionAndAnswerCommand(
             bookId = request.bookId,
             question = request.question,
             multipleChoiceYn = request.multipleChoiceYn,
             memberId = memberInfo.memberId,
             answerList = request.answerList,
         )
-        createQuestionAnswerUseCase.createQuestionAnswer(command)
+        createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
         return ResponseEntity.status(HttpStatus.CREATED).build()
+    }
+
+    fun updateQuestionAnswer() {
     }
 }

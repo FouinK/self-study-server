@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import self.study.sels.application.question.port.`in`.CreateQuestionAnswerCommand
-import self.study.sels.application.question.port.`in`.CreateQuestionAnswerUseCase
+import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCommand
+import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.CreateQuestionAnswerRequestDto
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
@@ -25,14 +25,14 @@ import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.QuestionRepository
 
 @SpringBootTest
-class CreateQuestionAnswerActionTest(
+class CreateQuestionAndAnswerActionTest(
     @Autowired val questionRepository: QuestionRepository,
     @Autowired val memberRepository: MemberRepository,
     @Autowired val bookcaseRepository: BookcaseRepository,
     @Autowired val bookRepository: BookRepository,
     @Autowired val answerRepository: AnswerRepository,
 ) {
-    lateinit var createQuestionAnswerUseCase: CreateQuestionAnswerUseCase
+    lateinit var createQuestionAndAnswerUseCase: CreateQuestionAndAnswerUseCase
     lateinit var member: Member
     lateinit var bookcase: Bookcase
     lateinit var book: Book
@@ -40,8 +40,8 @@ class CreateQuestionAnswerActionTest(
 
     @BeforeEach
     fun setUp() {
-        createQuestionAnswerUseCase =
-            CreateQuestionAnswerAction(
+        createQuestionAndAnswerUseCase =
+            CreateQuestionAndAnswerAction(
                 questionRepository,
                 bookRepository,
                 answerRepository,
@@ -83,7 +83,7 @@ class CreateQuestionAnswerActionTest(
         val answerString = "세종대왕"
 
         val command =
-            CreateQuestionAnswerCommand(
+            CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = questionString,
                 multipleChoiceYn = false,
@@ -98,7 +98,7 @@ class CreateQuestionAnswerActionTest(
             )
 
         // when
-        val questionId = createQuestionAnswerUseCase.createQuestionAnswer(command)
+        val questionId = createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
 
         // then
         val question =
@@ -117,7 +117,7 @@ class CreateQuestionAnswerActionTest(
         // given
         val answerString = "답"
         val command =
-            CreateQuestionAnswerCommand(
+            CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = existsQuestion,
                 multipleChoiceYn = false,
@@ -133,7 +133,7 @@ class CreateQuestionAnswerActionTest(
 
         // when & then
         assertThrows<ExistsNameException> {
-            createQuestionAnswerUseCase.createQuestionAnswer(command)
+            createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
         }.message.apply { assertThat(this).isEqualTo("동일한 질문이 이미 존재합니다.") }
     }
 
@@ -142,7 +142,7 @@ class CreateQuestionAnswerActionTest(
         // given
         val questionString = "한글을 창조한 사람은?"
         val command =
-            CreateQuestionAnswerCommand(
+            CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = questionString,
                 multipleChoiceYn = false,
@@ -151,7 +151,7 @@ class CreateQuestionAnswerActionTest(
             )
 
         // when
-        val questionId = createQuestionAnswerUseCase.createQuestionAnswer(command)
+        val questionId = createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
 
         // then
         val question =
@@ -170,7 +170,7 @@ class CreateQuestionAnswerActionTest(
         val answerString = "세종대왕"
 
         val command =
-            CreateQuestionAnswerCommand(
+            CreateQuestionAndAnswerCommand(
                 bookId = book.id,
                 question = questionString,
                 multipleChoiceYn = false,
@@ -186,7 +186,7 @@ class CreateQuestionAnswerActionTest(
 
         // when & then
         assertThrows<NotFoundException> {
-            createQuestionAnswerUseCase.createQuestionAnswer(command)
+            createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
         }.message.apply { assertThat(this).isEqualTo("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.") }
     }
 }

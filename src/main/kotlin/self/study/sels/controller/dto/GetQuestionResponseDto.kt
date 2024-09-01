@@ -8,8 +8,8 @@ class GetQuestionResponseDto(
     val answerList: List<Item>
 ) {
     class Item(
-        answerId: Int,
-        answer: String,
-        correctYn: Boolean,
+        val answerId: Int,
+        val answer: String,
+        val correctYn: Boolean,
     )
 }

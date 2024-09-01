@@ -1,9 +1,8 @@
 package self.study.sels.application.question.action
 
-import fixtures.AnswerListBuilder
 import fixtures.BookBuilder
 import fixtures.MemberBuilder
-import fixtures.QuestionBuilder
+import fixtures.step.CreateQuestionStep
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -40,12 +39,17 @@ class GetQuestionActionTest(
     lateinit var answer3: Answer
     lateinit var answer4: Answer
     lateinit var answer5: Answer
-    lateinit var answerStringList: MutableList<String>
+    lateinit var answerStringList: List<String>
 
     @BeforeEach
     fun setUp() {
         getQuestionUseCase = GetQuestionAction(
             questionRepository,
+        )
+
+        val createQuestionStep = CreateQuestionStep(
+            questionRepository,
+            answerRepository,
         )
 
         member = memberRepository.save(MemberBuilder().build())
@@ -58,30 +62,16 @@ class GetQuestionActionTest(
         )
 
         questionString = "문제"
+        val answerListSize = 5
 
-        question = questionRepository.save(
-            QuestionBuilder(
-                memberId = member.id,
-                bookId = book.id,
-                question = questionString,
-            ).build(),
+        question = createQuestionStep.create(
+            member = member,
+            book = book,
+            questionString = questionString,
+            answerListSize = answerListSize,
         )
 
-        val answerListSize = 5
-        answerStringList = mutableListOf()
-
-        answerRepository.saveAll(
-            AnswerListBuilder(
-                size = answerListSize,
-                question = question,
-                answerList = List(answerListSize) { i ->
-                    val answer = "보기" + (i + 1)
-                    answerStringList.add(answer)
-                    answer
-                },
-                correctYnList = List(answerListSize - 1) { false } + List(1) { true },
-            ).build(),
-        ).forEachIndexed { index, answer ->
+        question.answerList.forEachIndexed { index, answer ->
             when (index) {
                 0 -> answer1 = answer
                 1 -> answer2 = answer
@@ -90,16 +80,9 @@ class GetQuestionActionTest(
                 4 -> answer5 = answer
             }
         }
-
-        question.answerList = mutableListOf(
-            answer1,
-            answer2,
-            answer3,
-            answer4,
-            answer5,
-        )
-
-        question = questionRepository.save(question)
+        answerStringList = question.answerList.map {
+            it.answer
+        }
     }
 
     @Test
@@ -121,11 +104,11 @@ class GetQuestionActionTest(
         assertThat(detail.answerId).isEqualTo(null)
         val answerStringList = detail.answerList.map { item -> item.answer }
         assertThat(answerStringList).containsExactly(
-            answerStringList[0],
-            answerStringList[1],
-            answerStringList[2],
-            answerStringList[3],
-            answerStringList[4],
+            this.answerStringList[0],
+            this.answerStringList[1],
+            this.answerStringList[2],
+            this.answerStringList[3],
+            this.answerStringList[4],
         )
     }
 
@@ -152,11 +135,11 @@ class GetQuestionActionTest(
         assertThat(detail.answerId).isEqualTo(correctAnswer.id)
         val answerStringList = detail.answerList.map { item -> item.answer }
         assertThat(answerStringList).containsExactly(
-            answerStringList[0],
-            answerStringList[1],
-            answerStringList[2],
-            answerStringList[3],
-            answerStringList[4],
+            this.answerStringList[0],
+            this.answerStringList[1],
+            this.answerStringList[2],
+            this.answerStringList[3],
+            this.answerStringList[4],
         )
     }
 

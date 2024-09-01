@@ -51,4 +51,8 @@ class Question(
                 throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
             }
         }
+
+    fun updateQuestion(question: String) {
+        this.question = question
+    }
 }

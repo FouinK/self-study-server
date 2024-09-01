@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCommand
-import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
-import self.study.sels.application.question.port.`in`.GetQuestionCommand
-import self.study.sels.application.question.port.`in`.GetQuestionUseCase
+import self.study.sels.application.question.port.`in`.*
 import self.study.sels.config.auth.MemberInfo
 import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
+import self.study.sels.controller.dto.UpdateQuestionAndAnswerRequestDto
 
 @RestController
 @RequestMapping("/sels/api/u/question")
@@ -24,6 +22,7 @@ class QuestionController(
     private val memberInfo: MemberInfo,
     private val getQuestionUseCase: GetQuestionUseCase,
     private val createQuestionAndAnswerUseCase: CreateQuestionAndAnswerUseCase,
+    private val updateQuestionAndAnswerUseCase: UpdateQuestionAndAnswerUseCase,
 ) {
     @GetMapping("/{questionId}")
     fun detail(
@@ -55,6 +54,16 @@ class QuestionController(
     }
 
     @PutMapping
-    fun updateQuestionAnswer() {
+    fun updateQuestionAnswer(
+        @RequestBody @Valid request: UpdateQuestionAndAnswerRequestDto,
+    ): ResponseEntity<Any> {
+        val command = UpdateQuestionAndAnswerCommand(
+            questionId = request.questionId,
+            question = request.question,
+            answerList = request.answerList,
+            memberId = memberInfo.memberId,
+        )
+        updateQuestionAndAnswerUseCase.update(command)
+        return ResponseEntity.ok("")
     }
 }

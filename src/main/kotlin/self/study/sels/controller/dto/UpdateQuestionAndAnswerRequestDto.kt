@@ -5,5 +5,12 @@ import jakarta.validation.constraints.NotNull
 class UpdateQuestionAndAnswerRequestDto(
     @field:NotNull
     val questionId: Int,
-    val answerList: List<CreateQuestionAndAnswerRequestDto.AnswerItem>,
-)
+    val question: String?,
+    val answerList: List<AnswerItem>,
+) {
+    class AnswerItem(
+        val answerId: Int?,
+        val answer: String?,
+        val correctYn: Boolean?,
+    )
+}

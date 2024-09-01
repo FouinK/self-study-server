@@ -32,4 +32,12 @@ class Answer(
     @Column(name = "member_id", nullable = false)
     var memberId = memberId
         protected set
+
+    fun updateAnswer(answer: String) {
+        this.answer = answer
+    }
+
+    fun updateCorrectYn(correctYn: Boolean) {
+        this.correctYn = correctYn
+    }
 }

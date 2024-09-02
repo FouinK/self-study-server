@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerCommand
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerUseCase
+import self.study.sels.controller.dto.UpdateQuestionAndAnswerRequestDto
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
@@ -63,8 +65,21 @@ class UpdateQuestionAndAnswerActionTest(
     @Test
     fun `문제의 이름이 정상 업데이트 된다`() {
         //given
+        val command = UpdateQuestionAndAnswerCommand(
+            questionId = question.id,
+            question = questionString,
+            answerList = question.answerList.map {
+                UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                    it.id,
+                    answer = it.answer,
+                    correctYn = it.correctYn,
+                )
+            },
+            memberId = member.id,
+        )
 
         //when
+        val result = updateQuestionAndAnswerUseCase.update(command)
 
         //then
     }

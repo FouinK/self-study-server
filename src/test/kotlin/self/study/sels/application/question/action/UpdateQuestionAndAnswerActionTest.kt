@@ -156,4 +156,62 @@ class UpdateQuestionAndAnswerActionTest(
             true,
         )
     }
+
+    @Test
+    fun `문제의 이름과 보기의 설명이 정상 업데이트 된다`() {
+        //given
+        val updatedQuestion = "수정된 문제"
+        val updatedAnswer = "수정된 보기"
+        val updatedAnswer2 = "수정된 보기2"
+        val updateCorrectYn1 = true
+        val updateCorrectYn2 = false
+
+        val firstAnswer = question.answerList.first()
+        val lastAnswer = question.answerList.last()
+
+        val command = UpdateQuestionAndAnswerCommand(
+            questionId = question.id,
+            question = updatedQuestion,
+            answerList = listOf(
+                UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                    answerId = firstAnswer.id,
+                    answer = updatedAnswer,
+                    correctYn = updateCorrectYn1,
+                ),
+                UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                    answerId = lastAnswer.id,
+                    answer = updatedAnswer2,
+                    correctYn = updateCorrectYn2,
+                ),
+            ),
+            memberId = member.id,
+        )
+
+        //when
+        val result = updateQuestionAndAnswerUseCase.update(command)
+
+        //then
+        val findQuestion = questionRepository.findById(result.questionId)
+            .orElseThrow { throw NotFoundException("테스트 실패") }
+
+        val answerList = findQuestion.answerList.map { it.answer }
+        val correctYnList = findQuestion.answerList.map { it.correctYn }
+
+        assertThat(findQuestion.question).isEqualTo(updatedQuestion)
+        assertThat(answerList).containsExactly(
+            updatedAnswer,
+            "보기2",
+            "보기3",
+            "보기4",
+            updatedAnswer2,
+        )
+
+        assertThat(correctYnList).containsExactly(
+            updateCorrectYn1,
+            false,
+            false,
+            false,
+            updateCorrectYn2,
+        )
+    }
 }

@@ -214,4 +214,9 @@ class UpdateQuestionAndAnswerActionTest(
             updateCorrectYn2,
         )
     }
+
+    @Test
+    fun `보기가 기존보다 더 추가되는경우 정상적으로 추가 된다`() {
+        // TODO : 기존에 보기 4게만 추가하고 업데이트할 때 1개 추가하는거 케이스 구현
+    }
 }

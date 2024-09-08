@@ -63,4 +63,10 @@ class Question(
         this.answerList.removeIf { changeAnswerIdList.contains(it.id) }
         this.answerList.addAll(changeAnswerList)
     }
+
+    fun addAnswerList(
+        addAnswerList: List<Answer>
+    ) {
+        this.answerList.addAll(addAnswerList)
+    }
 }

@@ -5,6 +5,7 @@ import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerCom
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.UpdateQuestionAndAnswerResponseDto
 import self.study.sels.exception.NotFoundException
+import self.study.sels.model.answer.Answer
 import self.study.sels.model.question.QuestionRepository
 
 @Action
@@ -39,7 +40,19 @@ class UpdateQuestionAndAnswerAction(
                 answer
             }.toMutableList()
 
+            val addAnswerList = command.answerList
+                .filter { it.answerId == null }
+                .map {
+                    Answer(
+                        question = question,
+                        answer = it.answer!!,
+                        correctYn = it.correctYn!!,
+                        memberId = command.memberId,
+                    )
+                }
+
             question.updateAnswerList(changeAnswerList)
+            question.addAnswerList(addAnswerList)
         }
 
         questionRepository.save(question)

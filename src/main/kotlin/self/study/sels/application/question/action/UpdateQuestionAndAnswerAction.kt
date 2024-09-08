@@ -24,7 +24,7 @@ class UpdateQuestionAndAnswerAction(
         }
 
         if (command.answerList.isNotEmpty()) {
-            val answerList = command.answerList.map {
+            val changeAnswerList = command.answerList.map {
                 val answer = question.answerList.find { answer -> answer.id == it.answerId }
                     ?: throw NotFoundException("보기가 존재하지 않습니다.")
 
@@ -39,7 +39,7 @@ class UpdateQuestionAndAnswerAction(
                 answer
             }.toMutableList()
 
-            question.answerList = answerList
+            question.updateAnswerList(changeAnswerList)
         }
 
         questionRepository.save(question)

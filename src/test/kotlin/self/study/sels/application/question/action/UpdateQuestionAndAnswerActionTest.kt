@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerCommand
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.UpdateQuestionAndAnswerRequestDto
@@ -81,14 +80,35 @@ class UpdateQuestionAndAnswerActionTest(
         val result = updateQuestionAndAnswerUseCase.update(command)
 
         //then
-        val question = questionRepository.findByIdOrNull(result.questionId)!!
+        val question = questionRepository.findById(result.questionId)
+            .orElseThrow { throw NotFoundException("테스트 실패") }
+
         assertThat(question.question).isEqualTo(updatedName)
+        val answerList = question.answerList.map { it.answer }
+        val correctYnList = question.answerList.map { it.correctYn }
+
+        assertThat(answerList).containsExactly(
+            "보기1",
+            "보기2",
+            "보기3",
+            "보기4",
+            "보기5",
+        )
+
+        assertThat(correctYnList).containsExactly(
+            false,
+            false,
+            false,
+            false,
+            true,
+        )
     }
 
     @Test
     fun `보기의 설명이 정상 업데이트 된다`() {
         //given
         val updatedName = "수정된 보기 설명"
+        val updatedCorrecYn = true
 
         val answer = question.answerList.first()
 
@@ -99,7 +119,7 @@ class UpdateQuestionAndAnswerActionTest(
                 UpdateQuestionAndAnswerRequestDto.AnswerItem(
                     answerId = answer.id,
                     answer = updatedName,
-                    correctYn = true,
+                    correctYn = updatedCorrecYn,
                 ),
             ),
             memberId = member.id,
@@ -114,7 +134,26 @@ class UpdateQuestionAndAnswerActionTest(
 
         val questionAnswer = findQuestion.answerList.find { it.id == answer.id }!!
 
+        assertThat(findQuestion.question).isEqualTo(questionString)
         assertThat(questionAnswer.answer).isEqualTo(updatedName)
         assertThat(questionAnswer.correctYn).isTrue()
+
+        val answerList = findQuestion.answerList.map { it.answer }
+        val correctYnList = findQuestion.answerList.map { it.correctYn }
+
+        assertThat(answerList).containsExactly(
+            updatedName,
+            "보기2",
+            "보기3",
+            "보기4",
+            "보기5",
+        )
+        assertThat(correctYnList).containsExactly(
+            updatedCorrecYn,
+            false,
+            false,
+            false,
+            true,
+        )
     }
 }

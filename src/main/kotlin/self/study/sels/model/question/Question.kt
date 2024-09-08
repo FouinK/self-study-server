@@ -55,4 +55,12 @@ class Question(
     fun updateQuestion(question: String) {
         this.question = question
     }
+
+    fun updateAnswerList(
+        changeAnswerList: List<Answer>
+    ) {
+        val changeAnswerIdList = changeAnswerList.map { it.id }
+        this.answerList.removeIf { changeAnswerIdList.contains(it.id) }
+        this.answerList.addAll(changeAnswerList)
+    }
 }

@@ -217,6 +217,70 @@ class UpdateQuestionAndAnswerActionTest(
 
     @Test
     fun `보기가 기존보다 더 추가되는경우 정상적으로 추가 된다`() {
-        // TODO : 기존에 보기 4게만 추가하고 업데이트할 때 1개 추가하는거 케이스 구현
+        //given
+        val updatedQuestion = "수정된 문제"
+        val updatedAnswer = "수정된 보기"
+        val updatedAnswer2 = "수정된 보기2"
+
+        val updateCorrectYn1 = true
+        val updateCorrectYn2 = false
+
+        val addAnswer = "추가된 보기"
+        val addCorrectYn3 = false
+
+        val firstAnswer = question.answerList.first()
+        val lastAnswer = question.answerList.last()
+
+        val command = UpdateQuestionAndAnswerCommand(
+            questionId = question.id,
+            question = updatedQuestion,
+            answerList = listOf(
+                UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                    answerId = firstAnswer.id,
+                    answer = updatedAnswer,
+                    correctYn = updateCorrectYn1,
+                ),
+                UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                    answerId = lastAnswer.id,
+                    answer = updatedAnswer2,
+                    correctYn = updateCorrectYn2,
+                ),
+                UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                    answerId = null,
+                    answer = addAnswer,
+                    correctYn = addCorrectYn3,
+                ),
+            ),
+            memberId = member.id,
+        )
+
+        //when
+        val result = updateQuestionAndAnswerUseCase.update(command)
+
+        //then
+        val findQuestion = questionRepository.findById(result.questionId)
+            .orElseThrow { throw NotFoundException("테스트 실패") }
+
+        val answerList = findQuestion.answerList.map { it.answer }
+        val correctYnList = findQuestion.answerList.map { it.correctYn }
+
+        assertThat(findQuestion.question).isEqualTo(updatedQuestion)
+        assertThat(answerList).containsExactly(
+            updatedAnswer,
+            "보기2",
+            "보기3",
+            "보기4",
+            updatedAnswer2,
+            addAnswer,
+        )
+
+        assertThat(correctYnList).containsExactly(
+            updateCorrectYn1,
+            false,
+            false,
+            false,
+            updateCorrectYn2,
+            addCorrectYn3,
+        )
     }
 }

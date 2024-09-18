@@ -14,6 +14,60 @@ class SelsApplicationTests {
     }
 
     fun main(): Unit = runBlocking {
+        // 협력하는 코루틴이 없어도 다른 스레드에서 취소명령을 먼저 실행해버리니까 가능
+        // Dispatchers.Default는 다른 스레드에서 돌리겠다.
+        val job = launch(Dispatchers.Default) {
+            var i = 1
+            var nextPrintTime = System.currentTimeMillis()
+            while (i <= 5) {
+                if (nextPrintTime <= System.currentTimeMillis()) {
+                    printWithThread("${i++} 번째 출력 !")
+                    nextPrintTime += 1000L
+                }
+
+                if (!isActive) {
+                    throw CancellationException()
+                }
+            }
+        }
+
+        delay(100)
+        job.cancel()
+    }
+
+    fun example9(): Unit = runBlocking {
+        // 협력하는 코루틴 suspend fun 이 안에 없어서 job.cancel()이 안됨 (yield()나 delay())
+        val job = launch {
+            var i = 1
+            var nextPrintTime = System.currentTimeMillis()
+            while (i <= 5) {
+                if (nextPrintTime <= System.currentTimeMillis()) {
+                    printWithThread("${i++} 번째 출력 !")
+                    nextPrintTime += 1000L
+                }
+            }
+        }
+
+        delay(100)
+        job.cancel()
+    }
+
+    fun example8(): Unit = runBlocking {
+        val job1 = launch {
+            //delay에 suspend fun 이 있어서 job.cancel의 명령을 받을 수 있음
+            delay(1000)
+            printWithThread("job1")
+        }
+        val job2 = launch {
+            delay(1000)
+            printWithThread("job2")
+        }
+
+        delay(100)
+        job1.cancel()
+    }
+
+    fun example7(): Unit = runBlocking {
         val time = measureNanoTime {
             val job1 = async(start = CoroutineStart.LAZY) { apiCall1() }
             val job2 = async(start = CoroutineStart.LAZY) { apiCall2() }

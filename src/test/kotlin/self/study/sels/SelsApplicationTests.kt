@@ -14,6 +14,21 @@ class SelsApplicationTests {
     }
 
     fun main(): Unit = runBlocking {
+        val job = launch {
+            try {
+                delay(1000)
+            } catch (e: CancellationException) {
+                //아무것도 하지 않는다
+            }
+            printWithThread("delay에 의해 취소되지 않았다.")
+        }
+
+        delay(100)
+        job.cancel()
+        printWithThread("취소 실행햇음")
+    }
+
+    fun example10(): Unit = runBlocking {
         // 협력하는 코루틴이 없어도 다른 스레드에서 취소명령을 먼저 실행해버리니까 가능
         // Dispatchers.Default는 다른 스레드에서 돌리겠다.
         val job = launch(Dispatchers.Default) {

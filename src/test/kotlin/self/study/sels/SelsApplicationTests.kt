@@ -15,6 +15,21 @@ class SelsApplicationTests {
 
     fun main(): Unit = runBlocking {
         val time = measureNanoTime {
+            val job1 = async(start = CoroutineStart.LAZY) { apiCall1() }
+            val job2 = async(start = CoroutineStart.LAZY) { apiCall2() }
+
+            job1.start()
+            job2.start()
+
+            // LAZY 옵션이 있으면 여기서 끝날때까지 기다리면서 시작하지만 위의 start()로 미리 실행해버리면 LAZY 옵션이 없는 것처럼 할 수 있음
+            printWithThread(job1.await() + job2.await())
+        }
+
+        printWithThread("소요시간 : $time ms")
+    }
+
+    fun example6(): Unit = runBlocking {
+        val time = measureNanoTime {
             // 콜백을 사용하지 않고 동기방식의 코드를 작성 가능 (실제로는 비동기(?))
             val job1 = async { apiCall1() }
             val job2 = async { apiCall2() }

@@ -13,6 +13,18 @@ class SelsApplicationTests {
     }
 
     fun main(): Unit = runBlocking {
+        // async는 launch와 다르게 결과를 반환할 수 있음
+        val job = async {
+            3 + 5
+        }
+
+        // await는 async의 결과를 가져오는 함수
+        val eight = job.await()
+
+        printWithThread(eight)
+    }
+
+    fun example4(): Unit = runBlocking {
         val job1 = launch {
             delay(1000)
             printWithThread("job 1")

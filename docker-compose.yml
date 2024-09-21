@@ -1,0 +1,16 @@
+version: "2.2"
+services:
+  nginx:
+    image: nginx:latest
+    container_name: sels_local_gateway
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # NGINX 기본 설정을 유지하고 추가적인 설정을 할 경우:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+      # NGINX 기본 설정을 덮어쓸 경우:
+      # - "./nginx.conf:/etc/nginx/nginx.conf"
+    ports:
+      - "80:80"
+      - "443:443"

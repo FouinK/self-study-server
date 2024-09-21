@@ -24,8 +24,8 @@ class SelsApplicationTests {
         }
 
         delay(100)
-        job.cancel()
         printWithThread("취소 실행햇음")
+        job.cancel()
     }
 
     fun example10(): Unit = runBlocking {

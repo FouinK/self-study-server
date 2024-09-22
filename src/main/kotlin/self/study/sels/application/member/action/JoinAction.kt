@@ -1,10 +1,10 @@
 package self.study.sels.application.member.action
 
 import self.study.sels.annotation.Action
+import self.study.sels.application.member.port.`in`.JoinMemberCommand
 import self.study.sels.application.member.port.`in`.JoinUseCase
+import self.study.sels.application.member.port.`in`.PlatForm
 import self.study.sels.config.YmlProperties
-import self.study.sels.controller.dto.JoinMemberRequestDto
-import self.study.sels.controller.dto.PlatForm
 import self.study.sels.feignclient.KakaoAuthClient
 import self.study.sels.feignclient.NaverAuthClient
 
@@ -14,18 +14,11 @@ class JoinAction(
     private val naverAuthClient: NaverAuthClient,
     private val ymlProperties: YmlProperties,
 ) : JoinUseCase {
-    override fun join(command: JoinMemberRequestDto) {
+    override fun join(command: JoinMemberCommand) {
         if (command.platForm == PlatForm.KAKAO) {
-            kakaoAuthClient.authorize(
-                clientId = ymlProperties.kakaoClientKey,
-                redirectUri = command.redirectUri,
-            )
+            kakaoAuthClient.token()
         } else if (command.platForm == PlatForm.NAVER) {
-            naverAuthClient.authorize(
-                clientId = ymlProperties.naverClientKey,
-                redirectUri = command.redirectUri,
-                state = "",
-            )
+            naverAuthClient.token()
         } else {
         }
     }

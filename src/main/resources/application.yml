@@ -1,6 +1,14 @@
 server:
   port: 8080
 
+kakao:
+  client-key: d26bfd7ffcb2dbbf1e573e4c827d8078
+  auth-url: https://kauth.kakao.com
+
+naver:
+  client-key:
+  auth-url: https://nid.naver.com
+
 --- #production phase
 spring:
   config:
@@ -26,9 +34,10 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
 
-discord:
-  webhook:
-    url: https://discord.com/api/webhooks/1277123681360805908/m2P2yHwHt9k7VYgMAfQG6DOsI_xZPaZMBkWJt6ChkHm6rxhN6PBReQ32bsZn86MlTyJ8
+feign:
+  discord:
+    webhook:
+      url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt
 
 
 --- #alpha phase
@@ -56,9 +65,10 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
 
-discord:
-  webhook:
-    url: https://discord.com/api/webhooks/1277123349784563815/rv2oZ0SG8GNGHxqdi8qJbvN2tLxpTBN9Oy_I4U235RqMmAlSgK37apspZViA-mwzFnzX
+feign:
+  discord:
+    webhook:
+      url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt
 
 
 --- #development phase
@@ -86,9 +96,10 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
 
-discord:
-  webhook:
-    url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt
+feign:
+  discord:
+    webhook:
+      url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt
 
 --- #test phase
 spring:
@@ -113,6 +124,7 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
 
-discord:
-  webhook:
-    url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt
+feign:
+  discord:
+    webhook:
+      url: https://discord.com/api/webhooks/1277101129850683415/hC94z0g-t5agjiaPuTmR9sx_-tOefW-k9De46QXr0IXodsWiinqznJgOggCbBDWbyjGt

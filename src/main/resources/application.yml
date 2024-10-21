@@ -9,6 +9,9 @@ naver:
   client-key:
   auth-url: https://nid.naver.com
 
+# TODO : redis 세팅하는데 테스트환경 redis랑 분리하기
+# TODO 도커로 띄울거고 테스트 환경도 도커로, 그리고 pr할때 모든 test 돌릴 건데 git action 에서 redis 띄웠다 죽였다 할 수 있는지
+
 --- #production phase
 spring:
   config:
@@ -17,7 +20,7 @@ spring:
   application:
     name: sels
   datasource:
-    url: jdbc:mariadb://localhost:3306/self_study?useSSL=false
+    url: jdbc:mariadb://127.0.0.1:3306/self_study?useSSL=false
     username: root
     password: root
     driver-class-name: org.mariadb.jdbc.Driver
@@ -29,6 +32,10 @@ spring:
       hibernate:
         show-sql: true
         format_sql: true
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 
 logging:
   level:
@@ -48,7 +55,7 @@ spring:
   application:
     name: sels
   datasource:
-    url: jdbc:mariadb://localhost:3306/self_study?useSSL=false
+    url: jdbc:mariadb://127.0.0.1:3306/self_study?useSSL=false
     username: root
     password: root
     driver-class-name: org.mariadb.jdbc.Driver
@@ -60,6 +67,10 @@ spring:
       hibernate:
         show-sql: true
         format_sql: true
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 
 logging:
   level:
@@ -79,7 +90,7 @@ spring:
   application:
     name: sels
   datasource:
-    url: jdbc:mariadb://localhost:3306/self_study?useSSL=false
+    url: jdbc:mariadb://127.0.0.1:3306/self_study?useSSL=false
     username: root
     password: root
     driver-class-name: org.mariadb.jdbc.Driver
@@ -91,6 +102,10 @@ spring:
       hibernate:
         show-sql: true
         format_sql: true
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 
 logging:
   level:
@@ -119,6 +134,10 @@ spring:
         show-sql: true
         format_sql: true
     database-platform: org.hibernate.dialect.H2Dialect
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 
 logging:
   level:

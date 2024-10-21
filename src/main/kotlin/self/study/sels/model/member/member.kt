@@ -14,6 +14,7 @@ class Member(
     appVersion: Int? = null,
     os: String? = null,
     osVersion: String? = null,
+    phone: String,
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,16 +33,20 @@ class Member(
     var marketingYn = marketingYn
         protected set
 
-    @Column(name = "app_version", nullable = false)
+    @Column(name = "app_version", nullable = true)
     var appVersion = appVersion
         protected set
 
-    @Column(name = "os", nullable = false, length = 10)
+    @Column(name = "os", nullable = true, length = 10)
     var os = os
         protected set
 
-    @Column(name = "os_version", nullable = false, length = 10)
+    @Column(name = "os_version", nullable = true, length = 10)
     var osVersion = osVersion
+        protected set
+
+    @Column(name = "phone", nullable = false, length = 20)
+    var phone = phone
         protected set
 
     fun updateMemberInfo(

@@ -9,6 +9,7 @@ class MemberBuilder(
     val appVersion: Int? = 1,
     val os: String? = "ios",
     val osVersion: String? = "11.7",
+    val phone: String = "01099999999"
 ) {
     fun build() =
         Member(
@@ -18,5 +19,6 @@ class MemberBuilder(
             appVersion = appVersion,
             os = os,
             osVersion = osVersion,
+            phone = phone,
         )
 }

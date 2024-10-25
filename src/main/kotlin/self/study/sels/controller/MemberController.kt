@@ -31,11 +31,11 @@ class MemberController(
     fun join(
         @Valid @RequestBody request: JoinMemberRequestDto
     ): ResponseEntity<Any> {
-        joinUseCase.execute(command = request)
+        val result = joinUseCase.execute(command = request)
         return ResponseEntity.status(HttpStatus.CREATED).body(
             JoinMemberResponseDto(
-                memberId = 1,
-                authToken = "",
+                memberId = result.memberId,
+                authToken = result.authToken,
             ),
         )
     }

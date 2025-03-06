@@ -3,11 +3,13 @@ package self.study.sels.application.book_case.action
 import self.study.sels.annotation.Action
 import self.study.sels.application.book_case.port.`in`.CreateBookcaseCommand
 import self.study.sels.application.book_case.port.`in`.CreateBookcaseUseCase
+import self.study.sels.model.book_case.BookcaseFactory
 import self.study.sels.model.book_case.BookcaseRepository
 
 @Action
 class CreateBookcaseAction(
     private val bookcaseRepository: BookcaseRepository,
+    private val bookcaseFactory: BookcaseFactory,
 ) : CreateBookcaseUseCase {
     override fun create(
         command: CreateBookcaseCommand
@@ -16,10 +18,15 @@ class CreateBookcaseAction(
             throw Exception("이미 사용중인 이름입니다.")
         }
 
-        val bookCase = command.toEntity()
+        val bookcase = bookcaseRepository.save(
+            bookcaseFactory.create(
+                BookcaseFactory.Command(
+                    name = command.name,
+                    memberId = command.memberId,
+                ),
+            ),
+        )
 
-        val newBookcase = bookcaseRepository.save(bookCase)
-
-        return newBookcase.id
+        return bookcase.id
     }
 }

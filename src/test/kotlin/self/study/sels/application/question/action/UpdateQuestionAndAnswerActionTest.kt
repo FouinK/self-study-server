@@ -3,15 +3,13 @@ package self.study.sels.application.question.action
 import fixtures.BookBuilder
 import fixtures.MemberBuilder
 import fixtures.step.CreateQuestionStep
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import self.study.sels.IntegrationTest
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerCommand
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.UpdateQuestionAndAnswerRequestDto
-import self.study.sels.exception.NotFoundException
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
@@ -19,15 +17,15 @@ import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.Question
 import self.study.sels.model.question.QuestionRepository
+import kotlin.jvm.optionals.getOrNull
 
-@SpringBootTest
 class UpdateQuestionAndAnswerActionTest(
-    @Autowired val questionRepository: QuestionRepository,
-    @Autowired val answerRepository: AnswerRepository,
-    @Autowired val memberRepository: MemberRepository,
-    @Autowired val bookRepository: BookRepository,
-) {
-    lateinit var updateQuestionAndAnswerUseCase: UpdateQuestionAndAnswerUseCase
+    private val updateQuestionAndAnswerUseCase: UpdateQuestionAndAnswerUseCase,
+    private val questionRepository: QuestionRepository,
+    private val answerRepository: AnswerRepository,
+    private val memberRepository: MemberRepository,
+    private val bookRepository: BookRepository,
+) : IntegrationTest() {
     lateinit var member: Member
     lateinit var question: Question
     lateinit var book: Book
@@ -35,11 +33,6 @@ class UpdateQuestionAndAnswerActionTest(
 
     @BeforeEach
     fun setUp() {
-        //useCase = Action
-        updateQuestionAndAnswerUseCase = UpdateQuestionAndAnswerAction(
-            questionRepository,
-        )
-
         val createQuestionStep = CreateQuestionStep(
             questionRepository,
             answerRepository,
@@ -72,7 +65,12 @@ class UpdateQuestionAndAnswerActionTest(
         val command = UpdateQuestionAndAnswerCommand(
             questionId = question.id,
             question = updatedName,
-            answerList = listOf(),
+            answerList = question.answerList.map {
+                UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                    answer = it.answer,
+                    correctYn = it.correctYn,
+                )
+            },
             memberId = member.id,
         )
 
@@ -80,8 +78,7 @@ class UpdateQuestionAndAnswerActionTest(
         val result = updateQuestionAndAnswerUseCase.update(command)
 
         //then
-        val question = questionRepository.findById(result.questionId)
-            .orElseThrow { throw NotFoundException("테스트 실패") }
+        val question = questionRepository.findById(result.questionId).getOrNull()!!
 
         assertThat(question.question).isEqualTo(updatedName)
         val answerList = question.answerList.map { it.answer }
@@ -108,20 +105,26 @@ class UpdateQuestionAndAnswerActionTest(
     fun `보기의 설명이 정상 업데이트 된다`() {
         //given
         val updatedName = "수정된 보기 설명"
-        val updatedCorrecYn = true
+        val updatedCorrectYn = true
 
-        val answer = question.answerList.first()
+        val updateTargetAnswer = question.answerList.first()
 
         val command = UpdateQuestionAndAnswerCommand(
             questionId = question.id,
             question = null,
-            answerList = listOf(
-                UpdateQuestionAndAnswerRequestDto.AnswerItem(
-                    answerId = answer.id,
-                    answer = updatedName,
-                    correctYn = updatedCorrecYn,
-                ),
-            ),
+            answerList = question.answerList.map {
+                if (updateTargetAnswer.id == it.id) {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = updatedName,
+                        correctYn = updatedCorrectYn,
+                    )
+                } else {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = it.answer,
+                        correctYn = it.correctYn,
+                    )
+                }
+            },
             memberId = member.id,
         )
 
@@ -129,14 +132,9 @@ class UpdateQuestionAndAnswerActionTest(
         val result = updateQuestionAndAnswerUseCase.update(command)
 
         //then
-        val findQuestion = questionRepository.findById(result.questionId)
-            .orElseThrow { throw NotFoundException("테스트 실패") }
-
-        val questionAnswer = findQuestion.answerList.find { it.id == answer.id }!!
+        val findQuestion = questionRepository.findById(result.questionId).getOrNull()!!
 
         assertThat(findQuestion.question).isEqualTo(questionString)
-        assertThat(questionAnswer.answer).isEqualTo(updatedName)
-        assertThat(questionAnswer.correctYn).isTrue()
 
         val answerList = findQuestion.answerList.map { it.answer }
         val correctYnList = findQuestion.answerList.map { it.correctYn }
@@ -149,7 +147,7 @@ class UpdateQuestionAndAnswerActionTest(
             "보기5",
         )
         assertThat(correctYnList).containsExactly(
-            updatedCorrecYn,
+            updatedCorrectYn,
             false,
             false,
             false,
@@ -172,18 +170,24 @@ class UpdateQuestionAndAnswerActionTest(
         val command = UpdateQuestionAndAnswerCommand(
             questionId = question.id,
             question = updatedQuestion,
-            answerList = listOf(
-                UpdateQuestionAndAnswerRequestDto.AnswerItem(
-                    answerId = firstAnswer.id,
-                    answer = updatedAnswer,
-                    correctYn = updateCorrectYn1,
-                ),
-                UpdateQuestionAndAnswerRequestDto.AnswerItem(
-                    answerId = lastAnswer.id,
-                    answer = updatedAnswer2,
-                    correctYn = updateCorrectYn2,
-                ),
-            ),
+            answerList = question.answerList.map {
+                if (it.id == firstAnswer.id) {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = updatedAnswer,
+                        correctYn = updateCorrectYn1,
+                    )
+                } else if (it.id == lastAnswer.id) {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = updatedAnswer2,
+                        correctYn = updateCorrectYn2,
+                    )
+                } else {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = it.answer,
+                        correctYn = it.correctYn,
+                    )
+                }
+            },
             memberId = member.id,
         )
 
@@ -191,8 +195,7 @@ class UpdateQuestionAndAnswerActionTest(
         val result = updateQuestionAndAnswerUseCase.update(command)
 
         //then
-        val findQuestion = questionRepository.findById(result.questionId)
-            .orElseThrow { throw NotFoundException("테스트 실패") }
+        val findQuestion = questionRepository.findById(result.questionId).getOrNull()!!
 
         val answerList = findQuestion.answerList.map { it.answer }
         val correctYnList = findQuestion.answerList.map { it.correctYn }
@@ -234,19 +237,25 @@ class UpdateQuestionAndAnswerActionTest(
         val command = UpdateQuestionAndAnswerCommand(
             questionId = question.id,
             question = updatedQuestion,
-            answerList = listOf(
+            answerList = question.answerList.map {
+                if (it.id == firstAnswer.id) {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = updatedAnswer,
+                        correctYn = updateCorrectYn1,
+                    )
+                } else if (it.id == lastAnswer.id) {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = updatedAnswer2,
+                        correctYn = updateCorrectYn2,
+                    )
+                } else {
+                    UpdateQuestionAndAnswerRequestDto.AnswerItem(
+                        answer = it.answer,
+                        correctYn = it.correctYn,
+                    )
+                }
+            } + listOf(
                 UpdateQuestionAndAnswerRequestDto.AnswerItem(
-                    answerId = firstAnswer.id,
-                    answer = updatedAnswer,
-                    correctYn = updateCorrectYn1,
-                ),
-                UpdateQuestionAndAnswerRequestDto.AnswerItem(
-                    answerId = lastAnswer.id,
-                    answer = updatedAnswer2,
-                    correctYn = updateCorrectYn2,
-                ),
-                UpdateQuestionAndAnswerRequestDto.AnswerItem(
-                    answerId = null,
                     answer = addAnswer,
                     correctYn = addCorrectYn3,
                 ),
@@ -258,8 +267,7 @@ class UpdateQuestionAndAnswerActionTest(
         val result = updateQuestionAndAnswerUseCase.update(command)
 
         //then
-        val findQuestion = questionRepository.findById(result.questionId)
-            .orElseThrow { throw NotFoundException("테스트 실패") }
+        val findQuestion = questionRepository.findById(result.questionId).getOrNull()!!
 
         val answerList = findQuestion.answerList.map { it.answer }
         val correctYnList = findQuestion.answerList.map { it.correctYn }

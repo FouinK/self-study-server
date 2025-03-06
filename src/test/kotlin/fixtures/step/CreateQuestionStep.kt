@@ -19,7 +19,7 @@ class CreateQuestionStep(
         answerListSize: Int,
         answerStringList: MutableList<String> = mutableListOf(),
     ): Question {
-        var question = questionRepository.save(
+        val question = questionRepository.save(
             QuestionBuilder(
                 memberId = member.id,
                 bookId = book.id,
@@ -27,21 +27,21 @@ class CreateQuestionStep(
             ).build(),
         )
 
-        question.answerList = answerRepository.saveAll(
-            AnswerListBuilder(
-                size = answerListSize,
-                question = question,
-                answerList = List(answerListSize) { i ->
-                    val answer = "보기" + (i + 1)
-                    answerStringList.add(answer)
-                    answer
-                },
-                correctYnList = List(answerListSize - 1) { false } + List(1) { true },
-            ).build(),
+        question.updateAnswerList(
+            answerRepository.saveAll(
+                AnswerListBuilder(
+                    size = answerListSize,
+                    question = question,
+                    answerList = List(answerListSize) { i ->
+                        val answer = "보기" + (i + 1)
+                        answerStringList.add(answer)
+                        answer
+                    },
+                    correctYnList = List(answerListSize - 1) { false } + List(1) { true },
+                ).build(),
+            ),
         )
 
-        question = questionRepository.save(question)
-
-        return question
+        return questionRepository.save(question)
     }
 }

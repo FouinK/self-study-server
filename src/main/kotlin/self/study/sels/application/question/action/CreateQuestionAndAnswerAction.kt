@@ -6,14 +6,17 @@ import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCom
 import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
+import self.study.sels.model.answer.AnswerFactory
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.BookRepository
-import self.study.sels.model.question.Question
+import self.study.sels.model.question.QuestionFactory
 import self.study.sels.model.question.QuestionRepository
 
 @Action
 class CreateQuestionAndAnswerAction(
     private val questionRepository: QuestionRepository,
+    private val questionFactory: QuestionFactory,
+    private val answerFactory: AnswerFactory,
     private val bookRepository: BookRepository,
     private val answerRepository: AnswerRepository,
 ) : CreateQuestionAndAnswerUseCase {
@@ -28,19 +31,29 @@ class CreateQuestionAndAnswerAction(
         }
 
         val question = questionRepository.save(
-            Question(
-                memberId = command.memberId,
-                bookId = command.bookId,
-                question = command.question,
+            questionFactory.create(
+                QuestionFactory.Command(
+                    memberId = command.memberId,
+                    bookId = command.bookId,
+                    question = command.question,
+                ),
             ),
         )
 
-        val answerList = command.toAnswerEntityList(question).toMutableList()
+        val answers = answerRepository.saveAll(
+            command.answerList.map {
+                answerFactory.create(
+                    AnswerFactory.Command(
+                        question = question,
+                        answer = it.answer,
+                        correctYn = it.correctYn,
+                        memberId = command.memberId,
+                    ),
+                )
+            },
+        )
 
-        if (answerList.isNotEmpty()) {
-            val newAnswerList = answerRepository.saveAll(answerList)
-            question.updateAnswerList(newAnswerList)
-        }
+        question.updateAnswerList(answers)
 
         questionRepository.save(question)
 

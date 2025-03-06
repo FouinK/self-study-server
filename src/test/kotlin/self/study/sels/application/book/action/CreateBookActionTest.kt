@@ -5,9 +5,9 @@ import fixtures.MemberBuilder
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
+import self.study.sels.IntegrationTest
 import self.study.sels.application.book.port.`in`.CreateBookCommand
 import self.study.sels.application.book.port.`in`.CreateBookUseCase
 import self.study.sels.model.book.BookRepository
@@ -18,22 +18,16 @@ import self.study.sels.model.member.MemberRepository
 
 @SpringBootTest
 class CreateBookActionTest(
-    @Autowired val bookcaseRepository: BookcaseRepository,
-    @Autowired val bookRepository: BookRepository,
-    @Autowired val memberRepository: MemberRepository,
-) {
-    lateinit var createBookUseCase: CreateBookUseCase
+    private val createBookUseCase: CreateBookUseCase,
+    private val bookcaseRepository: BookcaseRepository,
+    private val bookRepository: BookRepository,
+    private val memberRepository: MemberRepository,
+) : IntegrationTest() {
     lateinit var member: Member
     lateinit var bookcase: Bookcase
 
     @BeforeEach
     fun setUp() {
-        createBookUseCase =
-            CreateBookAction(
-                bookcaseRepository,
-                bookRepository,
-            )
-
         member = memberRepository.save(MemberBuilder().build())
         bookcase =
             bookcaseRepository.save(

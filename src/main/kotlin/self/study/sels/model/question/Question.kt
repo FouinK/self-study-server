@@ -51,12 +51,10 @@ class Question(
         this.answerList.clear()
         this.answerList.addAll(changeAnswerList)
 
-        val correctAnswer = changeAnswerList.find { it.correctYn }
+        check(this.answerList.isNotEmpty()) { "질문에 대한 답 리스트를 작성해주세요." }
 
-        if (correctAnswer != null) {
-            this.answerId = correctAnswer.id
-        } else {
-            throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
-        }
+        val correctAnswer = changeAnswerList.find { it.correctYn } ?: throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
+
+        this.answerId = correctAnswer.id
     }
 }

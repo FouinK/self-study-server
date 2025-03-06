@@ -22,9 +22,7 @@ permissions:
 jobs:
   test:
     if: ${{ github.event.pull_request.draft == false }}
-    runs-on:
-      group: server-runner-group
-      labels: server-build-runner-8core
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -47,6 +45,7 @@ jobs:
           gradle-home-cache-cleanup: false
           cache-read-only: false
           gradle-version: 7.6.3
+
       - run: gradle --version
       - run: gradle build --parallel -x test
       - run: docker run -d -p 6379:6379 redis

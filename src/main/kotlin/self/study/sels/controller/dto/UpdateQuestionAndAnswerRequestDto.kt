@@ -9,8 +9,7 @@ class UpdateQuestionAndAnswerRequestDto(
     val answerList: List<AnswerItem>,
 ) {
     class AnswerItem(
-        val answerId: Int?,
-        val answer: String?,
-        val correctYn: Boolean?,
+        val answer: String,
+        val correctYn: Boolean,
     )
 }

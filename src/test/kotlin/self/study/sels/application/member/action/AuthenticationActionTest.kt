@@ -32,7 +32,7 @@ internal class AuthenticationActionTest(
         val result = sut.execute(command)
 
         //then
-        commonThen(result)
+        assertThat(result.length).isEqualTo(4)
     }
 
     @Test

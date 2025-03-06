@@ -39,7 +39,7 @@ class CreateQuestionAndAnswerAction(
 
         if (answerList.isNotEmpty()) {
             val newAnswerList = answerRepository.saveAll(answerList)
-            question.answerList = newAnswerList
+            question.updateAnswerList(newAnswerList)
         }
 
         questionRepository.save(question)

@@ -37,20 +37,7 @@ class Question(
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = [CascadeType.ALL], orphanRemoval = true)
     var answerList: MutableList<Answer> = answerList.toMutableList()
-        set(list) {
-            list.forEach { it.question = this }
-
-            field.clear()
-            field.addAll(list)
-
-            val correctAnswer = list.find { it.correctYn }
-
-            if (correctAnswer != null) {
-                this.answerId = correctAnswer.id
-            } else {
-                throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
-            }
-        }
+        protected set
 
     fun updateQuestion(question: String) {
         this.question = question
@@ -59,14 +46,17 @@ class Question(
     fun updateAnswerList(
         changeAnswerList: List<Answer>
     ) {
-        val changeAnswerIdList = changeAnswerList.map { it.id }
-        this.answerList.removeIf { changeAnswerIdList.contains(it.id) }
-        this.answerList.addAll(changeAnswerList)
-    }
+        changeAnswerList.forEach { it.question = this }
 
-    fun addAnswerList(
-        addAnswerList: List<Answer>
-    ) {
-        this.answerList.addAll(addAnswerList)
+        this.answerList.clear()
+        this.answerList.addAll(changeAnswerList)
+
+        val correctAnswer = changeAnswerList.find { it.correctYn }
+
+        if (correctAnswer != null) {
+            this.answerId = correctAnswer.id
+        } else {
+            throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
+        }
     }
 }

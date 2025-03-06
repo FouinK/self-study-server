@@ -5,12 +5,14 @@ import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerCom
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.UpdateQuestionAndAnswerResponseDto
 import self.study.sels.exception.NotFoundException
-import self.study.sels.model.answer.Answer
+import self.study.sels.model.answer.AnswerFactory
+import self.study.sels.model.answer.AnswerFactory.*
 import self.study.sels.model.question.QuestionRepository
 
 @Action
 class UpdateQuestionAndAnswerAction(
     private val questionRepository: QuestionRepository,
+    private val answerFactory: AnswerFactory,
 ) : UpdateQuestionAndAnswerUseCase {
     override fun update(
         command: UpdateQuestionAndAnswerCommand
@@ -24,36 +26,22 @@ class UpdateQuestionAndAnswerAction(
             question.updateQuestion(command.question)
         }
 
-        if (command.answerList.isNotEmpty()) {
-            val changeAnswerList = command.answerList.map {
-                val answer = question.answerList.find { answer -> answer.id == it.answerId }
-                    ?: throw NotFoundException("보기가 존재하지 않습니다.")
-
-                if (!it.answer.isNullOrBlank()) {
-                    answer.updateAnswer(it.answer)
-                }
-
-                if (it.correctYn != null) {
-                    answer.updateCorrectYn(it.correctYn)
-                }
-
-                answer
-            }.toMutableList()
-
-            val addAnswerList = command.answerList
-                .filter { it.answerId == null }
-                .map {
-                    Answer(
-                        question = question,
-                        answer = it.answer!!,
-                        correctYn = it.correctYn!!,
-                        memberId = command.memberId,
-                    )
-                }
-
-            question.updateAnswerList(changeAnswerList)
-            question.addAnswerList(addAnswerList)
+        if (command.answerList.isEmpty()) {
+            throw NotFoundException("수정할 답변을 입력해주세요.")
         }
+
+        val newAnswerList = command.answerList.map {
+            answerFactory.create(
+                Command(
+                    question = question,
+                    answer = it.answer,
+                    correctYn = it.correctYn,
+                    memberId = command.memberId,
+                ),
+            )
+        }
+
+        question.updateAnswerList(newAnswerList)
 
         questionRepository.save(question)
 

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import self.study.sels.IntegrationTest
 import self.study.sels.application.book_case.port.`in`.CreateBookcaseCommand
 import self.study.sels.application.book_case.port.`in`.CreateBookcaseUseCase
 import self.study.sels.model.book_case.Bookcase
@@ -18,20 +19,15 @@ import java.lang.IllegalArgumentException
 
 @SpringBootTest
 class CreateBookcaseActionTest(
+    private val createBookcaseUseCase: CreateBookcaseUseCase,
     @Autowired val bookcaseRepository: BookcaseRepository,
     @Autowired val memberRepository: MemberRepository,
-) {
-    lateinit var createBookcaseUseCase: CreateBookcaseUseCase
+) : IntegrationTest() {
     lateinit var defaultMember: Member
     lateinit var defaultBookcase: Bookcase
 
     @BeforeEach
     fun setUp() {
-        createBookcaseUseCase =
-            CreateBookcaseAction(
-                bookcaseRepository,
-            )
-
         defaultMember = memberRepository.save(MemberBuilder().build())
         defaultBookcase =
             bookcaseRepository.save(

@@ -8,14 +8,13 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import self.study.sels.IntegrationTest
 import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCommand
 import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
-import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.book_case.Bookcase
@@ -23,16 +22,16 @@ import self.study.sels.model.book_case.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.QuestionRepository
+import kotlin.jvm.optionals.getOrNull
 
 @SpringBootTest
 class CreateQuestionAndAnswerActionTest(
-    @Autowired val questionRepository: QuestionRepository,
-    @Autowired val memberRepository: MemberRepository,
-    @Autowired val bookcaseRepository: BookcaseRepository,
-    @Autowired val bookRepository: BookRepository,
-    @Autowired val answerRepository: AnswerRepository,
-) {
-    lateinit var createQuestionAndAnswerUseCase: CreateQuestionAndAnswerUseCase
+    private val createQuestionAndAnswerUseCase: CreateQuestionAndAnswerUseCase,
+    private val questionRepository: QuestionRepository,
+    private val memberRepository: MemberRepository,
+    private val bookcaseRepository: BookcaseRepository,
+    private val bookRepository: BookRepository,
+) : IntegrationTest() {
     lateinit var member: Member
     lateinit var bookcase: Bookcase
     lateinit var book: Book
@@ -40,13 +39,6 @@ class CreateQuestionAndAnswerActionTest(
 
     @BeforeEach
     fun setUp() {
-        createQuestionAndAnswerUseCase =
-            CreateQuestionAndAnswerAction(
-                questionRepository,
-                bookRepository,
-                answerRepository,
-            )
-
         member = memberRepository.save(MemberBuilder().build())
 
         bookcase =
@@ -100,9 +92,7 @@ class CreateQuestionAndAnswerActionTest(
         val questionId = createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
 
         // then
-        val question =
-            questionRepository.findById(questionId)
-                .orElseThrow { throw Exception("테스트 실패") }
+        val question = questionRepository.findById(questionId).getOrNull()!!
 
         assertThat(question.question).isEqualTo(questionString)
         assertThat(question.answerId).isNotNull()
@@ -137,7 +127,7 @@ class CreateQuestionAndAnswerActionTest(
     }
 
     @Test
-    fun `질문의 대한 대답이 없을 경우에도 정상 저장된다`() {
+    fun `질문의 대한 대답이 없을 경우에는 예외가 발생한다`() {
         // given
         val questionString = "한글을 창조한 사람은?"
         val command =
@@ -148,17 +138,10 @@ class CreateQuestionAndAnswerActionTest(
                 memberId = member.id,
             )
 
-        // when
-        val questionId = createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
-
-        // then
-        val question =
-            questionRepository.findById(questionId)
-                .orElseThrow { throw Exception("테스트 실패") }
-
-        assertThat(question.question).isEqualTo(questionString)
-        assertThat(question.answerList.size).isEqualTo(0)
-        assertThat(question.answerId).isNull()
+        // when & then
+        assertThrows<IllegalStateException> {
+            createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
+        }
     }
 
     @Test

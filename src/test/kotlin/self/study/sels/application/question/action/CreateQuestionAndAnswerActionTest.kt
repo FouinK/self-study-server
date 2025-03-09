@@ -14,7 +14,6 @@ import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCom
 import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
 import self.study.sels.exception.ExistsNameException
-import self.study.sels.exception.NotFoundException
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.bookcase.Bookcase
@@ -22,6 +21,7 @@ import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.QuestionRepository
+import self.study.sels.model.question.QuestionType
 import kotlin.jvm.optionals.getOrNull
 
 @SpringBootTest
@@ -69,7 +69,7 @@ class CreateQuestionAndAnswerActionTest(
     }
 
     @Test
-    fun `질문과 답이 정상 저장된다`() {
+    fun `질문과 답이 정상 저장된다 (단답형)`() {
         // given
         val questionString = "한글을 창조한 사람은?"
         val answerString = "세종대왕"
@@ -100,6 +100,49 @@ class CreateQuestionAndAnswerActionTest(
         assertThat(question.answerList[0].answer).isEqualTo(answerString)
         assertThat(question.answerList[0].id).isEqualTo(question.answerId)
         assertThat(question.answerList[0].memberId).isEqualTo(question.memberId)
+        assertThat(question.questionType).isEqualTo(QuestionType.SHORT)
+    }
+
+    @Test
+    fun `질문과 답이 정상 저장된다 (객관식)`() {
+        // given
+        val questionString = "한글을 창조한 사람은?"
+        val answerString = "세종대왕"
+        val answerString2 = "이순신"
+
+        val command =
+            CreateQuestionAndAnswerCommand(
+                bookId = book.id,
+                question = questionString,
+                memberId = member.id,
+                answerList =
+                    listOf(
+                        CreateQuestionAndAnswerRequestDto.AnswerItem(
+                            answer = answerString,
+                            correctYn = true,
+                        ),
+                        CreateQuestionAndAnswerRequestDto.AnswerItem(
+                            answer = answerString2,
+                            correctYn = false,
+                        ),
+                    ),
+            )
+
+        // when
+        val questionId = createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
+
+        // then
+        val question = questionRepository.findById(questionId).getOrNull()!!
+        assertThat(question.question).isEqualTo(questionString)
+        assertThat(question.answerId).isEqualTo(question.answerList.firstOrNull { it.correctYn }!!.id)
+        assertThat(question.answerList.size).isEqualTo(2)
+        assertThat(question.answerList[0].answer).isEqualTo(answerString)
+        assertThat(question.answerList[0].memberId).isEqualTo(question.memberId)
+        assertThat(question.answerList[0].correctYn).isTrue()
+        assertThat(question.answerList[1].answer).isEqualTo(answerString2)
+        assertThat(question.answerList[1].memberId).isEqualTo(question.memberId)
+        assertThat(question.answerList[1].correctYn).isFalse()
+        assertThat(question.questionType).isEqualTo(QuestionType.CHOICE)
     }
 
     @Test
@@ -165,7 +208,7 @@ class CreateQuestionAndAnswerActionTest(
             )
 
         // when & then
-        assertThrows<NotFoundException> {
+        assertThrows<IllegalStateException> {
             createQuestionAndAnswerUseCase.createQuestionAndAnswer(command)
         }.message.apply { assertThat(this).isEqualTo("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.") }
     }

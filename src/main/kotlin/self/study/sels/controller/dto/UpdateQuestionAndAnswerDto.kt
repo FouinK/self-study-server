@@ -13,3 +13,7 @@ class UpdateQuestionAndAnswerRequestDto(
         val correctYn: Boolean,
     )
 }
+
+class UpdateQuestionAndAnswerResponseDto(
+    val questionId: Int,
+)

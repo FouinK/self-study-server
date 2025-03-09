@@ -1,10 +1,10 @@
-package self.study.sels.application.book_case.action
+package self.study.sels.application.bookcase.action
 
 import self.study.sels.annotation.Action
-import self.study.sels.application.book_case.port.`in`.GetBookcaseListCommand
-import self.study.sels.application.book_case.port.`in`.GetBookcaseListUseCase
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseListCommand
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseListUseCase
 import self.study.sels.controller.dto.GetBookcaseListResponseDto
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.model.bookcase.BookcaseRepository
 
 @Action
 class GetBookcaseListAction(

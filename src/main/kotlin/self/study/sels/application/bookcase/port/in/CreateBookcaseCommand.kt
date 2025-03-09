@@ -1,6 +1,6 @@
-package self.study.sels.application.book_case.port.`in`
+package self.study.sels.application.bookcase.port.`in`
 
-import self.study.sels.model.book_case.Bookcase
+import self.study.sels.model.bookcase.Bookcase
 
 class CreateBookcaseCommand(
     val name: String,

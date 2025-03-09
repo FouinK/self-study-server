@@ -1,6 +1,6 @@
 package fixtures
 
-import self.study.sels.model.book_case.Bookcase
+import self.study.sels.model.bookcase.Bookcase
 
 class BookcaseBuilder(
     val name: String,

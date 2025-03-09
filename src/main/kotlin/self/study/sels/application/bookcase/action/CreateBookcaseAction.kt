@@ -1,10 +1,10 @@
-package self.study.sels.application.book_case.action
+package self.study.sels.application.bookcase.action
 
 import self.study.sels.annotation.Action
-import self.study.sels.application.book_case.port.`in`.CreateBookcaseCommand
-import self.study.sels.application.book_case.port.`in`.CreateBookcaseUseCase
-import self.study.sels.model.book_case.BookcaseFactory
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.application.bookcase.port.`in`.CreateBookcaseCommand
+import self.study.sels.application.bookcase.port.`in`.CreateBookcaseUseCase
+import self.study.sels.model.bookcase.BookcaseFactory
+import self.study.sels.model.bookcase.BookcaseRepository
 
 @Action
 class CreateBookcaseAction(

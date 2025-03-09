@@ -1,4 +1,4 @@
-package self.study.sels.application.book_case.action
+package self.study.sels.application.bookcase.action
 
 import fixtures.BookBuilder
 import fixtures.BookcaseBuilder
@@ -8,11 +8,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import self.study.sels.application.book_case.port.`in`.GetBookcaseCommand
-import self.study.sels.application.book_case.port.`in`.GetBookcaseUseCase
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseCommand
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseUseCase
 import self.study.sels.model.book.BookRepository
-import self.study.sels.model.book_case.Bookcase
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.model.bookcase.Bookcase
+import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 

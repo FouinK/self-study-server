@@ -1,11 +1,11 @@
-package self.study.sels.application.book_case.action
+package self.study.sels.application.bookcase.action
 
 import self.study.sels.annotation.Action
-import self.study.sels.application.book_case.port.`in`.UpdateBookcaseCommand
-import self.study.sels.application.book_case.port.`in`.UpdateBookcaseUseCase
+import self.study.sels.application.bookcase.port.`in`.UpdateBookcaseCommand
+import self.study.sels.application.bookcase.port.`in`.UpdateBookcaseUseCase
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.model.bookcase.BookcaseRepository
 
 @Action
 class UpdateBookcaseAction(

@@ -1,4 +1,4 @@
-package self.study.sels.application.book_case.action
+package self.study.sels.application.bookcase.action
 
 import fixtures.BookcaseBuilder
 import fixtures.MemberBuilder
@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import self.study.sels.application.book_case.port.`in`.GetBookcaseListCommand
-import self.study.sels.application.book_case.port.`in`.GetBookcaseListUseCase
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseListCommand
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseListUseCase
+import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 

@@ -16,8 +16,8 @@ import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
-import self.study.sels.model.book_case.Bookcase
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.model.bookcase.Bookcase
+import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 

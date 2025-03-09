@@ -5,7 +5,7 @@ import self.study.sels.application.book.port.`in`.CreateBookCommand
 import self.study.sels.application.book.port.`in`.CreateBookUseCase
 import self.study.sels.model.book.BookFactory
 import self.study.sels.model.book.BookRepository
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.model.bookcase.BookcaseRepository
 
 @Action
 class CreateBookAction(

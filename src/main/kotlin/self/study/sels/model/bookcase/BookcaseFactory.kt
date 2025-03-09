@@ -1,4 +1,4 @@
-package self.study.sels.model.book_case
+package self.study.sels.model.bookcase
 
 import org.springframework.stereotype.Component
 

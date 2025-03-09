@@ -1,6 +1,6 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-package self.study.sels.model.book_case
+package self.study.sels.model.bookcase
 
 import jakarta.persistence.*
 import self.study.sels.model.BaseTimeEntity

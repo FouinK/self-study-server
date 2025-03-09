@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import self.study.sels.application.book_case.port.`in`.*
+import self.study.sels.application.bookcase.port.`in`.*
 import self.study.sels.config.auth.MemberInfo
 import self.study.sels.controller.dto.CreateBookcaseRequestDto
 import self.study.sels.controller.dto.CreateBookcaseResponseDto

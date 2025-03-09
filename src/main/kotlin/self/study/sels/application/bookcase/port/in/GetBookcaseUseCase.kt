@@ -1,4 +1,4 @@
-package self.study.sels.application.book_case.port.`in`
+package self.study.sels.application.bookcase.port.`in`
 
 import self.study.sels.controller.dto.GetBookcaseResponseDto
 

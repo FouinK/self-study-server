@@ -1,4 +1,4 @@
-package self.study.sels.application.book_case.action
+package self.study.sels.application.bookcase.action
 
 import fixtures.BookcaseBuilder
 import fixtures.MemberBuilder
@@ -9,10 +9,10 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import self.study.sels.IntegrationTest
-import self.study.sels.application.book_case.port.`in`.CreateBookcaseCommand
-import self.study.sels.application.book_case.port.`in`.CreateBookcaseUseCase
-import self.study.sels.model.book_case.Bookcase
-import self.study.sels.model.book_case.BookcaseRepository
+import self.study.sels.application.bookcase.port.`in`.CreateBookcaseCommand
+import self.study.sels.application.bookcase.port.`in`.CreateBookcaseUseCase
+import self.study.sels.model.bookcase.Bookcase
+import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import java.lang.IllegalArgumentException

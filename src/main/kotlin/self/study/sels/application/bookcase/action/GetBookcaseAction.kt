@@ -1,8 +1,8 @@
-package self.study.sels.application.book_case.action
+package self.study.sels.application.bookcase.action
 
 import self.study.sels.annotation.Action
-import self.study.sels.application.book_case.port.`in`.GetBookcaseCommand
-import self.study.sels.application.book_case.port.`in`.GetBookcaseUseCase
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseCommand
+import self.study.sels.application.bookcase.port.`in`.GetBookcaseUseCase
 import self.study.sels.controller.dto.GetBookcaseResponseDto
 import self.study.sels.model.book.BookRepository
 

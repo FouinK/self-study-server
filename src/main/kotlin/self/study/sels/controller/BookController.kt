@@ -70,4 +70,10 @@ class BookController(
             ),
         )
     }
+
+    @PostMapping("/{bookId}/solve")
+    fun startSolveBook(
+        @PathVariable("bookId") bookId: Int,
+    ) {
+    }
 }

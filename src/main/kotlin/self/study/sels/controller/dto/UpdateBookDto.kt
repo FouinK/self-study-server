@@ -4,3 +4,7 @@ class UpdateBookRequestDto(
     val bookId: Int,
     val name: String,
 )
+
+class UpdateBookResponseDto(
+    val name: String,
+)

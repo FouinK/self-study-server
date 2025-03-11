@@ -6,9 +6,11 @@ import fixtures.step.CreateQuestionStep
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import self.study.sels.IntegrationTest
 import self.study.sels.application.book.port.`in`.StartSolveBookCommand
 import self.study.sels.application.book.port.`in`.StartSolveBookUseCase
+import self.study.sels.exception.NotFoundException
 import self.study.sels.model.answer.Answer
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.Book
@@ -95,5 +97,21 @@ class StartSolveBookActionTest(
 
         Assertions.assertThat(bookResultHistory.bookId).isEqualTo(book.id)
         Assertions.assertThat(bookResultHistory.memberId).isEqualTo(member.id)
+    }
+
+    @Test
+    fun `본인의 책이 아닌 경우에 예외가 발생한다`() {
+        //given
+        val anotherMember = memberRepository.save(MemberBuilder().build())
+
+        val command = StartSolveBookCommand(
+            bookId = book.id,
+            memberId = anotherMember.id,
+        )
+
+        //when & then
+        assertThrows<NotFoundException> {
+            startSolveBookUseCase.execute(command)
+        }
     }
 }

@@ -19,8 +19,8 @@ class StartSolveBookAction(
     override fun execute(
         command: StartSolveBookCommand
     ): Int {
-        val book = bookRepository.findById(command.bookId)
-            .orElseThrow { throw NotFoundException("책을 찾을 수 없습니다.") }
+        val book = bookRepository.findByIdAndMemberId(command.bookId, command.memberId)
+            ?: throw NotFoundException("책을 찾을 수 없습니다.")
 
         return bookResultHistoryRepository.save(
             bookResultHistoryFactory.create(

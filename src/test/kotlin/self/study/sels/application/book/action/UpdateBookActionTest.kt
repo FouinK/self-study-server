@@ -1,8 +1,5 @@
 package self.study.sels.application.book.action
 
-import fixtures.BookBuilder
-import fixtures.BookcaseBuilder
-import fixtures.MemberBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,6 +11,9 @@ import self.study.sels.application.book.port.`in`.UpdateBookCommand
 import self.study.sels.application.book.port.`in`.UpdateBookUseCase
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
+import self.study.sels.fixture.BookBuilder
+import self.study.sels.fixture.BookcaseBuilder
+import self.study.sels.fixture.MemberBuilder
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.bookcase.Bookcase

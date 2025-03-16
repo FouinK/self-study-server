@@ -1,4 +1,4 @@
-package fixtures
+package self.study.sels.fixture
 
 import self.study.sels.model.book.Book
 

@@ -7,14 +7,14 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.IntegrationTest
-import self.study.sels.application.member.port.`in`.JoinUseCase
+import self.study.sels.application.member.port.`in`.JoinAndLoginUseCase
 import self.study.sels.controller.dto.JoinMemberRequestDto
 import self.study.sels.model.member.MemberAuthenticationRedisRepository
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.util.AuthCodeUtil
 
-internal class JoinActionTest(
-    private val sut: JoinUseCase,
+internal class JoinAndLoginActionTest(
+    private val sut: JoinAndLoginUseCase,
     private val memberAuthenticationRedisRepository: MemberAuthenticationRedisRepository,
     private val memberRepository: MemberRepository,
     private val stringRedisTemplate: StringRedisTemplate,

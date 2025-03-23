@@ -1,8 +1,5 @@
 package self.study.sels.application.book.action
 
-import fixtures.BookBuilder
-import fixtures.MemberBuilder
-import fixtures.step.CreateQuestionStep
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -11,23 +8,20 @@ import self.study.sels.IntegrationTest
 import self.study.sels.application.book.port.`in`.StartSolveBookCommand
 import self.study.sels.application.book.port.`in`.StartSolveBookUseCase
 import self.study.sels.exception.NotFoundException
+import self.study.sels.fixture.MemberBuilder
+import self.study.sels.fixture.step.CreateQuestionStep
 import self.study.sels.model.answer.Answer
-import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.Book
-import self.study.sels.model.book.BookRepository
 import self.study.sels.model.bookresulthistory.BookResultHistoryRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.Question
-import self.study.sels.model.question.QuestionRepository
 import kotlin.jvm.optionals.getOrNull
 
 class StartSolveBookActionTest(
+    private val createQuestionStep: CreateQuestionStep,
     private val startSolveBookUseCase: StartSolveBookUseCase,
-    private val questionRepository: QuestionRepository,
-    private val answerRepository: AnswerRepository,
     private val memberRepository: MemberRepository,
-    private val bookRepository: BookRepository,
     private val bookResultHistoryRepository: BookResultHistoryRepository,
 ) : IntegrationTest() {
     lateinit var member: Member
@@ -43,29 +37,17 @@ class StartSolveBookActionTest(
 
     @BeforeEach
     fun setUp() {
-        val createQuestionStep = CreateQuestionStep(
-            questionRepository,
-            answerRepository,
-        )
-
-        member = memberRepository.save(MemberBuilder().build())
-        book = bookRepository.save(
-            BookBuilder(
-                name = "영어",
-                memberId = member.id,
-                bookcaseId = 1,
-            ).build(),
-        )
-
         questionString = "문제"
         val answerListSize = 5
 
-        question = createQuestionStep.create(
-            member = member,
-            book = book,
+        val createQuestionResponse = createQuestionStep.create(
             questionString = questionString,
             answerListSize = answerListSize,
         )
+
+        question = createQuestionResponse.question
+        book = createQuestionResponse.book
+        member = createQuestionResponse.member
 
         question.answerList.forEachIndexed { index, answer ->
             when (index) {

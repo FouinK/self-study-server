@@ -1,8 +1,5 @@
 package self.study.sels.application.question.action
 
-import fixtures.BookBuilder
-import fixtures.MemberBuilder
-import fixtures.step.CreateQuestionStep
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -10,11 +7,9 @@ import self.study.sels.IntegrationTest
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerCommand
 import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.UpdateQuestionAndAnswerRequestDto
-import self.study.sels.model.answer.AnswerRepository
+import self.study.sels.fixture.step.CreateQuestionStep
 import self.study.sels.model.book.Book
-import self.study.sels.model.book.BookRepository
 import self.study.sels.model.member.Member
-import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.Question
 import self.study.sels.model.question.QuestionRepository
 import kotlin.jvm.optionals.getOrNull
@@ -22,9 +17,7 @@ import kotlin.jvm.optionals.getOrNull
 class UpdateQuestionAndAnswerActionTest(
     private val updateQuestionAndAnswerUseCase: UpdateQuestionAndAnswerUseCase,
     private val questionRepository: QuestionRepository,
-    private val answerRepository: AnswerRepository,
-    private val memberRepository: MemberRepository,
-    private val bookRepository: BookRepository,
+    private val createQuestionStep: CreateQuestionStep,
 ) : IntegrationTest() {
     lateinit var member: Member
     lateinit var question: Question
@@ -33,28 +26,16 @@ class UpdateQuestionAndAnswerActionTest(
 
     @BeforeEach
     fun setUp() {
-        val createQuestionStep = CreateQuestionStep(
-            questionRepository,
-            answerRepository,
-        )
-
-        member = memberRepository.save(MemberBuilder().build())
-        book = bookRepository.save(
-            BookBuilder(
-                name = "영어",
-                memberId = member.id,
-                bookcaseId = 1,
-            ).build(),
-        )
-
         questionString = "문제"
 
-        question = createQuestionStep.create(
-            member = member,
-            book = book,
+        val createQuestionStepResponse = createQuestionStep.create(
             questionString = questionString,
             answerListSize = 5,
         )
+
+        question = createQuestionStepResponse.question
+        member = createQuestionStepResponse.member
+        book = createQuestionStepResponse.book
     }
 
     @Test

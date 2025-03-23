@@ -49,4 +49,8 @@ class QuestionResultHistory(
     @Column(name = "question_type", nullable = false, columnDefinition = "enum('SHORT','CHOICE')")
     var questionType: QuestionType = questionType
         protected set
+
+    fun updateAnswerResultHistoryList(answerResultHistories: List<AnswerResultHistory>) {
+        this.answerResultHistoryList = answerResultHistories.toMutableList()
+    }
 }

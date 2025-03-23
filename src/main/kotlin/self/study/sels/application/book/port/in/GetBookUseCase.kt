@@ -5,3 +5,8 @@ import self.study.sels.controller.dto.GetBookResponseDto
 interface GetBookUseCase {
     fun detail(command: GetBookCommand): GetBookResponseDto
 }
+
+class GetBookCommand(
+    val bookId: Int,
+    val memberId: Int,
+)

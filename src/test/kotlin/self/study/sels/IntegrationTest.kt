@@ -1,6 +1,7 @@
 package self.study.sels
 
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.context.TestPropertySource
@@ -10,5 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @TestPropertySource("classpath:application.yml")
+@ComponentScan("fixtures.step")
 @ActiveProfiles("test")
 open class IntegrationTest

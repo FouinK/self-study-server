@@ -1,10 +1,6 @@
 package self.study.sels.application.question.action
 
-import fixtures.BookBuilder
-import fixtures.BookcaseBuilder
-import fixtures.MemberBuilder
-import fixtures.QuestionBuilder
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -14,6 +10,10 @@ import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCom
 import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
 import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
 import self.study.sels.exception.ExistsNameException
+import self.study.sels.fixture.BookBuilder
+import self.study.sels.fixture.BookcaseBuilder
+import self.study.sels.fixture.MemberBuilder
+import self.study.sels.fixture.QuestionBuilder
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.bookcase.Bookcase

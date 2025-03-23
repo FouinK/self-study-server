@@ -24,6 +24,7 @@ class BookController(
     private val createBookUseCase: CreateBookUseCase,
     private val getBookUseCase: GetBookUseCase,
     private val updateBookUseCase: UpdateBookUseCase,
+    private val startSolveBookUseCase: StartSolveBookUseCase,
 ) {
     @GetMapping("/{bookId}")
     fun detail(
@@ -69,5 +70,16 @@ class BookController(
                 name = updateBookUseCase.update(command),
             ),
         )
+    }
+
+    @PostMapping("/{bookId}/solve")
+    fun startSolveBook(
+        @PathVariable("bookId") bookId: Int,
+    ) {
+        val command = StartSolveBookCommand(
+            bookId = bookId,
+            memberId = memberInfo.memberId,
+        )
+        startSolveBookUseCase.execute(command)
     }
 }

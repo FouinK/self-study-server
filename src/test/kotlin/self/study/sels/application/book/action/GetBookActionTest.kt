@@ -1,9 +1,5 @@
 package self.study.sels.application.book.action
 
-import fixtures.BookBuilder
-import fixtures.BookcaseBuilder
-import fixtures.MemberBuilder
-import fixtures.QuestionBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import self.study.sels.application.book.port.`in`.GetBookCommand
 import self.study.sels.application.book.port.`in`.GetBookUseCase
+import self.study.sels.fixture.BookBuilder
+import self.study.sels.fixture.BookcaseBuilder
+import self.study.sels.fixture.MemberBuilder
+import self.study.sels.fixture.QuestionBuilder
 import self.study.sels.model.book.Book
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.bookcase.Bookcase

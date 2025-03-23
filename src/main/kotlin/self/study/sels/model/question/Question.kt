@@ -66,4 +66,6 @@ class Question(
             QuestionType.SHORT
         }
     }
+
+    fun isShort() = this.questionType == QuestionType.SHORT
 }

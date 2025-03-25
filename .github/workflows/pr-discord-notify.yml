@@ -1,0 +1,19 @@
+name: Notify Discord on PR
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord notification
+        uses: Ilshidur/action-discord@master
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            🚀 새 Pull Request가 생성되었습니다!
+            🔗 PR 링크: ${{ github.event.pull_request.html_url }}
+            🧑‍💻 작성자: ${{ github.event.pull_request.user.login }}
+            📝 제목: ${{ github.event.pull_request.title }}

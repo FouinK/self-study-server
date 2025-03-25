@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord notification
-        uses: Ilshidur/action-discord@1.0.0
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: |
+          args: |
             🚀 새 Pull Request가 생성되었습니다!
             🔗 PR 링크: ${{ github.event.pull_request.html_url }}
             🧑‍💻 작성자: ${{ github.event.pull_request.user.login }}

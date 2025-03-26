@@ -23,8 +23,7 @@ class WebMvcConfig(
             .allowedOrigins(
                 "http://localhost:3000",
                 "http://192.168.123.105:3000",
-                "https://brandsite-alpha.cleaninglab.co.kr",
-                "https://www.cleaninglab.co.kr",
+                "http://192.168.123.169:3000",
             ).allowedMethods("*")
             .allowCredentials(true)
     }

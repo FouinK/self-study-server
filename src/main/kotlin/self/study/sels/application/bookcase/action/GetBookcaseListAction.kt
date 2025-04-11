@@ -23,7 +23,7 @@ class GetBookcaseListAction(
             page = bookcasePage.number,
             bookcaseList = bookcasePage.content.map {
                 GetBookcaseListResponseDto.Item(
-                    bookCaseId = it.id,
+                    bookcaseId = it.id,
                     bookcaseName = it.name,
                 )
             },

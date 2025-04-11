@@ -6,7 +6,7 @@ class GetBookcaseListResponseDto(
     val bookcaseList: List<Item>,
 ) {
     class Item(
-        val bookCaseId: Int,
+        val bookcaseId: Int,
         val bookcaseName: String,
     )
 }

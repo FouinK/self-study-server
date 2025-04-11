@@ -21,8 +21,8 @@ import self.study.sels.controller.dto.UpdateBookResponseDto
 @RequestMapping("/sels/api/u/book")
 class BookController(
     private val memberInfo: MemberInfo,
-    private val createBookUseCase: CreateBookUseCase,
     private val getBookUseCase: GetBookUseCase,
+    private val createBookUseCase: CreateBookUseCase,
     private val updateBookUseCase: UpdateBookUseCase,
 ) {
     @GetMapping("/{bookId}")

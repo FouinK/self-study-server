@@ -35,7 +35,7 @@ class UserAuthInterceptor(
         if (authToken.isNullOrEmpty()) {
             throw Exception() // TODO : 여기 kona에 있는거 그대로 정의하기
         }
-        val member: Member = memberRepository.findByAuthToken(authToken)
+        val member: Member = memberRepository.findByAuthToken(authToken.split(" ")[1])
             ?: throw Exception() // TODO : 여기 kona에 있는거 그대로 정의하기
 
         memberInfo.init(

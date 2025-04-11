@@ -1,8 +1,6 @@
 package self.study.sels.application.bookcase.action
 
-import fixtures.BookcaseBuilder
-import fixtures.MemberBuilder
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +9,8 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import self.study.sels.application.bookcase.port.`in`.GetBookcaseListCommand
 import self.study.sels.application.bookcase.port.`in`.GetBookcaseListUseCase
+import self.study.sels.fixture.BookcaseBuilder
+import self.study.sels.fixture.MemberBuilder
 import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository

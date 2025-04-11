@@ -9,9 +9,6 @@ naver:
   client-key:
   auth-url: https://nid.naver.com
 
-# TODO : redis 세팅하는데 테스트환경 redis랑 분리하기
-# TODO 도커로 띄울거고 테스트 환경도 도커로, 그리고 pr할때 모든 test 돌릴 건데 git action 에서 redis 띄웠다 죽였다 할 수 있는지
-
 --- #production phase
 spring:
   config:
@@ -128,7 +125,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         show-sql: true

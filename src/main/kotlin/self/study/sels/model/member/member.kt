@@ -4,6 +4,8 @@ package self.study.sels.model.member
 
 import jakarta.persistence.*
 import self.study.sels.model.BaseTimeEntity
+import self.study.sels.util.AuthCodeUtil
+import java.util.*
 
 @Entity
 @Table(name = "member")
@@ -57,5 +59,9 @@ class Member(
         this.os = os
         this.osVersion = osVersion
         this.appVersion = appVersion
+    }
+
+    fun refreshToken() {
+        this.authToken = AuthCodeUtil.generateAuthToken()
     }
 }

@@ -6,4 +6,6 @@ interface MemberRepository : JpaRepository<Member, Int> {
     fun findByAuthToken(authToken: String): Member?
 
     fun existsByPhone(phone: String): Boolean
+
+    fun findByPhone(phone: String): Member?
 }

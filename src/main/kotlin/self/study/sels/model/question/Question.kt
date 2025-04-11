@@ -1,7 +1,6 @@
 package self.study.sels.model.question
 
 import jakarta.persistence.*
-import self.study.sels.exception.NotFoundException
 import self.study.sels.model.BaseTimeEntity
 import self.study.sels.model.answer.Answer
 
@@ -13,6 +12,7 @@ class Question(
     question: String,
     answerId: Int? = null,
     answerList: List<Answer> = listOf(),
+    questionType: QuestionType = QuestionType.CHOICE,
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,11 @@ class Question(
     var answerList: MutableList<Answer> = answerList.toMutableList()
         protected set
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "question_type", nullable = false, columnDefinition = "enum('SHORT','CHOICE')")
+    var questionType: QuestionType = questionType
+        protected set
+
     fun updateQuestion(question: String) {
         this.question = question
     }
@@ -52,9 +57,15 @@ class Question(
         this.answerList.addAll(changeAnswerList)
 
         check(this.answerList.isNotEmpty()) { "질문에 대한 답 리스트를 작성해주세요." }
+        check(changeAnswerList.any { it.correctYn }) { "질문에 대한 답 리스트가 존재하는데 정답이 없습니다." }
 
-        val correctAnswer = changeAnswerList.find { it.correctYn } ?: throw NotFoundException("질문에 대한 답 리스트가 존재하는데 정답이 없습니다.")
-
-        this.answerId = correctAnswer.id
+        this.answerId = changeAnswerList.find { it.correctYn }!!.id
+        this.questionType = if (this.answerList.size > 1) {
+            QuestionType.CHOICE
+        } else {
+            QuestionType.SHORT
+        }
     }
+
+    fun isShort() = this.questionType == QuestionType.SHORT
 }

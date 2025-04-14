@@ -126,9 +126,7 @@ class JoinAndLoginAction(
         questionRepository.saveAll(questions.map { it.first })
         answerRepository.saveAll(questions.flatMap { it.second })
 
-        questions.forEach {
-            it.first.updateAnswerList(it.second)
-        }
+        questions.forEach { it.first.updateAnswerList(it.second) }
 
         questionRepository.saveAll(questions.map { it.first })
     }

@@ -50,6 +50,7 @@ class GlobalExceptionHandler(
         val errorMsg = ErrorMsg(
             content = msg,
         )
+        logger().error("Unexpected error occurred", ex)
         watchTowerService.sendErrorNotification(errorMsg)
         return GlobalErrorResponseDto(
             code = HttpStatus.INTERNAL_SERVER_ERROR.value(),

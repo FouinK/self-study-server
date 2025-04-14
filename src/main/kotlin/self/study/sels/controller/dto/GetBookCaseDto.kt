@@ -13,6 +13,7 @@ class GetBookcaseListResponseDto(
 
 class GetBookcaseResponseDto(
     val bookList: List<Item>,
+    val bookcaseName: String?,
 ) {
     class Item(
         val bookId: Int,

@@ -11,4 +11,6 @@ interface QuestionRepository : JpaRepository<Question, Int>, QuestionRepositoryC
 
     @EntityGraph(attributePaths = ["answerList"])
     fun findByIdAndMemberId(questionId: Int, memberId: Int): Question?
+
+    fun findAllByMemberId(memberId: Int): List<Question>
 }

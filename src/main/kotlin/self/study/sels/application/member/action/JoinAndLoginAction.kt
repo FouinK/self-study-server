@@ -8,9 +8,20 @@ import self.study.sels.application.member.port.`in`.JoinAndLoginUseCase
 import self.study.sels.application.member.port.`in`.JoinMemberResponseDto
 import self.study.sels.controller.dto.JoinMemberRequestDto
 import self.study.sels.exception.NotFoundException
+import self.study.sels.model.answer.AnswerFactory
+import self.study.sels.model.answer.AnswerRepository
+import self.study.sels.model.book.BookFactory
+import self.study.sels.model.book.BookRepository
+import self.study.sels.model.bookcase.BookcaseFactory
+import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.MemberAuthenticationRedisRepository
 import self.study.sels.model.member.MemberFactory
 import self.study.sels.model.member.MemberRepository
+import self.study.sels.model.question.QuestionFactory
+import self.study.sels.model.question.QuestionRepository
+import self.study.sels.service.BookPOJO
+import self.study.sels.service.BookcasePOJO
+import self.study.sels.service.NewbieJoinService
 import self.study.sels.util.AuthCodeUtil
 
 @Action
@@ -19,6 +30,15 @@ class JoinAndLoginAction(
     private val memberAuthenticationRedisRepository: MemberAuthenticationRedisRepository,
     private val memberFactory: MemberFactory,
     private val memberRepository: MemberRepository,
+    private val newbieJoinService: NewbieJoinService,
+    private val bookcaseFactory: BookcaseFactory,
+    private val bookFactory: BookFactory,
+    private val bookcaseRepository: BookcaseRepository,
+    private val bookRepository: BookRepository,
+    private val questionFactory: QuestionFactory,
+    private val answerFactory: AnswerFactory,
+    private val questionRepository: QuestionRepository,
+    private val answerRepository: AnswerRepository,
 ) : JoinAndLoginUseCase {
     @Transactional
     override fun execute(
@@ -52,9 +72,64 @@ class JoinAndLoginAction(
 
         memberAuthenticationRedisRepository.deleteMemberAuthenticationCode(command.phone)
 
+        createNewbie(memberId = member.id)
+
         return JoinMemberResponseDto(
             memberId = member.id,
             authToken = member.authToken!!,
         )
+    }
+
+    private fun createNewbie(memberId: Int) {
+        val bookcase = bookcaseRepository.save(
+            bookcaseFactory.create(
+                BookcaseFactory.Command(
+                    name = BookcasePOJO().name,
+                    memberId = memberId,
+                ),
+            ),
+        )
+
+        val book = bookRepository.save(
+            bookFactory.create(
+                BookFactory.Command(
+                    name = BookPOJO().name,
+                    bookcaseId = bookcase.id,
+                    memberId = memberId,
+                ),
+            ),
+        )
+
+        val questionPOJOs = newbieJoinService.createNewbieQuestionPOJOs()
+
+        val questions = questionPOJOs.map { questionPOJO ->
+            val question = questionFactory.create(
+                QuestionFactory.Command(
+                    memberId = memberId,
+                    bookId = book.id,
+                    question = questionPOJO.question,
+                ),
+            )
+            val answers = questionPOJO.answerPOJOs.map { answerPOJO ->
+                answerFactory.create(
+                    AnswerFactory.Command(
+                        question = question,
+                        answer = answerPOJO.answer,
+                        correctYn = answerPOJO.correctYn,
+                        memberId = memberId,
+                    ),
+                )
+            }
+            question to answers
+        }
+
+        questionRepository.saveAll(questions.map { it.first })
+        answerRepository.saveAll(questions.flatMap { it.second })
+
+        questions.forEach {
+            it.first.updateAnswerList(it.second)
+        }
+
+        questionRepository.saveAll(questions.map { it.first })
     }
 }

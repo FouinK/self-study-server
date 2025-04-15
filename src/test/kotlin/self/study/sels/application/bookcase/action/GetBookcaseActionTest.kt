@@ -3,8 +3,7 @@ package self.study.sels.application.bookcase.action
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import self.study.sels.IntegrationTest
 import self.study.sels.application.bookcase.port.`in`.GetBookcaseCommand
 import self.study.sels.application.bookcase.port.`in`.GetBookcaseUseCase
 import self.study.sels.fixture.BookBuilder
@@ -16,13 +15,12 @@ import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 
-@SpringBootTest
 class GetBookcaseActionTest(
-    @Autowired val bookRepository: BookRepository,
-    @Autowired val memberRepository: MemberRepository,
-    @Autowired val bookcaseRepository: BookcaseRepository,
-) {
-    lateinit var getBookcaseUseCase: GetBookcaseUseCase
+    private val bookRepository: BookRepository,
+    private val memberRepository: MemberRepository,
+    private val bookcaseRepository: BookcaseRepository,
+    private val sut: GetBookcaseUseCase,
+) : IntegrationTest() {
     lateinit var member: Member
     lateinit var bookcase: Bookcase
     lateinit var bookName1: String
@@ -31,11 +29,6 @@ class GetBookcaseActionTest(
 
     @BeforeEach
     fun setUp() {
-        getBookcaseUseCase =
-            GetBookcaseAction(
-                bookRepository,
-            )
-
         member = memberRepository.save(MemberBuilder().build())
 
         bookcase =
@@ -81,7 +74,7 @@ class GetBookcaseActionTest(
             )
 
         // when
-        val getBookcaseResponseDto = getBookcaseUseCase.detail(command)
+        val getBookcaseResponseDto = sut.detail(command)
 
         // then
         val actualBookcaseNames = getBookcaseResponseDto.bookList.map { it.bookName }

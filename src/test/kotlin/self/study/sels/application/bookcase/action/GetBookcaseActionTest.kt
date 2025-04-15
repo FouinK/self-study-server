@@ -34,6 +34,7 @@ class GetBookcaseActionTest(
         getBookcaseUseCase =
             GetBookcaseAction(
                 bookRepository,
+                bookcaseRepository,
             )
 
         member = memberRepository.save(MemberBuilder().build())

@@ -4,13 +4,20 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.springframework.data.domain.Pageable
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.IntegrationTest
 import self.study.sels.application.member.port.`in`.JoinAndLoginUseCase
 import self.study.sels.controller.dto.JoinMemberRequestDto
+import self.study.sels.model.answer.AnswerRepository
+import self.study.sels.model.book.BookRepository
+import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.MemberAuthenticationRedisRepository
 import self.study.sels.model.member.MemberRepository
+import self.study.sels.model.question.QuestionRepository
+import self.study.sels.service.BookPOJO
+import self.study.sels.service.BookcasePOJO
 import self.study.sels.util.AuthCodeUtil
 
 internal class JoinAndLoginActionTest(
@@ -18,6 +25,10 @@ internal class JoinAndLoginActionTest(
     private val memberAuthenticationRedisRepository: MemberAuthenticationRedisRepository,
     private val memberRepository: MemberRepository,
     private val stringRedisTemplate: StringRedisTemplate,
+    private val bookcaseRepository: BookcaseRepository,
+    private val bookRepository: BookRepository,
+    private val questionRepository: QuestionRepository,
+    private val answerRepository: AnswerRepository,
 ) : IntegrationTest() {
     val phone = "01011111111"
     lateinit var authenticationCode: String
@@ -80,5 +91,44 @@ internal class JoinAndLoginActionTest(
         assertThrows<Exception> {
             sut.execute(command)
         }
+    }
+
+    @Test
+    fun `회원가입 시 책장, 책, 질문, 답변이 모두 생성된다`() {
+        // given
+        val command = JoinMemberRequestDto(
+            phone = "01012345678",
+            authenticationCode = "1234",
+        )
+        memberAuthenticationRedisRepository.setMemberAuthenticationCode(
+            command.phone,
+            command.authenticationCode,
+        )
+
+        // when
+        val response = sut.execute(command)
+
+        // then
+        val memberId = response.memberId
+        val bookcases = bookcaseRepository.findAllByMemberId(memberId, Pageable.unpaged())
+        val books = bookRepository.findAllByMemberId(memberId)
+        val questions = questionRepository.findAllByMemberId(memberId)
+        val answers = answerRepository.findAllByMemberId(memberId)
+
+        assertThat(bookcases).hasSize(1)
+        assertThat(bookcases.content[0].name).isEqualTo(BookcasePOJO().name)
+
+        assertThat(books).hasSize(1)
+        assertThat(books[0].name).isEqualTo(BookPOJO().name)
+        assertThat(books[0].bookcaseId).isEqualTo(bookcases.content[0].id)
+
+        assertThat(questions).hasSize(3)
+        questions.forEach { q ->
+            assertThat(q.answerList.size).isEqualTo(5)
+            assertThat(q.answerId).isNotNull()
+            assertThat(q.answerList.any { it.correctYn }).isTrue()
+        }
+
+        assertThat(answers.size).isEqualTo(3 * 5)
     }
 }

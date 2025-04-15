@@ -19,4 +19,6 @@ interface BookRepository : JpaRepository<Book, Int>, BookRepositoryCustom {
     ): Boolean
 
     fun findByIdAndMemberId(bookId: Int, memberId: Int): Book?
+
+    fun findAllByMemberId(memberId: Int): List<Book>
 }

@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface AnswerRepository : JpaRepository<Answer, Int> {
     fun findAllByIdIn(idList: List<Int>): List<Answer>
+
+    fun findAllByMemberId(memberId: Int): List<Answer>
 }

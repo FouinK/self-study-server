@@ -4,6 +4,7 @@ import self.study.sels.annotation.Action
 import self.study.sels.application.bookcase.port.`in`.GetBookcaseCommand
 import self.study.sels.application.bookcase.port.`in`.GetBookcaseUseCase
 import self.study.sels.controller.dto.GetBookcaseResponseDto
+import self.study.sels.exception.NotFoundException
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.bookcase.BookcaseRepository
 
@@ -17,7 +18,8 @@ class GetBookcaseAction(
     ): GetBookcaseResponseDto {
         val bookList = bookRepository.findAllByBookcaseIdAndMemberId(command.bookcaseId, command.memberId)
 
-        val bookcaseName = bookcaseRepository.findById(command.bookcaseId).get().name
+        val bookcaseName = bookcaseRepository.findById(command.bookcaseId)
+            .orElseThrow { throw NotFoundException("책장을 찾을 수 없습니다.") }.name
 
         return GetBookcaseResponseDto(
             bookList = bookList.map {

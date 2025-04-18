@@ -58,6 +58,7 @@ class BookcaseController(
     ): ResponseEntity<Any> {
         val command = CreateBookcaseCommand(
             name = request.name,
+            color = request.color,
             memberId = memberInfo.memberId,
         )
 

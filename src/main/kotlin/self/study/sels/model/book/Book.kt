@@ -11,6 +11,7 @@ class Book(
     memberId: Int,
     bookcaseId: Int,
     name: String,
+    color: String,
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,10 @@ class Book(
 
     @Column(name = "name", nullable = false, length = 100)
     var name = name
+        protected set
+
+    @Column(name = "color", nullable = false, length = 100)
+    var color = color
         protected set
 
     fun updateName(name: String) {

@@ -8,6 +8,7 @@ class GetBookcaseListResponseDto(
     class Item(
         val bookcaseId: Int,
         val bookcaseName: String,
+        val bookcaseColor: String,
     )
 }
 
@@ -19,5 +20,6 @@ class GetBookcaseResponseDto(
         val bookId: Int,
         val bookcaseId: Int,
         val bookName: String,
+        val bookColor: String,
     )
 }

@@ -9,12 +9,14 @@ interface CreateBookUseCase {
 class CreateBookCommand(
     val bookcaseId: Int,
     val name: String,
+    val color: String,
     val memberId: Int,
 ) {
     fun toEntity(): Book {
         return Book(
             bookcaseId = this.bookcaseId,
             name = this.name,
+            color = this.color,
             memberId = this.memberId,
         )
     }

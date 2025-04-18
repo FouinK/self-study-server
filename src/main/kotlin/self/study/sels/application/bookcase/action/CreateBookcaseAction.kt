@@ -22,6 +22,7 @@ class CreateBookcaseAction(
             bookcaseFactory.create(
                 BookcaseFactory.Command(
                     name = command.name,
+                    color = command.color,
                     memberId = command.memberId,
                 ),
             ),

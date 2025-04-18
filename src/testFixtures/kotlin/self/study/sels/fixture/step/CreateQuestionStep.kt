@@ -31,12 +31,14 @@ class CreateQuestionStep(
         val bookcase = bookCaseRepository.save(
             BookcaseBuilder(
                 name = "영어",
+                color = "#6C86E8",
                 memberId = member.id,
             ).build(),
         )
         val book = bookRepository.save(
             BookBuilder(
                 name = "영어",
+                color = "#6C86E8",
                 memberId = member.id,
                 bookcaseId = bookcase.id,
             ).build(),

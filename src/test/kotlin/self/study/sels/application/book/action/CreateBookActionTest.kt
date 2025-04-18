@@ -33,6 +33,7 @@ class CreateBookActionTest(
             bookcaseRepository.save(
                 BookcaseBuilder(
                     name = "영어",
+                    color = "#6C86E8",
                     memberId = member.id,
                 ).build(),
             )
@@ -45,6 +46,7 @@ class CreateBookActionTest(
             CreateBookCommand(
                 bookcaseId = bookcase.id,
                 name = "1단원",
+                color = "#6C86E8",
                 memberId = member.id,
             )
 

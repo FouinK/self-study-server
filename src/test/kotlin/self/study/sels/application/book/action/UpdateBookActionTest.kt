@@ -54,6 +54,7 @@ class UpdateBookActionTest(
             bookcaseRepository.save(
                 BookcaseBuilder(
                     name = "책장",
+                    color = "#6C86E8",
                     memberId = member.id,
                 ).build(),
             )
@@ -61,6 +62,7 @@ class UpdateBookActionTest(
             bookcaseRepository.save(
                 BookcaseBuilder(
                     name = "책장",
+                    color = "#6C86E8",
                     memberId = otherMember.id,
                 ).build(),
             )
@@ -68,6 +70,7 @@ class UpdateBookActionTest(
         bookRepository.save(
             BookBuilder(
                 name = existsName,
+                color = "#6C86E8",
                 memberId = member.id,
                 bookcaseId = bookcase.id,
             ).build(),
@@ -76,6 +79,7 @@ class UpdateBookActionTest(
             bookRepository.save(
                 BookBuilder(
                     name = updateBeforeName,
+                    color = "#6C86E8",
                     memberId = member.id,
                     bookcaseId = bookcase.id,
                 ).build(),
@@ -85,6 +89,7 @@ class UpdateBookActionTest(
             bookRepository.save(
                 BookBuilder(
                     name = "책이름",
+                    color = "#6C86E8",
                     memberId = otherMember.id,
                     bookcaseId = otherMemberBookcase.id,
                 ).build(),

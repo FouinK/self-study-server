@@ -8,6 +8,8 @@ class CreateBookRequestDto(
     val bookcaseId: Int,
     @field:NotBlank
     val name: String,
+    @field:NotBlank
+    val color: String,
 )
 
 class CreateBookResponseDto(

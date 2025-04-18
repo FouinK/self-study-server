@@ -25,6 +25,7 @@ class GetBookcaseListAction(
                 GetBookcaseListResponseDto.Item(
                     bookcaseId = it.id,
                     bookcaseName = it.name,
+                    bookcaseColor = it.color,
                 )
             },
         )

@@ -10,6 +10,7 @@ import self.study.sels.model.BaseTimeEntity
 class Bookcase(
     memberId: Int,
     name: String,
+    color: String,
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +23,10 @@ class Bookcase(
 
     @Column(name = "name", nullable = false, length = 100)
     var name = name
+        protected set
+
+    @Column(name = "color", nullable = false, length = 100)
+    var color = color
         protected set
 
     fun updateName(name: String) {

@@ -46,6 +46,7 @@ class BookController(
         val command = CreateBookCommand(
             bookcaseId = request.bookcaseId,
             name = request.name,
+            color = request.color,
             memberId = memberInfo.memberId,
         )
 

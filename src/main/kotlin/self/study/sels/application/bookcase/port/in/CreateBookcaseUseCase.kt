@@ -6,5 +6,6 @@ interface CreateBookcaseUseCase {
 
 class CreateBookcaseCommand(
     val name: String,
+    val color: String,
     val memberId: Int,
 )

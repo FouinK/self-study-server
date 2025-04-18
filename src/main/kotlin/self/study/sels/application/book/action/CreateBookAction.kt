@@ -24,6 +24,7 @@ class CreateBookAction(
                 BookFactory.Command(
                     bookcaseId = bookcase.id,
                     name = command.name,
+                    color = command.color,
                     memberId = command.memberId,
                 ),
             ),

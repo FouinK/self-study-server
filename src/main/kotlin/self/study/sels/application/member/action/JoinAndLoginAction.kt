@@ -85,6 +85,7 @@ class JoinAndLoginAction(
             bookcaseFactory.create(
                 BookcaseFactory.Command(
                     name = BookcasePOJO().name,
+                    color = BookcasePOJO().color,
                     memberId = memberId,
                 ),
             ),
@@ -94,6 +95,7 @@ class JoinAndLoginAction(
             bookFactory.create(
                 BookFactory.Command(
                     name = BookPOJO().name,
+                    color = BookPOJO().color,
                     bookcaseId = bookcase.id,
                     memberId = memberId,
                 ),

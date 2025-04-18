@@ -8,6 +8,7 @@ class BookFactory {
         Book(
             bookcaseId = command.bookcaseId,
             name = command.name,
+            color = command.color,
             memberId = command.memberId,
         )
 
@@ -15,5 +16,6 @@ class BookFactory {
         val memberId: Int,
         val bookcaseId: Int,
         val name: String,
+        val color: String,
     )
 }

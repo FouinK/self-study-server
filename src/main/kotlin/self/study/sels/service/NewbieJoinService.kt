@@ -3,11 +3,13 @@ package self.study.sels.service
 import org.springframework.stereotype.Service
 
 data class BookcasePOJO(
-    val name: String = "한국사"
+    val name: String = "한국사",
+    val color: String = "#6C86E8"
 )
 
 data class BookPOJO(
-    val name: String = "조선시대 (연습문제)"
+    val name: String = "조선시대 (연습문제)",
+    val color: String = "#6C86E8"
 )
 
 data class AnswerPOJO(

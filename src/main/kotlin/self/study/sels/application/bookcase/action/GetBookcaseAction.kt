@@ -27,6 +27,7 @@ class GetBookcaseAction(
                     it.id,
                     it.bookcaseId,
                     bookName = it.name,
+                    bookColor = it.color,
                 )
             },
             bookcaseName = bookcaseName,

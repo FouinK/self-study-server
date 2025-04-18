@@ -35,6 +35,7 @@ class GetBookcaseActionTest(
             bookcaseRepository.save(
                 BookcaseBuilder(
                     name = "영어",
+                    color = "#6C86E8",
                     memberId = member.id,
                 ).build(),
             )
@@ -47,16 +48,19 @@ class GetBookcaseActionTest(
             listOf(
                 BookBuilder(
                     name = bookName1,
+                    color = "#6C86E8",
                     memberId = member.id,
                     bookcaseId = bookcase.id,
                 ).build(),
                 BookBuilder(
                     name = bookName2,
+                    color = "#6C86E8",
                     memberId = member.id,
                     bookcaseId = bookcase.id,
                 ).build(),
                 BookBuilder(
                     name = bookName3,
+                    color = "#6C86E8",
                     memberId = member.id,
                     bookcaseId = bookcase.id,
                 ).build(),

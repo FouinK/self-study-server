@@ -43,9 +43,11 @@ class UpdateBookcaseActionTest(
 
         existsName = "이미 존재하는 이름"
         updateBeforeName = "수정 전 이름"
-        bookcaseRepository.save(BookcaseBuilder(name = existsName, memberId = member.id).build())
-        bookcase = bookcaseRepository.save(BookcaseBuilder(name = updateBeforeName, memberId = member.id).build())
-        otherMemberBookcase = bookcaseRepository.save(BookcaseBuilder(name = updateBeforeName, memberId = otherMember.id).build())
+        bookcaseRepository.save(BookcaseBuilder(name = existsName, memberId = member.id, color = "#6C86E8").build())
+        bookcase = bookcaseRepository.save(BookcaseBuilder(name = updateBeforeName, memberId = member.id, color = "#6C86E8").build())
+        otherMemberBookcase = bookcaseRepository.save(
+            BookcaseBuilder(name = updateBeforeName, memberId = otherMember.id, color = "#6C86E8").build(),
+        )
     }
 
     @Test

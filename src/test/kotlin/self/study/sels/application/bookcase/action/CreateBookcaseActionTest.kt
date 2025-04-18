@@ -33,6 +33,7 @@ class CreateBookcaseActionTest(
             bookcaseRepository.save(
                 BookcaseBuilder(
                     name = "국어",
+                    color = "#6C86E8",
                     memberId = defaultMember.id,
                 ).build(),
             )
@@ -42,9 +43,11 @@ class CreateBookcaseActionTest(
     fun `bookcase 생성 시 정상 저장 된다`() {
         // given
         val bookcaseName = "영어"
+        val bookcaseColor = "#6C86E8"
         val createBookCaseCommand =
             CreateBookcaseCommand(
                 name = bookcaseName,
+                color = bookcaseColor,
                 memberId = defaultMember.id,
             )
 
@@ -67,6 +70,7 @@ class CreateBookcaseActionTest(
         val createBookcaseCommand =
             CreateBookcaseCommand(
                 name = defaultBookcase.name,
+                color = defaultBookcase.color,
                 memberId = defaultMember.id,
             )
 

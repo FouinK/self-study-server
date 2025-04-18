@@ -45,6 +45,7 @@ class CreateQuestionAndAnswerActionTest(
             bookcaseRepository.save(
                 BookcaseBuilder(
                     name = "역사",
+                    color = "#6C86E8",
                     memberId = member.id,
                 ).build(),
             )
@@ -53,6 +54,7 @@ class CreateQuestionAndAnswerActionTest(
             bookRepository.save(
                 BookBuilder(
                     name = "1단원",
+                    color = "#6C86E8",
                     memberId = member.id,
                     bookcaseId = bookcase.id,
                 ).build(),

@@ -25,6 +25,7 @@ class GetBookcaseListActionTest(
     lateinit var english: String
     lateinit var korean: String
     lateinit var science: String
+    lateinit var color: String
 
     @BeforeEach
     fun beforeEach() {
@@ -35,6 +36,7 @@ class GetBookcaseListActionTest(
 
         member = memberRepository.save(MemberBuilder().build())
 
+        color = "#6C86E8"
         english = "영어"
         korean = "국어"
         science = "과학"
@@ -43,14 +45,17 @@ class GetBookcaseListActionTest(
             listOf(
                 BookcaseBuilder(
                     name = english,
+                    color = color,
                     memberId = member.id,
                 ).build(),
                 BookcaseBuilder(
                     name = korean,
+                    color = color,
                     memberId = member.id,
                 ).build(),
                 BookcaseBuilder(
                     name = science,
+                    color = color,
                     memberId = member.id,
                 ).build(),
             ),

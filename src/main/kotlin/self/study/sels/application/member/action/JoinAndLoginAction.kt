@@ -58,7 +58,7 @@ class JoinAndLoginAction(
             member.refreshToken()
             member
         } else {
-            memberRepository.save(
+            val newMember = memberRepository.save(
                 memberFactory.create(
                     MemberFactory.Command(
                         authToken = AuthCodeUtil.generateAuthToken(),
@@ -68,11 +68,11 @@ class JoinAndLoginAction(
                     ),
                 ),
             )
+            createNewbie(memberId = newMember.id)
+            newMember
         }
 
         memberAuthenticationRedisRepository.deleteMemberAuthenticationCode(command.phone)
-
-        createNewbie(memberId = member.id)
 
         return JoinMemberResponseDto(
             memberId = member.id,

@@ -10,6 +10,7 @@ import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.IntegrationTest
 import self.study.sels.application.member.port.`in`.JoinAndLoginUseCase
 import self.study.sels.controller.dto.JoinMemberRequestDto
+import self.study.sels.fixture.MemberBuilder
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.BookRepository
 import self.study.sels.model.bookcase.BookcaseRepository
@@ -130,5 +131,33 @@ internal class JoinAndLoginActionTest(
         }
 
         assertThat(answers.size).isEqualTo(3 * 5)
+    }
+
+    @Test
+    fun `로그인 시에는 뉴비키트가 생성되지 않는다 (빌더로 생성해서 뉴비키트 없는게 맞음)`() {
+        //given
+        val member = memberRepository.save(MemberBuilder().build())
+        val command = JoinMemberRequestDto(
+            phone = member.phone,
+            authenticationCode = "1234",
+        )
+        memberAuthenticationRedisRepository.setMemberAuthenticationCode(
+            command.phone,
+            command.authenticationCode,
+        )
+
+        // when
+        sut.execute(command)
+
+        //then
+        val bookcases = bookcaseRepository.findAllByMemberId(member.id, Pageable.unpaged())
+        val books = bookRepository.findAllByMemberId(member.id)
+        val questions = questionRepository.findAllByMemberId(member.id)
+        val answers = answerRepository.findAllByMemberId(member.id)
+
+        assertThat(bookcases).hasSize(0)
+        assertThat(books).hasSize(0)
+        assertThat(questions).hasSize(0)
+        assertThat(answers).hasSize(0)
     }
 }

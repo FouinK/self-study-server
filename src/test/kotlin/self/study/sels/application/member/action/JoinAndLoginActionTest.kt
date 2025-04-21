@@ -136,7 +136,11 @@ internal class JoinAndLoginActionTest(
     @Test
     fun `로그인 시에는 뉴비키트가 생성되지 않는다 (빌더로 생성해서 뉴비키트 없는게 맞음)`() {
         //given
-        val member = memberRepository.save(MemberBuilder().build())
+        val member = memberRepository.save(
+            MemberBuilder(
+                phone = "01011111111",
+            ).build(),
+        )
         val command = JoinMemberRequestDto(
             phone = member.phone,
             authenticationCode = "1234",

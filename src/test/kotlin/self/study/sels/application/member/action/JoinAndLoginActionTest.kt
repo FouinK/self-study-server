@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.IntegrationTest
-import self.study.sels.application.member.port.`in`.JoinAndLoginUseCase
-import self.study.sels.controller.dto.JoinMemberRequestDto
 import self.study.sels.fixture.MemberBuilder
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.book.BookRepository
@@ -17,8 +15,10 @@ import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.MemberAuthenticationRedisRepository
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.QuestionRepository
-import self.study.sels.service.BookPOJO
-import self.study.sels.service.BookcasePOJO
+import self.study.sels.userapi.member.application.action.JoinMemberRequestDto
+import self.study.sels.userapi.member.application.port.`in`.JoinAndLoginUseCase
+import self.study.sels.userapi.service.BookPOJO
+import self.study.sels.userapi.service.BookcasePOJO
 import self.study.sels.util.AuthCodeUtil
 
 internal class JoinAndLoginActionTest(

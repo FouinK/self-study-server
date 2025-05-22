@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.data.redis.core.StringRedisTemplate
 import self.study.sels.IntegrationTest
-import self.study.sels.application.member.port.`in`.AuthenticationUseCase
-import self.study.sels.controller.dto.AuthenticationMemberRequestDto
+import self.study.sels.userapi.member.application.action.AuthenticationMemberRequestDto
+import self.study.sels.userapi.member.application.port.`in`.AuthenticationUseCase
 
 internal class AuthenticationActionTest(
     private val sut: AuthenticationUseCase,

@@ -1,16 +1,16 @@
 package self.study.sels.application.answer.application
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import self.study.sels.IntegrationTest
-import self.study.sels.application.answer.port.`in`.SolveQuestionCommand
-import self.study.sels.application.answer.port.`in`.SolveQuestionUseCase
 import self.study.sels.fixture.step.CreateQuestionStep
 import self.study.sels.model.answer.Answer
 import self.study.sels.model.member.Member
 import self.study.sels.model.question.Question
 import self.study.sels.model.questionresulthistory.QuestionResultHistoryRepository
+import self.study.sels.userapi.answer.application.port.`in`.SolveQuestionCommand
+import self.study.sels.userapi.answer.application.port.`in`.SolveQuestionUseCase
 
 class SolveQuestionActionTest(
     private val createQuestionStep: CreateQuestionStep,

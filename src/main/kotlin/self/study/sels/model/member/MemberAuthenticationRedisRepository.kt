@@ -24,9 +24,7 @@ class MemberAuthenticationRedisRepository(
         stringRedisTemplate.opsForValue().set(phone, authenticationCode, Duration.ofMinutes(5L))
     }
 
-    fun getMemberAuthenticationCode(phone: String): String? {
-        return stringRedisTemplate.opsForValue().get(phone)
-    }
+    fun getMemberAuthenticationCode(phone: String): String? = stringRedisTemplate.opsForValue().get(phone)
 
     fun deleteMemberAuthenticationCode(phone: String) {
         stringRedisTemplate.delete(listOf("${phone}_count", phone))

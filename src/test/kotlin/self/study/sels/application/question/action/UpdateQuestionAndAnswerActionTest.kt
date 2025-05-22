@@ -4,14 +4,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import self.study.sels.IntegrationTest
-import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerCommand
-import self.study.sels.application.question.port.`in`.UpdateQuestionAndAnswerUseCase
-import self.study.sels.controller.dto.UpdateQuestionAndAnswerRequestDto
 import self.study.sels.fixture.step.CreateQuestionStep
 import self.study.sels.model.book.Book
 import self.study.sels.model.member.Member
 import self.study.sels.model.question.Question
 import self.study.sels.model.question.QuestionRepository
+import self.study.sels.userapi.question.application.action.UpdateQuestionAndAnswerRequestDto
+import self.study.sels.userapi.question.application.port.`in`.UpdateQuestionAndAnswerCommand
+import self.study.sels.userapi.question.application.port.`in`.UpdateQuestionAndAnswerUseCase
 import kotlin.jvm.optionals.getOrNull
 
 class UpdateQuestionAndAnswerActionTest(

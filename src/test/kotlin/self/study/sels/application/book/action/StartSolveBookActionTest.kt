@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import self.study.sels.IntegrationTest
-import self.study.sels.application.book.port.`in`.StartSolveBookCommand
-import self.study.sels.application.book.port.`in`.StartSolveBookUseCase
 import self.study.sels.exception.NotFoundException
 import self.study.sels.fixture.MemberBuilder
 import self.study.sels.fixture.step.CreateQuestionStep
@@ -16,6 +14,8 @@ import self.study.sels.model.bookresulthistory.BookResultHistoryRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.Question
+import self.study.sels.userapi.book.application.port.`in`.StartSolveBookCommand
+import self.study.sels.userapi.book.application.port.`in`.StartSolveBookUseCase
 import kotlin.jvm.optionals.getOrNull
 
 class StartSolveBookActionTest(

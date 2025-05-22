@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 import self.study.sels.IntegrationTest
-import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerCommand
-import self.study.sels.application.question.port.`in`.CreateQuestionAndAnswerUseCase
-import self.study.sels.controller.dto.CreateQuestionAndAnswerRequestDto
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.fixture.BookBuilder
 import self.study.sels.fixture.BookcaseBuilder
@@ -22,6 +19,9 @@ import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.QuestionRepository
 import self.study.sels.model.question.QuestionType
+import self.study.sels.userapi.question.application.action.CreateQuestionAndAnswerRequestDto
+import self.study.sels.userapi.question.application.port.`in`.CreateQuestionAndAnswerCommand
+import self.study.sels.userapi.question.application.port.`in`.CreateQuestionAndAnswerUseCase
 import kotlin.jvm.optionals.getOrNull
 
 @SpringBootTest

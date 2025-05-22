@@ -1,21 +1,20 @@
 package self.study.sels.application.bookcase.action
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import self.study.sels.IntegrationTest
-import self.study.sels.application.bookcase.port.`in`.CreateBookcaseCommand
-import self.study.sels.application.bookcase.port.`in`.CreateBookcaseUseCase
 import self.study.sels.fixture.BookcaseBuilder
 import self.study.sels.fixture.MemberBuilder
 import self.study.sels.model.bookcase.Bookcase
 import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
-import java.lang.IllegalArgumentException
+import self.study.sels.userapi.bookcase.application.port.`in`.CreateBookcaseCommand
+import self.study.sels.userapi.bookcase.application.port.`in`.CreateBookcaseUseCase
 
 @SpringBootTest
 class CreateBookcaseActionTest(
@@ -56,7 +55,8 @@ class CreateBookcaseActionTest(
 
         // then
         val bookcase =
-            bookcaseRepository.findById(bookcaseId)
+            bookcaseRepository
+                .findById(bookcaseId)
                 .orElseThrow { throw IllegalArgumentException("없는 아이디로 조회 테스트 실패") }
 
         assertThat(bookcase.id).isEqualTo(bookcaseId)

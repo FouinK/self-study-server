@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import self.study.sels.IntegrationTest
-import self.study.sels.application.book.port.`in`.CreateBookCommand
-import self.study.sels.application.book.port.`in`.CreateBookUseCase
 import self.study.sels.fixture.BookcaseBuilder
 import self.study.sels.fixture.MemberBuilder
 import self.study.sels.model.book.BookRepository
@@ -15,6 +13,8 @@ import self.study.sels.model.bookcase.Bookcase
 import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
+import self.study.sels.userapi.book.application.port.`in`.CreateBookCommand
+import self.study.sels.userapi.book.application.port.`in`.CreateBookUseCase
 
 @SpringBootTest
 class CreateBookActionTest(

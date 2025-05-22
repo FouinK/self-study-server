@@ -5,15 +5,15 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import self.study.sels.IntegrationTest
-import self.study.sels.application.question.port.`in`.GetQuestionCommand
-import self.study.sels.application.question.port.`in`.GetQuestionUseCase
-import self.study.sels.controller.dto.GetQuestionResponseDto
 import self.study.sels.exception.NotFoundException
 import self.study.sels.fixture.step.CreateQuestionStep
 import self.study.sels.model.answer.Answer
 import self.study.sels.model.answer.AnswerRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.question.Question
+import self.study.sels.userapi.question.application.action.GetQuestionResponseDto
+import self.study.sels.userapi.question.application.port.`in`.GetQuestionCommand
+import self.study.sels.userapi.question.application.port.`in`.GetQuestionUseCase
 
 class GetQuestionActionTest(
     private val answerRepository: AnswerRepository,

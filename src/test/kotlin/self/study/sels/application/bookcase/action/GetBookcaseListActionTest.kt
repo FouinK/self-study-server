@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import self.study.sels.application.bookcase.port.`in`.GetBookcaseListCommand
-import self.study.sels.application.bookcase.port.`in`.GetBookcaseListUseCase
 import self.study.sels.fixture.BookcaseBuilder
 import self.study.sels.fixture.MemberBuilder
 import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
+import self.study.sels.userapi.bookcase.application.action.GetBookcaseListAction
+import self.study.sels.userapi.bookcase.application.port.`in`.GetBookcaseListCommand
+import self.study.sels.userapi.bookcase.application.port.`in`.GetBookcaseListUseCase
 
 @SpringBootTest
 class GetBookcaseListActionTest(

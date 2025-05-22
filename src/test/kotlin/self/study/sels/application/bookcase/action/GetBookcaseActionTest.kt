@@ -1,11 +1,9 @@
 package self.study.sels.application.bookcase.action
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import self.study.sels.IntegrationTest
-import self.study.sels.application.bookcase.port.`in`.GetBookcaseCommand
-import self.study.sels.application.bookcase.port.`in`.GetBookcaseUseCase
 import self.study.sels.fixture.BookBuilder
 import self.study.sels.fixture.BookcaseBuilder
 import self.study.sels.fixture.MemberBuilder
@@ -14,6 +12,8 @@ import self.study.sels.model.bookcase.Bookcase
 import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
+import self.study.sels.userapi.bookcase.application.port.`in`.GetBookcaseCommand
+import self.study.sels.userapi.bookcase.application.port.`in`.GetBookcaseUseCase
 
 class GetBookcaseActionTest(
     private val bookRepository: BookRepository,

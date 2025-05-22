@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import self.study.sels.feignclient.ErrorMsg
-import self.study.sels.service.WatchTowerService
+import self.study.sels.userapi.service.WatchTowerService
 import self.study.sels.util.logger
 import java.net.InetAddress
 import java.time.LocalDateTime

@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import self.study.sels.application.book.port.`in`.GetBookCommand
-import self.study.sels.application.book.port.`in`.GetBookUseCase
 import self.study.sels.fixture.BookBuilder
 import self.study.sels.fixture.BookcaseBuilder
 import self.study.sels.fixture.MemberBuilder
@@ -19,6 +17,9 @@ import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
 import self.study.sels.model.question.QuestionRepository
+import self.study.sels.userapi.book.application.action.GetBookAction
+import self.study.sels.userapi.book.application.port.`in`.GetBookCommand
+import self.study.sels.userapi.book.application.port.`in`.GetBookUseCase
 
 @SpringBootTest
 class GetBookActionTest(

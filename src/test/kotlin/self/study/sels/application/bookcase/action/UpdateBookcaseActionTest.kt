@@ -7,8 +7,6 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
-import self.study.sels.application.bookcase.port.`in`.UpdateBookcaseCommand
-import self.study.sels.application.bookcase.port.`in`.UpdateBookcaseUseCase
 import self.study.sels.exception.ExistsNameException
 import self.study.sels.exception.NotFoundException
 import self.study.sels.fixture.BookcaseBuilder
@@ -17,6 +15,9 @@ import self.study.sels.model.bookcase.Bookcase
 import self.study.sels.model.bookcase.BookcaseRepository
 import self.study.sels.model.member.Member
 import self.study.sels.model.member.MemberRepository
+import self.study.sels.userapi.bookcase.application.action.UpdateBookcaseAction
+import self.study.sels.userapi.bookcase.application.port.`in`.UpdateBookcaseCommand
+import self.study.sels.userapi.bookcase.application.port.`in`.UpdateBookcaseUseCase
 
 @SpringBootTest
 class UpdateBookcaseActionTest(
